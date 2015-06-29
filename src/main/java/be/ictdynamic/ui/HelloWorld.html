@@ -1,0 +1,40 @@
+<html>
+<head>
+    <title>Wicket Hello World</title>
+</head>
+<body>
+
+<h1>
+    <span wicket:id="message">message will be replace later</span>
+</h1>
+
+  <form wicket:id="commentForm">
+      <table>
+          <tr>
+              <td>
+                  Commentaar:
+              </td>
+              <td>
+                  <input type="text" wicket:id="text" required="true"/>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  Auteur:
+              </td>
+              <td>
+                  <input type="text" wicket:id="author" required="true"/>
+              </td>
+          </tr>
+      </table>
+      <input type="submit" value="Submit" id="formsubmit"
+  </form>
+
+  <span wicket:id="comments">
+     <span wicket:id="date">1/6/2014</span><br>
+     <span wicket:id="text">dummy text</span><br>
+     <span wicket:id="author">dummy author</span><br>
+  </span>
+
+</body>
+</html>
