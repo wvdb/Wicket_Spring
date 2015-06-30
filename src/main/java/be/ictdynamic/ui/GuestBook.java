@@ -11,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.basic.MultiLineLabel;
+import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
@@ -43,6 +44,15 @@ public final class GuestBook extends WebPage {
                 listItem.add(new MultiLineLabel("text"));
             }
         }).setVersioned(false);
+
+        Button submitButton = new Button("formsubmit") {          // (4)
+            @Override
+            public void onSubmit() {
+                System.out.println("OnSubmit, name = ");
+            }
+        };
+
+        add(submitButton);
     }
 
     /**
@@ -60,7 +70,6 @@ public final class GuestBook extends WebPage {
             add(new TextField<String>("text").setType(String.class));
             add(new TextField<String>("author").setType(String.class));
         }
-
 
         @Override
         public final void onSubmit() {
