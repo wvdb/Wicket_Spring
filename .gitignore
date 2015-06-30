@@ -1,0 +1,5 @@
+target/
+overlays/
+*.class
+*.war
+*.log
