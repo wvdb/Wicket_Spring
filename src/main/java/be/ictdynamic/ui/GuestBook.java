@@ -65,12 +65,14 @@ public final class GuestBook extends WebPage {
         @Override
         public final void onSubmit() {
             LOGGER.info("starting onSubmit()");
+            getSession().info("Adding Comment");
+
             ValueMap values = getModelObject();
 
-//            if (StringUtils.isNotBlank((String)values.get("text"))) {
-//                error("Caught a spammer!!!");
-//                return;
-//            }
+            if (StringUtils.isNotBlank((String)values.get("text"))) {
+                error("Caught a spammer!!!");
+                return;
+            }
 
             // Construct a copy of the edited comment
             Comment comment = new Comment();
@@ -84,6 +86,7 @@ public final class GuestBook extends WebPage {
 
             values.put("text", "");
             values.put("author", "");
+            getSession().info("Comment added successfully");
         }
     }
 
