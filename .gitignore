@@ -1,0 +1,6 @@
+target/
+overlays/
+.idea/
+*.class
+*.war
+*.log
