@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import be.ictdynamic.data.Comment;
+import be.ictdynamic.ui.base.BasePage;
 import org.apache.commons.lang.StringUtils;
 
 import org.apache.wicket.markup.html.WebPage;
@@ -23,21 +24,19 @@ import org.apache.wicket.util.value.ValueMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class GuestBook extends WebPage {
-    /**
-     * A global list of all comments from all users across all sessions
-     */
+public final class Dummy extends BasePage {
+
 //    private static final List<Comment> commentList = Collections.synchronizedList(new ArrayList<Comment>());
 //    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     /**
      * Constructor that is invoked when page is invoked without a session.
      */
-    public GuestBook() {
-        initGUI();
+    public Dummy() {
+        initGui();
     }
 
-    private void initGUI() {
+    private void initGui() {
         add(new TextField<String>("text").setType(String.class));
         add(new TextField<String>("author").setType(String.class));
         add(new Link<WebPage>("addLink1") {

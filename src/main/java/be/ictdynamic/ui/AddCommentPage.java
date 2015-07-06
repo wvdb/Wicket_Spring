@@ -1,6 +1,6 @@
 package be.ictdynamic.ui;
 
-import org.apache.wicket.markup.html.WebPage;
+import be.ictdynamic.ui.base.BasePage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -10,7 +10,7 @@ import org.apache.wicket.model.CompoundPropertyModel;
 /**
  * Created by 50038706 on 05/07/2015.
  */
-public class AddCommentPage extends WebPage {
+public class AddCommentPage extends BasePage {
     private String author;
     private String comment;
 
@@ -39,7 +39,7 @@ public class AddCommentPage extends WebPage {
             @Override
             public void onSubmit() {
                 getSession().info("Comment added successfully");
-                setResponsePage(GuestBook.class);
+                setResponsePage(Dummy.class);
             }
         };
         addCommentForm.add(submitButton);

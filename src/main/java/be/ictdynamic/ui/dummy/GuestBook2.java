@@ -1,4 +1,4 @@
-package be.ictdynamic.ui;
+package be.ictdynamic.ui.dummy;
 
 import be.ictdynamic.data.Comment;
 import org.apache.commons.lang.StringUtils;
@@ -29,7 +29,7 @@ public final class GuestBook2 extends WebPage {
      * Constructor that is invoked when page is invoked without a session.
      */
     public GuestBook2() {
-        LOGGER.info("starting GuestBook() now");
+        LOGGER.info("starting Dummy() now");
         // Add comment form
         add(new CommentForm("commentForm"));
 

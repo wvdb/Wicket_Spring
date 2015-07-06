@@ -1,4 +1,4 @@
-package be.ictdynamic.ui;
+package be.ictdynamic.ui.dummy;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
