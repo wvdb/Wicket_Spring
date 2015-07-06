@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Wicket Hello World</title>
+    <title>Dummy Page</title>
 </head>
 <body>
 
@@ -8,35 +8,32 @@
 <!--<span wicket:id="message">message will be replace later</span>-->
 <!--</h1>-->
 
-  <form wicket:id="commentForm">
-      <table>
-          <tr>
-              <td>
-                  Comment:
-              </td>
-              <td>
-                  <input type="text" wicket:id="text"/>
-              </td>
-          </tr>
-          <tr>
-              <td>
-                  Author:
-              </td>
-              <td>
-                  <!-- <input type="text" wicket:id="author" onfocus="getElementById('formsubmit').focus();"/> -->
-                  <input type="text" wicket:id="author"/>
-              </td>
-          </tr>
-      </table>
-      <input type="submit" value="Submit" wicket:id="formsubmit">
-  </form>
+<h3>
+    Dummy Page
+</h3>
+<br/>
 
-  <span wicket:id="comments">
-      test comments-bis
-     <span wicket:id="date">1/6/2014</span><br>
-     <span wicket:id="text">dummy text</span><br>
-     <span wicket:id="author">dummy author</span><br>
-  </span>
+<table>
+    <tr>
+        <td>
+            Comment:
+        </td>
+        <td>
+            <input type="text" wicket:id="text"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Author:
+        </td>
+        <td>
+            <!-- <input type="text" wicket:id="author" onfocus="getElementById('formsubmit').focus();"/> -->
+            <input type="text" wicket:id="author"/>
+        </td>
+    </tr>
+</table>
+
+<a href="#" wicket:id="addLink1">add comment</a>
 
 </body>
 </html>
