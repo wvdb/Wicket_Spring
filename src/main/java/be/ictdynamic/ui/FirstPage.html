@@ -1,11 +1,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
       xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
 <head>
-    <title>Dummy Page</title>
+    <title>First Page</title>
 </head>
 <body>
 
     <wicket:extend>
+        <h3>
+            First Page
+        </h3>
+
+        <form action="" wicket:id="firstPageForm">
         <table>
             <tr>
                 <td>
@@ -17,16 +22,18 @@
             </tr>
             <tr>
                 <td>
-                    Author:
+                    Date (dd/mm/yyyy):
                 </td>
                 <td>
                     <!-- <input type="text" wicket:id="author" onfocus="getElementById('formsubmit').focus();"/> -->
-                    <input type="text" wicket:id="author"/>
+                    <input type="text" wicket:id="date"/>
                 </td>
             </tr>
         </table>
 
-        <a href="#" wicket:id="addLink1">add comment</a>
+        <!--<a href="#" wicket:id="addLink1">add comment</a>           -->
+        <input type="submit" value="Save" class="formbutton" name="save" wicket:id="submitButton"/>
+        </form>
     </wicket:extend>
 
 </body>

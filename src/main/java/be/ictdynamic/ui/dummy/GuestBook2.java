@@ -29,7 +29,7 @@ public final class GuestBook2 extends WebPage {
      * Constructor that is invoked when page is invoked without a session.
      */
     public GuestBook2() {
-        LOGGER.info("starting Dummy() now");
+        LOGGER.info("starting FirstPage() now");
         // Add comment form
         add(new CommentForm("commentForm"));
 

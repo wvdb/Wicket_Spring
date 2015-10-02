@@ -1,6 +1,6 @@
 package be.ictdynamic.application;
 
-import be.ictdynamic.ui.Dummy;
+import be.ictdynamic.ui.FirstPage;
 import org.apache.wicket.protocol.http.WebApplication;
 
 public class HelloWorldApplication extends WebApplication {
@@ -14,6 +14,6 @@ public class HelloWorldApplication extends WebApplication {
 
     @Override
     public Class getHomePage() {
-        return Dummy.class;
+        return FirstPage.class;
     }
 }

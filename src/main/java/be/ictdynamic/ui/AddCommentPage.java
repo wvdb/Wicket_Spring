@@ -3,8 +3,8 @@ package be.ictdynamic.ui;
 import be.ictdynamic.ui.base.BasePage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
-import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
+import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.model.CompoundPropertyModel;
 
 /**
@@ -20,7 +20,8 @@ public class AddCommentPage extends BasePage {
 
     private void initGui() {
 
-        Form<AddCommentPage> addCommentForm = new Form<AddCommentPage>("addCommentForm", new CompoundPropertyModel<AddCommentPage>(this));
+//        Form<AddCommentPage> addCommentForm = new Form<AddCommentPage>("addCommentForm", new CompoundPropertyModel<AddCommentPage>(this));
+        StatelessForm<AddCommentPage> addCommentForm = new StatelessForm<AddCommentPage>("addCommentForm", new CompoundPropertyModel<AddCommentPage>(this));
         add(addCommentForm);
 
         Label authorLabel = new Label("authorLabel", "Author:");
@@ -39,7 +40,7 @@ public class AddCommentPage extends BasePage {
             @Override
             public void onSubmit() {
                 getSession().info("Comment added successfully");
-                setResponsePage(Dummy.class);
+                setResponsePage(FirstPage.class);
             }
         };
         addCommentForm.add(submitButton);
