@@ -1,4 +1,4 @@
-package be.ictdynamic.data;
+package be.ictdynamic.domain;
 
 import java.util.Date;
 

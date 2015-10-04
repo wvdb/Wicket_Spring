@@ -1,6 +1,6 @@
 package be.ictdynamic.ui.dummy;
 
-import be.ictdynamic.data.Comment;
+import be.ictdynamic.domain.Comment;
 import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
