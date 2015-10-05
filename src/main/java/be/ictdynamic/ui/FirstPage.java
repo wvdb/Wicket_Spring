@@ -11,17 +11,16 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.springframework.context.ApplicationContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 
 public final class FirstPage extends BasePage {
-    private ApplicationContext ctx;
     public Date date;
     public String comment;
 
-//    private static final List<Comment> commentList = Collections.synchronizedList(new ArrayList<Comment>());
-//    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    private static final Logger LOG = LoggerFactory.getLogger(FirstPage.class);
 
     @SpringBean
     private HelloWorldService helloWorldService;
@@ -31,7 +30,6 @@ public final class FirstPage extends BasePage {
      */
     public FirstPage() {
         initGui();
-//        ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
     }
 
     private void initGui() {
@@ -41,19 +39,18 @@ public final class FirstPage extends BasePage {
 
         TextField comment = new TextField("comment");
         if (helloWorldService == null) {
-            System.out.println("helloWorldService.getMessage() = empty");
+            LOG.warn(">>>This is not supposed to happen");
             comment.setModel(Model.of("Spring is not always fun"));
-        }
-        else {
-            System.out.println("helloWorldService.getMessage() = " + helloWorldService.getMessage());
-            comment.setModel(Model.of(helloWorldService.getMessage() + " ik begrijp het niet helemaal"));
+        } else {
+            LOG.debug(">>>Spring config ok .... ready to roll");
+            comment.setModel(Model.of(helloWorldService.getMessage()));
         }
         firstPageForm.add(comment).setVersioned(false);
 
         //Date field
         DateTextField dateTextField = new DateTextField("date",
-                                                            new PropertyModel<Date>(this, "date"),
-                                                            new PatternDateConverter("dd/MM/YYYY", true));
+                new PropertyModel<Date>(this, "date"),
+                new PatternDateConverter("dd/MM/YYYY", true));
 
 //        DatePicker datePicker = new DatePicker();
 //        datePicker.setShowOnFieldClick(true);
@@ -76,17 +73,5 @@ public final class FirstPage extends BasePage {
         firstPageForm.add(submitButton);
 
     }
-
-//    public HelloWorldService getHelloWorldService() {
-//        return helloWorldService;
-//    }
-//
-//    public void setHelloWorldService(HelloWorldService helloWorldService) {
-//        this.helloWorldService = helloWorldService;
-//    }
-//
-//    public HelloWorldService getHelloWorldService() {
-//        return (HelloWorldService) BeanFactoryUtils.beanOfType(ctx, HelloWorldService.class);
-//    }
 
 }

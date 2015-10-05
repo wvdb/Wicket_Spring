@@ -7,11 +7,6 @@
 
     <context:component-scan base-package="be.ictdynamic" />
 
-    <!--<bean id="helloWorldService"-->
-          <!--class="be.ictdynamic.services.HelloWorldService">-->
-        <!--<property name="message" value="Spring is sometimes fun."/>-->
-    <!--</bean>-->
-
     <bean id="wicketApplication"
           class="be.ictdynamic.application.HelloWorldApplication">
     </bean>
