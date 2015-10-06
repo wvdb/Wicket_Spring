@@ -10,19 +10,18 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class HelloWorldServiceImpl implements HelloWorldService {
-    String message = "this is the default value";
+    String country;
 
     public HelloWorldServiceImpl() {
-        this.message = "bericht van de service-constructor";
+        this.country = "Belgium";
     }
 
     @Override
-    public String getMessage() {
-        return message;
+    public String getCountry() {
+        return country;
     }
 
-    @Override
-    public void setMessage(String message) {
-        this.message = message;
+    public void setCountry(String country) {
+        this.country = country;
     }
 }

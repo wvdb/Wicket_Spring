@@ -7,6 +7,5 @@ package be.ictdynamic.services;
  * @since 05/10/2015 - 13:58
  */
 public interface HelloWorldService {
-    String getMessage();
-    void setMessage(String message);
+    String getCountry();
 }

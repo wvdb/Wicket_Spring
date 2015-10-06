@@ -43,7 +43,7 @@ public final class FirstPage extends BasePage {
             comment.setModel(Model.of("Spring is not always fun"));
         } else {
             LOG.debug(">>>Spring config ok .... ready to roll");
-            comment.setModel(Model.of(helloWorldService.getMessage()));
+            comment.setModel(Model.of(helloWorldService.getCountry()));
         }
         firstPageForm.add(comment).setVersioned(false);
 

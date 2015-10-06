@@ -1,6 +1,6 @@
 package be.ictdynamic.application;
 
-import be.ictdynamic.ui.FirstPage;
+import be.ictdynamic.ui.CommutePage;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 
@@ -10,7 +10,7 @@ public class HelloWorldApplication extends WebApplication {
 
     @Override
     public Class getHomePage() {
-        return FirstPage.class;
+        return CommutePage.class;
     }
 
     @Override

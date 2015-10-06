@@ -1,0 +1,47 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
+<head>
+    <title>IctDynamic's Commute Page</title>
+</head>
+<body>
+
+    <wicket:extend>
+        <h3>
+            Commute Page
+        </h3>
+
+        <form action="" wicket:id="commutePageForm">
+        <table id="TableLocationOffice">
+            <tr>
+                <td>
+                    Street:
+                </td>
+                <td>
+                    <input type="text" wicket:id="street"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Commune:
+                </td>
+                <td>
+                    <input type="text" wicket:id="commune"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Country:
+                </td>
+                <td>
+                    <input type="text" wicket:id="country"/>
+                </td>
+            </tr>
+        </table>
+
+        <!--<a href="#" wicket:id="addLink1">add comment</a>           -->
+        <input type="submit" value="Save" class="formbutton" name="save" wicket:id="submitButton"/>
+        </form>
+    </wicket:extend>
+
+</body>
+</html>
