@@ -1,5 +1,6 @@
 package be.ictdynamic.ui;
 
+import be.ictdynamic.domain.Commuter;
 import be.ictdynamic.services.HelloWorldService;
 import be.ictdynamic.ui.base.BasePage;
 import org.apache.wicket.markup.html.form.Button;
@@ -12,10 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public final class CommutePage extends BasePage {
-    public String street;
-    public String commune;
-    public String country;
-
     private static final Logger LOG = LoggerFactory.getLogger(CommutePage.class);
 
     @SpringBean
@@ -30,24 +27,24 @@ public final class CommutePage extends BasePage {
 
     private void initGui() {
 
-        Form<CommutePage> form = new Form<CommutePage>("commutePageForm", new CompoundPropertyModel<CommutePage>(this));
+        Form<CommutePage> form = new Form<CommutePage>("commutePageForm", new CompoundPropertyModel<CommutePage>(new Commuter()));
         add(form);
 
-        TextField street = new TextField("street");
-        form.add(street).setVersioned(false);
+        TextField officeStreetField = new TextField("officeStreet");
+        TextField officeCommuneField = new TextField("officeCommune");
+        TextField officeCountryField = new TextField("officeCountry");
 
-        TextField commune = new TextField("commune");
-        form.add(commune).setVersioned(false);
+        TextField homeStreetField = new TextField("homeStreet");
+        TextField homeCommuneField = new TextField("homeCommune");
+        TextField homeCountryField = new TextField("homeCountry");
 
-        TextField country = new TextField("country");
         if (helloWorldService == null) {
             LOG.warn(">>>This is not supposed to happen");
-            country.setModel(Model.of("Spring is not always fun"));
+            officeCountryField.setModel(Model.of("Spring is not always fun"));
         } else {
             LOG.debug(">>>Spring config ok .... ready to roll");
-            country.setModel(Model.of(helloWorldService.getCountry()));
+            officeCountryField.setModel(Model.of(helloWorldService.getCountry()));
         }
-        form.add(country).setVersioned(false);
 
         Button submitButton = new Button("submitButton") {
             @Override
@@ -55,6 +52,14 @@ public final class CommutePage extends BasePage {
                 setResponsePage(AddCommentPage.class);
             }
         };
+
+        form.add(officeStreetField).setVersioned(false);
+        form.add(officeCommuneField).setVersioned(false);
+        form.add(officeCountryField).setVersioned(false);
+
+        form.add(homeStreetField).setVersioned(false);
+        form.add(homeCommuneField).setVersioned(false);
+        form.add(homeCountryField).setVersioned(false);
 
         form.add(submitButton);
 

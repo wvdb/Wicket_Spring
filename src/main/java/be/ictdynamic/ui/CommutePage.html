@@ -11,13 +11,14 @@
         </h3>
 
         <form action="" wicket:id="commutePageForm">
+
         <table id="TableLocationOffice">
             <tr>
                 <td>
                     Street:
                 </td>
                 <td>
-                    <input type="text" wicket:id="street"/>
+                    <input type="text" wicket:id="officeStreet"/>
                 </td>
             </tr>
             <tr>
@@ -25,7 +26,7 @@
                     Commune:
                 </td>
                 <td>
-                    <input type="text" wicket:id="commune"/>
+                    <input type="text" wicket:id="officeCommune"/>
                 </td>
             </tr>
             <tr>
@@ -33,10 +34,27 @@
                     Country:
                 </td>
                 <td>
-                    <input type="text" wicket:id="country"/>
+                    <input type="text" wicket:id="officeCountry"/>
                 </td>
             </tr>
         </table>
+
+            <table id="TableLocationHome">
+                <tr>
+                    <td>
+                        Home:
+                    </td>
+                    <td>
+                        <input type="text" wicket:id="homeStreet"/>
+                    </td>
+                    <td>
+                        <input type="text" wicket:id="homeCommune"/>
+                    </td>
+                    <td>
+                        <input type="text" wicket:id="homeCountry"/>
+                    </td>
+                </tr>
+            </table>
 
         <!--<a href="#" wicket:id="addLink1">add comment</a>           -->
         <input type="submit" value="Save" class="formbutton" name="save" wicket:id="submitButton"/>
