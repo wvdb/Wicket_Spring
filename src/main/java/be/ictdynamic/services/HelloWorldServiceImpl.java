@@ -57,7 +57,6 @@ public class HelloWorldServiceImpl implements HelloWorldService {
 
         } catch (Exception e) {
             LOG.error(">>>Error message = " + e.getMessage());
-            e.printStackTrace();
         }
     }
 }
