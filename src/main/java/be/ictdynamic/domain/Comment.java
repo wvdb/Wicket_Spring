@@ -1,5 +1,6 @@
 package be.ictdynamic.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -7,7 +8,7 @@ import java.util.Date;
  * @version $Revision: $
  * @date $Date: $
  */
-public class Comment {
+public class Comment implements Serializable {
     private String text;
     private Date date = new Date();
     private String author;

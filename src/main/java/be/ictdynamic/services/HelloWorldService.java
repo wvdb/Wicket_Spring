@@ -8,4 +8,5 @@ package be.ictdynamic.services;
  */
 public interface HelloWorldService {
     String getCountry();
+    void getDummy();
 }

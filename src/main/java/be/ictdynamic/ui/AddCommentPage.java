@@ -1,6 +1,7 @@
 package be.ictdynamic.ui;
 
 import be.ictdynamic.ui.base.BasePage;
+import be.ictdynamic.ui.dummy.FirstPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.RequiredTextField;

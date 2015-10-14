@@ -1,6 +1,7 @@
-package be.ictdynamic.ui;
+package be.ictdynamic.ui.dummy;
 
 import be.ictdynamic.services.HelloWorldService;
+import be.ictdynamic.ui.AddCommentPage;
 import be.ictdynamic.ui.base.BasePage;
 import org.apache.wicket.datetime.PatternDateConverter;
 import org.apache.wicket.datetime.markup.html.form.DateTextField;

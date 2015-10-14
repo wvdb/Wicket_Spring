@@ -1,11 +1,13 @@
 package be.ictdynamic.domain;
 
+import java.io.Serializable;
+
 /**
  * @author $Author: $
  * @version $Revision: $
  * @date $Date: $
  */
-public class Commuter {
+public class Commuter implements Serializable {
     private String officeStreet;
     private String officeCommune;
     private String officeCountry;

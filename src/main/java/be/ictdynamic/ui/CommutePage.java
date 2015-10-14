@@ -30,6 +30,8 @@ public final class CommutePage extends BasePage {
         Form<CommutePage> form = new Form<CommutePage>("commutePageForm", new CompoundPropertyModel<CommutePage>(new Commuter()));
         add(form);
 
+        helloWorldService.getDummy();
+
         TextField officeStreetField = new TextField("officeStreet");
         TextField officeCommuneField = new TextField("officeCommune");
         TextField officeCountryField = new TextField("officeCountry");
