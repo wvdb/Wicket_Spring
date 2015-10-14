@@ -45,6 +45,7 @@ public class HelloWorldServiceImpl implements HelloWorldService {
 
             // CONVERT RESPONSE TO STRING
             String result = EntityUtils.toString(response.getEntity());
+            LOG.debug(">>>HTTP result = {}", result);
 
             // CONVERT STRING TO JSON ARRAY
 //            JSONArray jsonArray = new JSONArray(result);
