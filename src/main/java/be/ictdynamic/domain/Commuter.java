@@ -3,9 +3,10 @@ package be.ictdynamic.domain;
 import java.io.Serializable;
 
 /**
- * @author $Author: $
- * @version $Revision: $
- * @date $Date: $
+ * Class Commuter.
+ *
+ * @author Wim Van den Brande
+ * @since 03/10/2015 - 20:35
  */
 public class Commuter implements Serializable {
     private String officeStreet;

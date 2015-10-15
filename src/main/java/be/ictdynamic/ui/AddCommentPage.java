@@ -1,16 +1,12 @@
 package be.ictdynamic.ui;
 
 import be.ictdynamic.ui.base.BasePage;
-import be.ictdynamic.ui.dummy.FirstPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.model.CompoundPropertyModel;
 
-/**
- * Created by 50038706 on 05/07/2015.
- */
 public class AddCommentPage extends BasePage {
     private String author;
     private String comment;
@@ -38,10 +34,12 @@ public class AddCommentPage extends BasePage {
         addCommentForm.add(commentField);
 
         Button submitButton = new Button("submitButton") {
+            private static final long serialVersionUID = 5824523915446192700L;
+
             @Override
             public void onSubmit() {
                 getSession().info("Comment added successfully");
-                setResponsePage(FirstPage.class);
+                setResponsePage(CommutePage.class);
             }
         };
         addCommentForm.add(submitButton);

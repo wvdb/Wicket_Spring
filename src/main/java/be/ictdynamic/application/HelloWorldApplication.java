@@ -1,6 +1,7 @@
 package be.ictdynamic.application;
 
 import be.ictdynamic.ui.CommutePage;
+import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 
@@ -9,14 +10,13 @@ public class HelloWorldApplication extends WebApplication {
     }
 
     @Override
-    public Class getHomePage() {
+    public Class<? extends Page> getHomePage() {
         return CommutePage.class;
     }
 
     @Override
     protected void init() {
         super.init();
-        // getComponentInitializationListeners().add((IComponentInitializationListener) new SpringComponentInjector(this));
         addComponentInstantiationListener(new SpringComponentInjector(this));
     }
 }

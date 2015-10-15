@@ -49,6 +49,8 @@ public final class CommutePage extends BasePage {
         }
 
         Button submitButton = new Button("submitButton") {
+            private static final long serialVersionUID = 1858351845188795071L;
+
             @Override
             public void onSubmit() {
                 setResponsePage(AddCommentPage.class);

@@ -4,9 +4,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author $Author: $
- * @version $Revision: $
- * @date $Date: $
+ * Class Comment.
+ *
+ * @author Wim Van den Brande
+ * @since 03/10/2015 - 20:35
  */
 public class Comment implements Serializable {
     private String text;
