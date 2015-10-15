@@ -18,11 +18,13 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class HelloWorldServiceImpl implements HelloWorldService {
-    private String country;
     private static final Logger LOG = LoggerFactory.getLogger(HelloWorldServiceImpl.class);
+    private String country;
+    private String commune;
 
     public HelloWorldServiceImpl() {
         this.country = "Belgium";
+        this.commune = "Edegem";
     }
 
     @Override
@@ -30,8 +32,9 @@ public class HelloWorldServiceImpl implements HelloWorldService {
         return country;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    @Override
+    public String getCommune() {
+        return commune;
     }
 
     public void getDummy() {

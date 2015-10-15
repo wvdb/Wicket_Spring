@@ -27,14 +27,14 @@ public final class CommutePage extends BasePage {
 
     private void initGui() {
 
+        // bind Model with Page !!!
         Form<CommutePage> form = new Form<CommutePage>("commutePageForm", new CompoundPropertyModel<CommutePage>(new Commuter()));
+
         add(form);
 
-        helloWorldService.getDummy();
-
-        TextField officeStreetField = new TextField("officeStreet");
-        TextField officeCommuneField = new TextField("officeCommune");
-        TextField officeCountryField = new TextField("officeCountry");
+        TextField<String> officeStreetField = new TextField<String>("officeStreet");
+        TextField<String> officeCommuneField = new TextField<String>("officeCommune");
+        TextField<String> officeCountryField = new TextField<String>("officeCountry");
 
         TextField homeStreetField = new TextField("homeStreet");
         TextField homeCommuneField = new TextField("homeCommune");
@@ -46,6 +46,7 @@ public final class CommutePage extends BasePage {
         } else {
             LOG.debug(">>>Spring config ok .... ready to roll");
             officeCountryField.setModel(Model.of(helloWorldService.getCountry()));
+            officeCommuneField.setModel(Model.of(helloWorldService.getCommune()));
         }
 
         Button submitButton = new Button("submitButton") {
@@ -66,6 +67,9 @@ public final class CommutePage extends BasePage {
         form.add(homeCountryField).setVersioned(false);
 
         form.add(submitButton);
+
+        // invoke actual service
+        helloWorldService.getDummy();
 
     }
 

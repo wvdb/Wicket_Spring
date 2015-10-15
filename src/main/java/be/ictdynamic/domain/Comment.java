@@ -10,6 +10,9 @@ import java.util.Date;
  * @since 03/10/2015 - 20:35
  */
 public class Comment implements Serializable {
+
+    private static final long serialVersionUID = -7520412074740146528L;
+
     private String text;
     private Date date = new Date();
     private String author;

@@ -9,6 +9,9 @@ import java.io.Serializable;
  * @since 03/10/2015 - 20:35
  */
 public class Commuter implements Serializable {
+
+    private static final long serialVersionUID = -5073135041934007777L;
+
     private String officeStreet;
     private String officeCommune;
     private String officeCountry;
