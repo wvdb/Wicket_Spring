@@ -35,6 +35,14 @@
     <orderEntry type="library" name="Maven: org.apache.wicket:wicket-spring:1.4.17" level="project" />
     <orderEntry type="library" name="Maven: org.apache.wicket:wicket-ioc:1.4.17" level="project" />
     <orderEntry type="library" name="Maven: cglib:cglib-nodep:2.1_3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.wicket:wicket-core:6.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.wicket:wicket-util:6.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.wicket:wicket-request:6.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.wicket:wicket:1.4.17" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.5.8" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.wicket:wicket-spring:1.4.17" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.wicket:wicket-ioc:1.4.17" level="project" />
+    <orderEntry type="library" name="Maven: cglib:cglib-nodep:2.1_3" level="project" />
     <orderEntry type="library" name="Maven: org.apache.wicket:wicket-datetime:6.2.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.wicket:wicket-core:6.2.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.wicket:wicket-util:6.2.0" level="project" />
