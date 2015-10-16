@@ -12,46 +12,20 @@ public class Commuter implements Serializable {
 
     private static final long serialVersionUID = -5073135041934007777L;
 
-    private String officeStreet;
-    private String officeCommune;
-    private String officeCountry;
-
     private String homeStreet;
     private String homeCommune;
     private String homeCountry;
 
     public Commuter() {
-        officeStreet = "Tweebunder 4";
+        homeStreet = "Da Vincilaan 4";
+        homeCommune = "Zaventem";
+        homeCountry = "Belgium";
     }
 
-    public Commuter(String officeStreet, String officeCommune, String officeCountry) {
-        this.officeStreet = officeStreet;
-        this.officeCommune = officeCommune;
-        this.officeCountry = officeCountry;
-    }
-
-    public String getOfficeStreet() {
-        return officeStreet;
-    }
-
-    public void setOfficeStreet(String officeStreet) {
-        this.officeStreet = officeStreet;
-    }
-
-    public String getOfficeCommune() {
-        return officeCommune;
-    }
-
-    public void setOfficeCommune(String officeCommune) {
-        this.officeCommune = officeCommune;
-    }
-
-    public String getOfficeCountry() {
-        return officeCountry;
-    }
-
-    public void setOfficeCountry(String officeCountry) {
-        this.officeCountry = officeCountry;
+    public Commuter(String homeStreet, String homeCommune, String homeCountry) {
+        this.homeStreet = homeStreet;
+        this.homeCommune = homeCommune;
+        this.homeCountry = homeCountry;
     }
 
     public String getHomeStreet() {
@@ -81,9 +55,9 @@ public class Commuter implements Serializable {
     @Override
     public String toString() {
         return "Commuter{" +
-                "officeStreet='" + officeStreet + '\'' +
-                ", officeCommune='" + officeCommune + '\'' +
-                ", officeCountry='" + officeCountry + '\'' +
+                "homeStreet='" + homeStreet + '\'' +
+                ", homeCommune='" + homeCommune + '\'' +
+                ", homeCountry='" + homeCountry + '\'' +
                 '}';
     }
 

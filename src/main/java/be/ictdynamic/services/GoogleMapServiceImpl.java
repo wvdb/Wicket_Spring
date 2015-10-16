@@ -11,31 +11,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
- * Class HelloWorldService.
+ * Class GoogleMapServiceImpl.
  *
  * @author Wim Van den Brande
  * @since 03/10/2015 - 20:35
  */
 @Service
-public class HelloWorldServiceImpl implements HelloWorldService {
-    private static final Logger LOG = LoggerFactory.getLogger(HelloWorldServiceImpl.class);
-    private String country;
+public class GoogleMapServiceImpl implements GoogleMapService {
+    private static final Logger LOG = LoggerFactory.getLogger(GoogleMapServiceImpl.class);
+    private String street;
     private String commune;
-
-    public HelloWorldServiceImpl() {
-        this.country = "Belgium";
-        this.commune = "Edegem";
-    }
-
-    @Override
-    public String getCountry() {
-        return country;
-    }
-
-    @Override
-    public String getCommune() {
-        return commune;
-    }
+    private String country;
 
     public void getDummy() {
         HttpClient client = new DefaultHttpClient();

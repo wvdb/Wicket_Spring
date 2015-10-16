@@ -7,31 +7,31 @@ import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.model.CompoundPropertyModel;
 
-public class AddCommentPage extends BasePage {
+public class ResponsePage extends BasePage {
     private String author;
     private String comment;
 
-    public AddCommentPage() {
+    public ResponsePage() {
         initGui();
     }
 
     private void initGui() {
 
-//        Form<AddCommentPage> addCommentForm = new Form<AddCommentPage>("addCommentForm", new CompoundPropertyModel<AddCommentPage>(this));
-        StatelessForm<AddCommentPage> addCommentForm = new StatelessForm<AddCommentPage>("addCommentForm", new CompoundPropertyModel<AddCommentPage>(this));
-        add(addCommentForm);
+//        Form<ResponsePage> addCommentForm = new Form<ResponsePage>("addCommentForm", new CompoundPropertyModel<ResponsePage>(this));
+        StatelessForm<ResponsePage> responseForm = new StatelessForm<ResponsePage>("responseForm", new CompoundPropertyModel<ResponsePage>(this));
+        add(responseForm);
 
         Label authorLabel = new Label("authorLabel", "Author:");
-        addCommentForm.add(authorLabel);
+        responseForm.add(authorLabel);
 
         RequiredTextField<String> authorField = new RequiredTextField<String>("author");
-        addCommentForm.add(authorField);
+        responseForm.add(authorField);
 
         Label commentLabel = new Label("commentLabel", "Comment:");
-        addCommentForm.add(commentLabel);
+        responseForm.add(commentLabel);
 
         RequiredTextField<String> commentField = new RequiredTextField<String>("comment");
-        addCommentForm.add(commentField);
+        responseForm.add(commentField);
 
         Button submitButton = new Button("submitButton") {
             private static final long serialVersionUID = 5824523915446192700L;
@@ -42,7 +42,7 @@ public class AddCommentPage extends BasePage {
                 setResponsePage(CommutePage.class);
             }
         };
-        addCommentForm.add(submitButton);
+        responseForm.add(submitButton);
     }
 
 }

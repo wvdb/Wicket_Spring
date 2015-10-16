@@ -1,13 +1,13 @@
 package be.ictdynamic.services;
 
 /**
- * Class HelloWorldService.
+ * Class OfficeLocationService.
  *
  * @author Wim Van den Brande
  * @since 05/10/2015 - 20:35
  */
-public interface HelloWorldService {
-    String getCountry();
+public interface OfficeLocationService {
+    String getStreet();
     String getCommune();
-    void getDummy();
+    String getCountry();
 }
