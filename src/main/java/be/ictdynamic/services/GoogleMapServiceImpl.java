@@ -19,11 +19,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class GoogleMapServiceImpl implements GoogleMapService {
     private static final Logger LOG = LoggerFactory.getLogger(GoogleMapServiceImpl.class);
-    private String street;
-    private String commune;
-    private String country;
 
-    public void getDummy() {
+    public void getGoogleDistance() {
         HttpClient client = new DefaultHttpClient();
         HttpGet request = new HttpGet("https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA");
 

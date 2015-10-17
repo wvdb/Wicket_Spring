@@ -78,7 +78,7 @@ public final class CommutePage extends BasePage {
         form.add(submitButton);
 
         // invoke actual service
-        googleMapService.getDummy();
+        googleMapService.getGoogleDistance();
 
     }
 
