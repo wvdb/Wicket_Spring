@@ -19,9 +19,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class GoogleMapServiceImpl implements GoogleMapService {
     private static final Logger LOG = LoggerFactory.getLogger(GoogleMapServiceImpl.class);
-    private String street;
-    private String commune;
-    private String country;
 
     public void getDummy() {
         HttpClient client = new DefaultHttpClient();
