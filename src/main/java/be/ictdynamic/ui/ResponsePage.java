@@ -6,20 +6,39 @@ import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.Model;
 
 public class ResponsePage extends BasePage {
+    private String myResponse;
     private String author;
     private String comment;
 
-    public ResponsePage() {
+//    public ResponsePage(final PageParameters parameters) {
+//        if (parameters.containsKey("reponseGoogleMap")) {
+//            setMyResponse(parameters.getString("reponseGoogleMap"));
+//        }
+//
+//        initGui();
+//    }
+
+    // page should be non-bookmarkable
+    public ResponsePage(String myResponse) {
+        this.myResponse = myResponse;
+
         initGui();
     }
 
     private void initGui() {
 
-//        Form<ResponsePage> addCommentForm = new Form<ResponsePage>("addCommentForm", new CompoundPropertyModel<ResponsePage>(this));
         StatelessForm<ResponsePage> responseForm = new StatelessForm<ResponsePage>("responseForm", new CompoundPropertyModel<ResponsePage>(this));
         add(responseForm);
+
+        Label responseLabel = new Label("responseLabel", "Response:");
+        responseForm.add(responseLabel);
+
+        RequiredTextField<String> responseField = new RequiredTextField<String>("response");
+        responseField.setModel(Model.of(getMyResponse()));
+        responseForm.add(responseField);
 
         Label authorLabel = new Label("authorLabel", "Author:");
         responseForm.add(authorLabel);
@@ -45,5 +64,12 @@ public class ResponsePage extends BasePage {
         responseForm.add(submitButton);
     }
 
+    public String getMyResponse() {
+        return myResponse;
+    }
+
+    public void setMyResponse(String myResponse) {
+        this.myResponse = myResponse;
+    }
 }
 
