@@ -72,7 +72,7 @@ public final class CommutePage extends BasePage {
                 pageParameters.add("reponseGoogleMap", response);
 
                 // setResponsePage(new ResponsePage());
-//                setResponsePage(ResponsePage.class, pageParameters);
+                // setResponsePage(ResponsePage.class, pageParameters);
                 setResponsePage(new ResponsePage(response));
             }
         };
