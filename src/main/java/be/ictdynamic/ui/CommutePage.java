@@ -9,6 +9,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,7 +64,16 @@ public final class CommutePage extends BasePage {
 
             @Override
             public void onSubmit() {
-                setResponsePage(ResponsePage.class);
+
+                // invoke actual service
+                String response = googleMapService.getGoogleDistance();
+
+                PageParameters pageParameters = new PageParameters();
+                pageParameters.add("reponseGoogleMap", response);
+
+                // setResponsePage(new ResponsePage());
+//                setResponsePage(ResponsePage.class, pageParameters);
+                setResponsePage(new ResponsePage(response));
             }
         };
 
@@ -77,8 +87,6 @@ public final class CommutePage extends BasePage {
 
         form.add(submitButton);
 
-        // invoke actual service
-        googleMapService.getGoogleDistance();
 
     }
 

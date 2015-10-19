@@ -7,5 +7,5 @@ package be.ictdynamic.services;
  * @since 05/10/2015 - 20:35
  */
 public interface GoogleMapService {
-    void getGoogleDistance();
+    String getGoogleDistance();
 }

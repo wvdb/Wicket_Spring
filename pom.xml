@@ -21,15 +21,16 @@
 
         <dependency>
             <groupId>org.apache.wicket</groupId>
-            <artifactId>wicket-spring</artifactId>
-            <version>1.4.17</version>
+            <artifactId>wicket-core</artifactId>
+            <version>1.5.9</version>
             <!--<version>7.0.0</version>-->
         </dependency>
 
         <dependency>
             <groupId>org.apache.wicket</groupId>
-            <artifactId>wicket-datetime</artifactId>
-            <version>6.2.0</version>
+            <artifactId>wicket-spring</artifactId>
+            <version>1.4.17</version>
+            <!--<version>7.0.0</version>-->
         </dependency>
 
         <dependency>
