@@ -10,6 +10,16 @@
     <version>1.0-SNAPSHOT</version>
     <name>POC_WicketSpring</name>
 
+    <properties>
+        <appengine.version>1.9.19</appengine.version>
+        <appengine.app.version>1</appengine.app.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.http.version>1.19.0</project.http.version>
+        <project.oauth.version>1.19.0</project.oauth.version>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <maven.compiler.source>1.7</maven.compiler.source>
+    </properties>
+
     <dependencies>
 
         <dependency>
@@ -73,6 +83,12 @@
         	<groupId>org.json</groupId>
         	<artifactId>json</artifactId>
         	<version>20150729</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-api-1.0-sdk</artifactId>
+            <version>${appengine.version}</version>
         </dependency>
 
     </dependencies>
