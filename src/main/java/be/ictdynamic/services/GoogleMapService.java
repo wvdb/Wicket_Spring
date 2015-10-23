@@ -1,5 +1,8 @@
 package be.ictdynamic.services;
 
+import be.ictdynamic.domain.GoogleMapRequest;
+import be.ictdynamic.domain.GoogleMapResponse;
+
 /**
  * Class GoogleMapService.
  *
@@ -7,5 +10,5 @@ package be.ictdynamic.services;
  * @since 05/10/2015 - 20:35
  */
 public interface GoogleMapService {
-    String getGoogleDistance();
+    GoogleMapResponse getGoogleDistance(GoogleMapRequest googleMapRequest);
 }

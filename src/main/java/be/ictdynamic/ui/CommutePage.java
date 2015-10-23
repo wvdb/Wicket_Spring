@@ -1,6 +1,8 @@
 package be.ictdynamic.ui;
 
 import be.ictdynamic.domain.Commuter;
+import be.ictdynamic.domain.GoogleMapRequest;
+import be.ictdynamic.domain.GoogleMapResponse;
 import be.ictdynamic.services.GoogleMapFactoryServiceImpl;
 import be.ictdynamic.services.OfficeLocationService;
 import be.ictdynamic.ui.base.BasePage;
@@ -68,14 +70,19 @@ public final class CommutePage extends BasePage {
                 // invoke factory instantiating a Google Map Service
                 // http://www.tutorialspoint.com/design_pattern/factory_pattern.htm
 
-                String response = googleMapFactoryService.getGoogleMapService().getGoogleDistance();
+                GoogleMapRequest googleMapRequest = new GoogleMapRequest();
+                googleMapRequest.setStreet(officeLocationService.getStreet());
+                googleMapRequest.setCommune(officeLocationService.getCommune());
+                googleMapRequest.setCountry(officeLocationService.getCountry());
+
+                GoogleMapResponse googleMapResponse = googleMapFactoryService.getGoogleMapService().getGoogleDistance(googleMapRequest);
 
 //                PageParameters pageParameters = new PageParameters();
 //                pageParameters.add("reponseGoogleMap", response);
 
                 // setResponsePage(new ResponsePage());
                 // setResponsePage(ResponsePage.class, pageParameters);
-                setResponsePage(new ResponsePage(response));
+                setResponsePage(new ResponsePage(googleMapResponse));
             }
         };
 

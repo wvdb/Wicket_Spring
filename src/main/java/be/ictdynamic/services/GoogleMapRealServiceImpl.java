@@ -1,5 +1,7 @@
 package be.ictdynamic.services;
 
+import be.ictdynamic.domain.GoogleMapRequest;
+import be.ictdynamic.domain.GoogleMapResponse;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -9,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 /**
  * Class GoogleMapRealServiceImpl.
@@ -16,12 +19,26 @@ import org.slf4j.LoggerFactory;
  * @author Wim Van den Brande
  * @since 03/10/2015 - 20:35
  */
+@Service
 public class GoogleMapRealServiceImpl implements GoogleMapService {
     private static final Logger LOG = LoggerFactory.getLogger(GoogleMapRealServiceImpl.class);
 
-    public String getGoogleDistance() {
+    private GoogleMapRealServiceImpl googleMapRealService;
+
+    private GoogleMapRealServiceImpl getGoogleMapRealService() {
+        if (googleMapRealService == null ) {
+            googleMapRealService = new GoogleMapRealServiceImpl();
+        }
+        return googleMapRealService;
+    }
+
+    public GoogleMapResponse getGoogleDistance(GoogleMapRequest googleMapRequest) {
         HttpClient client = new DefaultHttpClient();
-        HttpGet request = new HttpGet("https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA");
+        // HttpGet request = new HttpGet("https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA");
+        String httpRequest = "https://maps.googleapis.com/maps/api/geocode/json?address=" + googleMapRequest.getStreet() + ",+" + googleMapRequest.getCommune() + ",+" + googleMapRequest.getCountry();
+        HttpGet request = new HttpGet(httpRequest);
+
+        GoogleMapResponse googleMapResponse = new GoogleMapResponse();
 
         try {
             HttpResponse response = client.execute(request);
@@ -43,13 +60,15 @@ public class GoogleMapRealServiceImpl implements GoogleMapService {
 
                 LOG.debug(">>>location.lat = " + jsonobject2.getJSONObject("geometry").getJSONObject("location").get("lat"));
                 LOG.debug(">>>location.lng = " + jsonobject2.getJSONObject("geometry").getJSONObject("location").get("lng"));
+
+                googleMapResponse.setLat((Double) jsonobject2.getJSONObject("geometry").getJSONObject("location").get("lat"));
+                googleMapResponse.setLng((Double) jsonobject2.getJSONObject("geometry").getJSONObject("location").get("lng"));
             }
 
-            return "dummy";
-
+            return googleMapResponse;
         } catch (Exception e) {
             LOG.error(">>>GoogleMapRealServiceImpl : Error message = " + e.getMessage());
-            throw new IllegalArgumentException("Google not available");
+            throw new IllegalArgumentException("Google Real not available");
         }
     }
 }

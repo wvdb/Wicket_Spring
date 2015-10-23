@@ -18,7 +18,7 @@ public class OfficeLocationServiceImpl implements OfficeLocationService {
     private String country;
 
     public OfficeLocationServiceImpl() {
-        this.street = "Tweebunder 4";
+        this.street = "Tweebunder";
         this.commune = "Edegem";
         this.country = "Belgium";
     }

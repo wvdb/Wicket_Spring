@@ -8,7 +8,7 @@ package be.ictdynamic;
  */
 public class Constants {
 
-    public final static Boolean REAL_GOOGLE_MAP_SERVICE = false;
+    public final static Boolean REAL_GOOGLE_MAP_SERVICE = true;
     public final static String DUMMY_RESPONSE = "{\n" +
             "   \"results\" : [\n" +
             "      {\n" +
