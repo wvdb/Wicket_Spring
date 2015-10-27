@@ -26,9 +26,6 @@ public class GoogleMapFactoryServiceImpl {
     @SpringBean
     private GoogleMapDummyServiceImpl googleMapDummyServiceImpl;
 
-    @SpringBean
-    private DummyService dummyService;
-
     public GoogleMapService getGoogleMapService() {
         if (Constants.REAL_GOOGLE_MAP_SERVICE) {
 //            return getGoogleMapRealService();

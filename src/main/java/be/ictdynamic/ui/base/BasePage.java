@@ -5,7 +5,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 
 public abstract class BasePage extends WebPage{
 
-  public String feedbackMessage;
+  public String feedbackMessage = "test";
 
   public BasePage() {
       initGui();
