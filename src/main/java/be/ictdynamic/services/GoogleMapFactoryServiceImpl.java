@@ -16,39 +16,40 @@ import org.springframework.stereotype.Service;
 public class GoogleMapFactoryServiceImpl {
     private static final Logger LOG = LoggerFactory.getLogger(GoogleMapFactoryServiceImpl.class);
 
+    public GoogleMapFactoryServiceImpl () {
+//        InjectorHolder.getInjector().inject(this);
+    }
+
     @SpringBean
     private GoogleMapRealServiceImpl googleMapRealServiceImpl;
 
     @SpringBean
     private GoogleMapDummyServiceImpl googleMapDummyServiceImpl;
 
+    @SpringBean
+    private DummyService dummyService;
+
     public GoogleMapService getGoogleMapService() {
         if (Constants.REAL_GOOGLE_MAP_SERVICE) {
-            return getGoogleMapRealService();
+//            return getGoogleMapRealService();
+            return new GoogleMapRealServiceImpl();
         }
         else {
-            return getGoogleMapDummyService();
+//            return getGoogleMapDummyService();
+            return new GoogleMapDummyServiceImpl();
         }
     }
 
-    // lazy loading the GoogleMapRealService
-
     private GoogleMapRealServiceImpl getGoogleMapRealService() {
-        if (googleMapRealServiceImpl == null ) {
-            googleMapRealServiceImpl = new GoogleMapRealServiceImpl();
-//            googleMapRealServiceImpl = googleMapRealServiceImpl;
-        }
         return googleMapRealServiceImpl;
     }
 
-    // lazy loading the GoogleMapDummyService
-
     private GoogleMapDummyServiceImpl getGoogleMapDummyService() {
-        if (googleMapDummyServiceImpl == null ) {
-            googleMapDummyServiceImpl = new GoogleMapDummyServiceImpl();
-//            googleMapDummyServiceImpl = googleMapDummyServiceImpl;
-        }
         return googleMapDummyServiceImpl;
     }
 
+//    @Autowired
+//    private void setDummyService(DummyService dummyService) {
+//        this.dummyService = dummyService;
+//    }
 }

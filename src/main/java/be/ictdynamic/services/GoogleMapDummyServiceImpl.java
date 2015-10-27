@@ -18,17 +18,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class GoogleMapDummyServiceImpl implements GoogleMapService {
     private static final Logger LOG = LoggerFactory.getLogger(GoogleMapDummyServiceImpl.class);
+    private String dummy = "dummy value";
 
-    private GoogleMapDummyServiceImpl googleMapDummyService;
-
-    private GoogleMapDummyServiceImpl getGoogleMapDummyService() {
-        if (googleMapDummyService == null ) {
-            googleMapDummyService = new GoogleMapDummyServiceImpl();
-        }
-        return googleMapDummyService;
-    }
-
-    public GoogleMapResponse getGoogleDistance(GoogleMapRequest googleMapRequest) {
+    public GoogleMapResponse getGoogleDistance(final GoogleMapRequest googleMapRequest) {
         try {
             String stringResult = Constants.DUMMY_RESPONSE;
             JSONObject jsonobject1 = new JSONObject(stringResult);
@@ -39,15 +31,15 @@ public class GoogleMapDummyServiceImpl implements GoogleMapService {
                 // GET INDIVIDUAL JSON OBJECT FROM JSON ARRAY
                 JSONObject jsonobject2 = jsonArray.getJSONObject(i);
 
-                LOG.debug(">>>location.lat = " + jsonobject2.getJSONObject("geometry").getJSONObject("location").get("lat"));
-                LOG.debug(">>>location.lng = " + jsonobject2.getJSONObject("geometry").getJSONObject("location").get("lng"));
+                LOG.debug(">>location.lat = " + jsonobject2.getJSONObject("geometry").getJSONObject("location").get("lat"));
+                LOG.debug(">>location.lng = " + jsonobject2.getJSONObject("geometry").getJSONObject("location").get("lng"));
 
                 googleMapResponse.setLat((Double) jsonobject2.getJSONObject("geometry").getJSONObject("location").get("lat"));
                 googleMapResponse.setLng((Double) jsonobject2.getJSONObject("geometry").getJSONObject("location").get("lng"));
             }
             return googleMapResponse;
         } catch (Exception e) {
-            LOG.error(">>>GoogleMapDummyServiceImpl : Error message = " + e.getMessage());
+            LOG.error(">>GoogleMapDummyServiceImpl : Error message = " + e.getMessage());
             throw new IllegalArgumentException("Google Dummy not available");
         }
     }

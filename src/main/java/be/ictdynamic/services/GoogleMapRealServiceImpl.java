@@ -23,17 +23,9 @@ import org.springframework.stereotype.Service;
 public class GoogleMapRealServiceImpl implements GoogleMapService {
     private static final Logger LOG = LoggerFactory.getLogger(GoogleMapRealServiceImpl.class);
 
-    private GoogleMapRealServiceImpl googleMapRealService;
-
-    private GoogleMapRealServiceImpl getGoogleMapRealService() {
-        if (googleMapRealService == null ) {
-            googleMapRealService = new GoogleMapRealServiceImpl();
-        }
-        return googleMapRealService;
-    }
-
-    public GoogleMapResponse getGoogleDistance(GoogleMapRequest googleMapRequest) {
+    public GoogleMapResponse getGoogleDistance(final GoogleMapRequest googleMapRequest) {
         HttpClient client = new DefaultHttpClient();
+
         // HttpGet request = new HttpGet("https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA");
         String httpRequest = "https://maps.googleapis.com/maps/api/geocode/json?address=" + googleMapRequest.getStreet() + ",+" + googleMapRequest.getCommune() + ",+" + googleMapRequest.getCountry();
         HttpGet request = new HttpGet(httpRequest);

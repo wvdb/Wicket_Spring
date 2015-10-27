@@ -3,6 +3,7 @@ package be.ictdynamic.ui;
 import be.ictdynamic.domain.Commuter;
 import be.ictdynamic.domain.GoogleMapRequest;
 import be.ictdynamic.domain.GoogleMapResponse;
+import be.ictdynamic.services.DummyService;
 import be.ictdynamic.services.GoogleMapFactoryServiceImpl;
 import be.ictdynamic.services.OfficeLocationService;
 import be.ictdynamic.ui.base.BasePage;
@@ -23,6 +24,9 @@ public final class CommutePage extends BasePage {
 
     @SpringBean
     private GoogleMapFactoryServiceImpl googleMapFactoryService;
+
+    @SpringBean
+    private DummyService dummyService;
 
     /**
      * Constructor that is invoked when page is invoked without a session.
