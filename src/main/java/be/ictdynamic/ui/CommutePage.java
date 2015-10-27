@@ -79,13 +79,16 @@ public final class CommutePage extends BasePage {
                 googleMapRequest.setCommune(officeLocationService.getCommune());
                 googleMapRequest.setCountry(officeLocationService.getCountry());
 
-                GoogleMapResponse googleMapResponse = googleMapFactoryService.getGoogleMapService().getGoogleDistance(googleMapRequest);
+                GoogleMapResponse googleMapResponse = null;
+                try {
+                    googleMapResponse = googleMapFactoryService.getGoogleMapService().getGoogleDistance(googleMapRequest);
+                } catch (Exception e) {
+                    feedbackMessage = "GoogleMapService is not available";
+                }
 
 //                PageParameters pageParameters = new PageParameters();
 //                pageParameters.add("reponseGoogleMap", response);
 
-                // setResponsePage(new ResponsePage());
-                // setResponsePage(ResponsePage.class, pageParameters);
                 setResponsePage(new ResponsePage(googleMapResponse));
             }
         };

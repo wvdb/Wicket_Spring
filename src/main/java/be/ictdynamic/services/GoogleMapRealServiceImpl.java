@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 public class GoogleMapRealServiceImpl implements GoogleMapService {
     private static final Logger LOG = LoggerFactory.getLogger(GoogleMapRealServiceImpl.class);
 
-    public GoogleMapResponse getGoogleDistance(final GoogleMapRequest googleMapRequest) {
+    public GoogleMapResponse getGoogleDistance(final GoogleMapRequest googleMapRequest) throws Exception {
         HttpClient client = new DefaultHttpClient();
 
         // HttpGet request = new HttpGet("https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA");
@@ -59,8 +59,8 @@ public class GoogleMapRealServiceImpl implements GoogleMapService {
 
             return googleMapResponse;
         } catch (Exception e) {
-            LOG.error(">>>GoogleMapRealServiceImpl : Error message = " + e.getMessage());
-            throw new IllegalArgumentException("Google Real not available");
+//            throw new IllegalArgumentException("Google Real not available");
+            throw new Exception(e);
         }
     }
 }
