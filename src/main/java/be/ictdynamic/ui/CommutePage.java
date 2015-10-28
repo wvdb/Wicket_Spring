@@ -84,6 +84,7 @@ public final class CommutePage extends BasePage {
                     googleMapResponse = googleMapFactoryService.getGoogleMapService().getGoogleDistance(googleMapRequest);
                 } catch (Exception e) {
                     error("GoogleMapService is not available");
+//                    error("GoogleMapService is not available");
                 }
 
 //                PageParameters pageParameters = new PageParameters();
