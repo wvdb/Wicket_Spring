@@ -10,8 +10,8 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 
 public class ResponsePage extends BasePage {
-    private Double lat;
-    private Double lng;
+    private Double lat = 0.0;
+    private Double lng = 0.0;
     private String comment;
 
 //    public ResponsePage(final PageParameters parameters) {
@@ -24,8 +24,10 @@ public class ResponsePage extends BasePage {
 
     // page should be non-bookmarkable
     public ResponsePage(GoogleMapResponse googleMapResponse) {
-        this.lat = googleMapResponse.getLat();
-        this.lng = googleMapResponse.getLng();
+        if (googleMapResponse != null) {
+            this.lat = googleMapResponse.getLat();
+            this.lng = googleMapResponse.getLng();
+        }
         initGui();
     }
 

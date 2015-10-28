@@ -59,7 +59,6 @@ public class GoogleMapRealServiceImpl implements GoogleMapService {
 
             return googleMapResponse;
         } catch (Exception e) {
-//            throw new IllegalArgumentException("Google Real not available");
             throw new Exception(e);
         }
     }

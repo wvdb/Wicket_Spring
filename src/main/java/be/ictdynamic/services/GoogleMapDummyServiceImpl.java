@@ -20,7 +20,7 @@ public class GoogleMapDummyServiceImpl implements GoogleMapService {
     private static final Logger LOG = LoggerFactory.getLogger(GoogleMapDummyServiceImpl.class);
     private String dummy = "dummy value";
 
-    public GoogleMapResponse getGoogleDistance(final GoogleMapRequest googleMapRequest) {
+    public GoogleMapResponse getGoogleDistance(final GoogleMapRequest googleMapRequest) throws Exception {
         try {
             String stringResult = Constants.DUMMY_RESPONSE;
             JSONObject jsonobject1 = new JSONObject(stringResult);
@@ -39,8 +39,6 @@ public class GoogleMapDummyServiceImpl implements GoogleMapService {
             }
             return googleMapResponse;
         } catch (Exception e) {
-            LOG.error(">>GoogleMapDummyServiceImpl : Error message = " + e.getMessage());
-            throw new IllegalArgumentException("Google Dummy not available");
-        }
+            throw new Exception(e);        }
     }
 }
