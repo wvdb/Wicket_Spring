@@ -8,7 +8,13 @@ package be.ictdynamic;
  */
 public class Constants {
 
-    public final static Boolean REAL_GOOGLE_MAP_SERVICE = true;
+    public final static Boolean REAL_GOOGLE_MAP_SERVICE = false;
+
+    public final static Integer MIN_LENGTH = 5;
+    public final static Integer MAX_LENGTH_STREET = 30;
+    public final static Integer MAX_LENGTH_COMMUNE = 30;
+    public final static Integer MAX_LENGTH_COUNTRY = 50;
+
     public final static String DUMMY_RESPONSE = "{\n" +
             "   \"results\" : [\n" +
             "      {\n" +

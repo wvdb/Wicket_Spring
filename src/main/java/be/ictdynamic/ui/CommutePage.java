@@ -1,5 +1,6 @@
 package be.ictdynamic.ui;
 
+import be.ictdynamic.Constants;
 import be.ictdynamic.domain.Commuter;
 import be.ictdynamic.domain.GoogleMapRequest;
 import be.ictdynamic.domain.GoogleMapResponse;
@@ -13,6 +14,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.validation.validator.StringValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,7 +86,6 @@ public final class CommutePage extends BasePage {
                     googleMapResponse = googleMapFactoryService.getGoogleMapService().getGoogleDistance(googleMapRequest);
                 } catch (Exception e) {
                     error("GoogleMapService is not available");
-//                    error("GoogleMapService is not available");
                 }
 
 //                PageParameters pageParameters = new PageParameters();
@@ -94,13 +95,13 @@ public final class CommutePage extends BasePage {
             }
         };
 
-        form.add(officeStreetField).setVersioned(false);
-        form.add(officeCommuneField).setVersioned(false);
-        form.add(officeCountryField).setVersioned(false);
+        form.add(officeStreetField.setRequired(true)).setVersioned(false);
+        form.add(officeCommuneField.setRequired(true)).setVersioned(false);
+        form.add(officeCountryField.setRequired(true)).setVersioned(false);
 
-        form.add(homeStreetField).setVersioned(false);
-        form.add(homeCommuneField).setVersioned(false);
-        form.add(homeCountryField).setVersioned(false);
+        form.add(homeStreetField.add(StringValidator.lengthBetween(Constants.MIN_LENGTH, Constants.MAX_LENGTH_STREET))).setVersioned(false);
+        form.add(homeCommuneField.add(StringValidator.lengthBetween(Constants.MIN_LENGTH, Constants.MAX_LENGTH_COMMUNE))).setVersioned(false);
+        form.add(homeCountryField.add(StringValidator.lengthBetween(Constants.MIN_LENGTH, Constants.MAX_LENGTH_COUNTRY))).setVersioned(false);
 
         form.add(submitButton);
 

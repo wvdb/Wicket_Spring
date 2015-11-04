@@ -17,7 +17,8 @@ public class GoogleMapFactoryServiceImpl {
     private static final Logger LOG = LoggerFactory.getLogger(GoogleMapFactoryServiceImpl.class);
 
     public GoogleMapFactoryServiceImpl () {
-//        InjectorHolder.getInjector().inject(this);
+        // explained in manning-wicket-in-action, page 312
+        // InjectorHolder.getInjector().inject(this);
     }
 
     @SpringBean

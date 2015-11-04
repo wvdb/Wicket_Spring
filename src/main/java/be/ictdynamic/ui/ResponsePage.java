@@ -36,21 +36,21 @@ public class ResponsePage extends BasePage {
         StatelessForm<ResponsePage> responseForm = new StatelessForm<ResponsePage>("responseForm", new CompoundPropertyModel<ResponsePage>(this));
         add(responseForm);
 
-        Label responseLabel = new Label("latLabel", "Latitude:");
+        Label responseLabel = new Label("latLabel", "Latitude: (*)");
         responseForm.add(responseLabel);
 
         RequiredTextField<String> latField = new RequiredTextField<String>("lat");
         latField.setModel(Model.of(getLat().toString()));
         responseForm.add(latField);
 
-        Label authorLabel = new Label("lngLabel", "Longitude:");
+        Label authorLabel = new Label("lngLabel", "Longitude: (*)");
         responseForm.add(authorLabel);
 
         RequiredTextField<String> lngField = new RequiredTextField<String>("lng");
         lngField.setModel(Model.of(getLng().toString()));
         responseForm.add(lngField);
 
-        Label commentLabel = new Label("commentLabel", "Comment:");
+        Label commentLabel = new Label("commentLabel", "Comment: (*)");
         responseForm.add(commentLabel);
 
         RequiredTextField<String> commentField = new RequiredTextField<String>("comment");

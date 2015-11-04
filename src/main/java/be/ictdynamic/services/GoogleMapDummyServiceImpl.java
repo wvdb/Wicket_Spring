@@ -20,6 +20,8 @@ public class GoogleMapDummyServiceImpl implements GoogleMapService {
     private static final Logger LOG = LoggerFactory.getLogger(GoogleMapDummyServiceImpl.class);
     private String dummy = "dummy value";
 
+    // HttpGet request = new HttpGet("https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA");
+
     public GoogleMapResponse getGoogleDistance(final GoogleMapRequest googleMapRequest) throws Exception {
         try {
             String stringResult = Constants.DUMMY_RESPONSE;
@@ -39,6 +41,7 @@ public class GoogleMapDummyServiceImpl implements GoogleMapService {
             }
             return googleMapResponse;
         } catch (Exception e) {
-            throw new Exception(e);        }
+            throw new Exception(e);
+        }
     }
 }

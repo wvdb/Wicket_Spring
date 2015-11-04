@@ -13,6 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.net.URI;
+
 /**
  * Class GoogleMapRealServiceImpl.
  *
@@ -26,8 +28,14 @@ public class GoogleMapRealServiceImpl implements GoogleMapService {
     public GoogleMapResponse getGoogleDistance(final GoogleMapRequest googleMapRequest) throws Exception {
         HttpClient client = new DefaultHttpClient();
 
-        // HttpGet request = new HttpGet("https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA");
-        String httpRequest = "https://maps.googleapis.com/maps/api/geocode/json?address=" + googleMapRequest.getStreet() + ",+" + googleMapRequest.getCommune() + ",+" + googleMapRequest.getCountry();
+        URI uri = new URI(
+                "https",
+                "maps.googleapis.com",
+                "/maps/api/geocode/json",
+                "address=" + googleMapRequest.getStreet() + ",+" + googleMapRequest.getCommune() + ",+" + googleMapRequest.getCountry(),
+                null);
+        String httpRequest = uri.toASCIIString();
+        // String httpRequest = "https://maps.googleapis.com/maps/api/geocode/json?address=" + googleMapRequest.getStreet() + ",+" + googleMapRequest.getCommune() + ",+" + googleMapRequest.getCountry();
         HttpGet request = new HttpGet(httpRequest);
 
         GoogleMapResponse googleMapResponse = new GoogleMapResponse();
