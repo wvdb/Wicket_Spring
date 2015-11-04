@@ -1,5 +1,6 @@
 package be.ictdynamic.ui;
 
+import be.ictdynamic.domain.GoogleMapResponse;
 import be.ictdynamic.ui.base.BasePage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
@@ -9,8 +10,8 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 
 public class ResponsePage extends BasePage {
-    private String myResponse;
-    private String author;
+    private Double lat = 0.0;
+    private Double lng = 0.0;
     private String comment;
 
 //    public ResponsePage(final PageParameters parameters) {
@@ -22,9 +23,11 @@ public class ResponsePage extends BasePage {
 //    }
 
     // page should be non-bookmarkable
-    public ResponsePage(String myResponse) {
-        this.myResponse = myResponse;
-
+    public ResponsePage(GoogleMapResponse googleMapResponse) {
+        if (googleMapResponse != null) {
+            this.lat = googleMapResponse.getLat();
+            this.lng = googleMapResponse.getLng();
+        }
         initGui();
     }
 
@@ -33,20 +36,21 @@ public class ResponsePage extends BasePage {
         StatelessForm<ResponsePage> responseForm = new StatelessForm<ResponsePage>("responseForm", new CompoundPropertyModel<ResponsePage>(this));
         add(responseForm);
 
-        Label responseLabel = new Label("responseLabel", "Response:");
+        Label responseLabel = new Label("latLabel", "Latitude: (*)");
         responseForm.add(responseLabel);
 
-        RequiredTextField<String> responseField = new RequiredTextField<String>("response");
-        responseField.setModel(Model.of(getMyResponse()));
-        responseForm.add(responseField);
+        RequiredTextField<String> latField = new RequiredTextField<String>("lat");
+        latField.setModel(Model.of(getLat().toString()));
+        responseForm.add(latField);
 
-        Label authorLabel = new Label("authorLabel", "Author:");
+        Label authorLabel = new Label("lngLabel", "Longitude: (*)");
         responseForm.add(authorLabel);
 
-        RequiredTextField<String> authorField = new RequiredTextField<String>("author");
-        responseForm.add(authorField);
+        RequiredTextField<String> lngField = new RequiredTextField<String>("lng");
+        lngField.setModel(Model.of(getLng().toString()));
+        responseForm.add(lngField);
 
-        Label commentLabel = new Label("commentLabel", "Comment:");
+        Label commentLabel = new Label("commentLabel", "Comment: (*)");
         responseForm.add(commentLabel);
 
         RequiredTextField<String> commentField = new RequiredTextField<String>("comment");
@@ -64,12 +68,13 @@ public class ResponsePage extends BasePage {
         responseForm.add(submitButton);
     }
 
-    public String getMyResponse() {
-        return myResponse;
+    public Double getLat() {
+        return lat;
     }
 
-    public void setMyResponse(String myResponse) {
-        this.myResponse = myResponse;
+    public Double getLng() {
+        return lng;
     }
+
 }
 

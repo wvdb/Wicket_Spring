@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
- * Class GoogleMapServiceImpl.
+ * Class GoogleMapRealServiceImpl.
  *
  * @author Wim Van den Brande
  * @since 03/10/2015 - 20:35

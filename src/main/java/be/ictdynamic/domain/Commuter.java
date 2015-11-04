@@ -17,8 +17,8 @@ public class Commuter implements Serializable {
     private String homeCountry;
 
     public Commuter() {
-        homeStreet = "Da Vincilaan 4";
-        homeCommune = "Zaventem";
+        homeStreet = "Tweebunder";
+        homeCommune = "Edegem";
         homeCountry = "Belgium";
     }
 

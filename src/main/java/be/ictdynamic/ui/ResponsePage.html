@@ -13,14 +13,32 @@
 
     <form action="" wicket:id="responseForm">
 
-        <label for="response" wicket:id="responseLabel">label dummy</label>
-        <input type="text" id="response" wicket:id="response"/><br/>
-
-        <label for="author" wicket:id="authorLabel">label dummy</label>
-        <input type="text" id="author" wicket:id="author"/><br/>
-
-        <label for="comment" wicket:id="commentLabel">label dummy</label>
-        <input type="text" id="comment" wicket:id="comment"/><br/>
+        <table id="TableResponse">
+            <tr>
+                <td>
+                    <label for="lat" wicket:id="latLabel">label dummy</label>
+                </td>
+                <td>
+                    <input type="text" id="lat" wicket:id="lat"/><br/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="lng" wicket:id="lngLabel">label dummy</label>
+                </td>
+                <td>
+                    <input type="text" id="lng" wicket:id="lng"/><br/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="comment" wicket:id="commentLabel">label dummy</label>
+                </td>
+                <td>
+                    <input type="text" id="comment" wicket:id="comment"/><br/>
+                </td>
+            </tr>
+        </table>
 
         <input type="submit" value="Save" class="formbutton" name="save" wicket:id="submitButton"/>
     </form>

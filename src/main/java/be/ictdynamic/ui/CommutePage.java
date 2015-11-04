@@ -1,7 +1,11 @@
 package be.ictdynamic.ui;
 
+import be.ictdynamic.Constants;
 import be.ictdynamic.domain.Commuter;
-import be.ictdynamic.services.GoogleMapService;
+import be.ictdynamic.domain.GoogleMapRequest;
+import be.ictdynamic.domain.GoogleMapResponse;
+import be.ictdynamic.services.DummyService;
+import be.ictdynamic.services.GoogleMapFactoryServiceImpl;
 import be.ictdynamic.services.OfficeLocationService;
 import be.ictdynamic.ui.base.BasePage;
 import org.apache.wicket.markup.html.form.Button;
@@ -9,8 +13,8 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.validation.validator.StringValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +25,10 @@ public final class CommutePage extends BasePage {
     private OfficeLocationService officeLocationService;
 
     @SpringBean
-    private GoogleMapService googleMapService;
+    private GoogleMapFactoryServiceImpl googleMapFactoryService;
+
+    @SpringBean
+    private DummyService dummyService;
 
     /**
      * Constructor that is invoked when page is invoked without a session.
@@ -33,7 +40,8 @@ public final class CommutePage extends BasePage {
     private void initGui() {
 
         // bind Form with Model of Type CompoundProperty !!!
-        Form<CommutePage> form = new Form<CommutePage>("commutePageForm", new CompoundPropertyModel<CommutePage>(new Commuter()));
+        Commuter commuter = new Commuter();
+        Form<CommutePage> form = new Form<CommutePage>("commutePageForm", new CompoundPropertyModel<CommutePage>(commuter));
 
         add(form);
 
@@ -65,25 +73,35 @@ public final class CommutePage extends BasePage {
             @Override
             public void onSubmit() {
 
-                // invoke actual service
-                String response = googleMapService.getGoogleDistance();
+                // invoke factory instantiating a Google Map Service
+                // http://www.tutorialspoint.com/design_pattern/factory_pattern.htm
 
-                PageParameters pageParameters = new PageParameters();
-                pageParameters.add("reponseGoogleMap", response);
+                GoogleMapRequest googleMapRequest = new GoogleMapRequest();
+                googleMapRequest.setStreet(officeLocationService.getStreet());
+                googleMapRequest.setCommune(officeLocationService.getCommune());
+                googleMapRequest.setCountry(officeLocationService.getCountry());
 
-                // setResponsePage(new ResponsePage());
-                // setResponsePage(ResponsePage.class, pageParameters);
-                setResponsePage(new ResponsePage(response));
+                GoogleMapResponse googleMapResponse = null;
+                try {
+                    googleMapResponse = googleMapFactoryService.getGoogleMapService().getGoogleDistance(googleMapRequest);
+                } catch (Exception e) {
+                    error("GoogleMapService is not available");
+                }
+
+//                PageParameters pageParameters = new PageParameters();
+//                pageParameters.add("reponseGoogleMap", response);
+
+                setResponsePage(new ResponsePage(googleMapResponse));
             }
         };
 
-        form.add(officeStreetField).setVersioned(false);
-        form.add(officeCommuneField).setVersioned(false);
-        form.add(officeCountryField).setVersioned(false);
+        form.add(officeStreetField.setRequired(true)).setVersioned(false);
+        form.add(officeCommuneField.setRequired(true)).setVersioned(false);
+        form.add(officeCountryField.setRequired(true)).setVersioned(false);
 
-        form.add(homeStreetField).setVersioned(false);
-        form.add(homeCommuneField).setVersioned(false);
-        form.add(homeCountryField).setVersioned(false);
+        form.add(homeStreetField.add(StringValidator.lengthBetween(Constants.MIN_LENGTH, Constants.MAX_LENGTH_STREET))).setVersioned(false);
+        form.add(homeCommuneField.add(StringValidator.lengthBetween(Constants.MIN_LENGTH, Constants.MAX_LENGTH_COMMUNE))).setVersioned(false);
+        form.add(homeCountryField.add(StringValidator.lengthBetween(Constants.MIN_LENGTH, Constants.MAX_LENGTH_COUNTRY))).setVersioned(false);
 
         form.add(submitButton);
 
