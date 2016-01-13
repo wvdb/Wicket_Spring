@@ -15,8 +15,15 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.validation.validator.StringValidator;
+import org.jxls.common.Context;
+import org.jxls.util.JxlsHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public final class CommutePage extends BasePage {
     private static final Logger LOG = LoggerFactory.getLogger(CommutePage.class);
@@ -107,7 +114,20 @@ public final class CommutePage extends BasePage {
 
         form.add(submitButton);
 
+        dummyJXLS();
+    }
 
+    private void dummyJXLS() {
+        InputStream is = CommutePage.class.getResourceAsStream("c:\\temp\\jxls\\test1.xls");
+
+        try {
+            OutputStream os = new FileOutputStream("c:\\temp\\jxls\\test2.xls");
+            Context context = new Context();
+            context.putVar("test", "dit is een test");
+            JxlsHelper.getInstance().processTemplate(is, os, context);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
