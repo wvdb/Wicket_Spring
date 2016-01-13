@@ -40,6 +40,8 @@ public final class CommutePage extends BasePage {
     private void initGui() {
 
         // bind Form with Model of Type CompoundProperty !!!
+        // -------------------------------------------------
+
         Commuter commuter = new Commuter();
         Form<CommutePage> form = new Form<CommutePage>("commutePageForm", new CompoundPropertyModel<CommutePage>(commuter));
 
