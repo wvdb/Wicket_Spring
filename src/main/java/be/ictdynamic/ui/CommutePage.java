@@ -15,15 +15,8 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.validation.validator.StringValidator;
-import org.jxls.common.Context;
-import org.jxls.util.JxlsHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 public final class CommutePage extends BasePage {
     private static final Logger LOG = LoggerFactory.getLogger(CommutePage.class);
@@ -97,9 +90,11 @@ public final class CommutePage extends BasePage {
                     error("GoogleMapService is not available");
                 }
 
-//                PageParameters pageParameters = new PageParameters();
-//                pageParameters.add("reponseGoogleMap", response);
+                // improper support for navigating from CommutePage to ResponsePage
+                // PageParameters pageParameters = new PageParameters();
+                // pageParameters.add("reponseGoogleMap", response);
 
+                // to support navigation from CommutePage to ResponsePage
                 setResponsePage(new ResponsePage(googleMapResponse));
             }
         };
@@ -113,21 +108,6 @@ public final class CommutePage extends BasePage {
         form.add(homeCountryField.add(StringValidator.lengthBetween(Constants.MIN_LENGTH, Constants.MAX_LENGTH_COUNTRY))).setVersioned(false);
 
         form.add(submitButton);
-
-        dummyJXLS();
-    }
-
-    private void dummyJXLS() {
-        InputStream is = CommutePage.class.getResourceAsStream("c:\\temp\\jxls\\test1.xls");
-
-        try {
-            OutputStream os = new FileOutputStream("c:\\temp\\jxls\\test2.xls");
-            Context context = new Context();
-            context.putVar("test", "dit is een test");
-            JxlsHelper.getInstance().processTemplate(is, os, context);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 }
