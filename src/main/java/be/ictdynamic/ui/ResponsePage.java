@@ -6,21 +6,15 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.StatelessForm;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 
 public class ResponsePage extends BasePage {
     private Double lat = 0.0;
     private Double lng = 0.0;
-    private String comment;
-
-//    public ResponsePage(final PageParameters parameters) {
-//        if (parameters.containsKey("reponseGoogleMap")) {
-//            setMyResponse(parameters.getString("reponseGoogleMap"));
-//        }
-//
-//        initGui();
-//    }
+    // required because of Wicket's CompoundPropertyModel
+    public String comment;
 
     // page should be non-bookmarkable
     public ResponsePage(GoogleMapResponse googleMapResponse) {
@@ -53,7 +47,7 @@ public class ResponsePage extends BasePage {
         Label commentLabel = new Label("commentLabel", "Comment: (*)");
         responseForm.add(commentLabel);
 
-        RequiredTextField<String> commentField = new RequiredTextField<String>("comment");
+        TextField<String> commentField = new TextField<String>("comment");
         responseForm.add(commentField);
 
         Button submitButton = new Button("submitButton") {
@@ -66,6 +60,16 @@ public class ResponsePage extends BasePage {
             }
         };
         responseForm.add(submitButton);
+
+        Button backButton = new Button("backButton") {
+            private static final long serialVersionUID = 5824523915446192700L;
+
+            @Override
+            public void onSubmit() {
+                setResponsePage(CommutePage.class);
+            }
+        };
+        responseForm.add(backButton);
     }
 
     public Double getLat() {

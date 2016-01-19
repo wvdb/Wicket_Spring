@@ -25,7 +25,7 @@ import java.net.URI;
 public class GoogleMapRealServiceImpl implements GoogleMapService {
     private static final Logger LOG = LoggerFactory.getLogger(GoogleMapRealServiceImpl.class);
 
-    public GoogleMapResponse getGoogleDistance(final GoogleMapRequest googleMapRequest) throws Exception {
+    public GoogleMapResponse getGoogleLocation(final GoogleMapRequest googleMapRequest) throws Exception {
         HttpClient client = new DefaultHttpClient();
 
         URI uri = new URI(

@@ -12,6 +12,8 @@ public class Commuter implements Serializable {
 
     private static final long serialVersionUID = -5073135041934007777L;
 
+    private String dummy;
+
     private String homeStreet;
     private String homeCommune;
     private String homeCountry;
@@ -50,6 +52,14 @@ public class Commuter implements Serializable {
 
     public void setHomeCountry(String homeCountry) {
         this.homeCountry = homeCountry;
+    }
+
+    public String getDummy() {
+        return dummy;
+    }
+
+    public void setDummy(String dummy) {
+        this.dummy = dummy;
     }
 
     @Override

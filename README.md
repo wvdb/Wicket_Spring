@@ -6,5 +6,6 @@ the service and uses component-scanning (see applicationContext.xml).
 
 For questions or remarks, use github or drop me an e-mail @ info@ictdynamic.be. 
 
-Wim Van den Brande 
+Wim Van den Brande
+
 Belgium 
