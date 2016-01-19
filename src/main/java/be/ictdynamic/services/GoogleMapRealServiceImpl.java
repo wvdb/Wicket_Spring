@@ -42,14 +42,14 @@ public class GoogleMapRealServiceImpl implements GoogleMapService {
 
         try {
             HttpResponse response = client.execute(request);
-            LOG.debug(">>>HTTP response = {}", response);
+            LOG.debug(">>>HTTP response = {}" + response);
 
             // CONVERT RESPONSE TO STRING
             String stringResult = EntityUtils.toString(response.getEntity());
-            LOG.debug(">>>HTTP stringResult = {}", stringResult);
+            LOG.debug(">>>HTTP stringResult = {}" +  stringResult);
 
             JSONObject jsonobject1 = new JSONObject(stringResult);
-            LOG.debug(">>>HTTP jsonobject1 = {}", jsonobject1);
+            LOG.debug(">>>HTTP jsonobject1 = {}" +  jsonobject1);
 
             // CONVERT STRING TO JSON ARRAY
             JSONArray jsonArray = jsonobject1.getJSONArray("results");

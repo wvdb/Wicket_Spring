@@ -51,7 +51,7 @@ public final class CommutePage extends BasePage {
         // -------------------------------------------------
 
         Commuter commuter = new Commuter();
-        Form<CommutePage> form = new Form<CommutePage>("commutePageForm", new CompoundPropertyModel<CommutePage>(commuter));
+        Form<CommutePage> form = new Form("commutePageForm", new CompoundPropertyModel<Commuter>(Model.of(commuter)));
 
         add(form);
 

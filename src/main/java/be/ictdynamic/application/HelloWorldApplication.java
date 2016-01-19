@@ -17,6 +17,7 @@ public class HelloWorldApplication extends WebApplication {
     @Override
     protected void init() {
         super.init();
-        addComponentInstantiationListener(new SpringComponentInjector(this));
+//        addComponentInstantiationListener(new SpringComponentInjector(this));
+       getComponentInstantiationListeners().add(new SpringComponentInjector(this));
     }
 }
