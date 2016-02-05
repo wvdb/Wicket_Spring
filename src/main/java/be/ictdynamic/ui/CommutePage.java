@@ -26,6 +26,7 @@ import java.io.Serializable;
 
 public final class CommutePage extends BasePage {
     private static final Logger LOG = LoggerFactory.getLogger(CommutePage.class);
+    private static final long serialVersionUID = -264755820748811049L;
 
     @SpringBean
     private OfficeLocationService officeLocationService;
@@ -50,17 +51,17 @@ public final class CommutePage extends BasePage {
 
         // bind Form with Model of Type CompoundProperty !!!
         // -------------------------------------------------
-
         Commuter commuter = new Commuter();
-        Form<CommutePage> form = new Form("commutePageForm", new CompoundPropertyModel<Commuter>(Model.of(commuter)));
+
+        Form<Commuter> form = new Form<>("commutePageForm", new CompoundPropertyModel<>(Model.of(commuter)));
 
         add(form);
 
         // location of office is retrieved by using a (not very intelligent) service
 
-        final TextField<String> officeStreetField = new TextField<String>("officeStreet");
-        final TextField<String> officeCommuneField = new TextField<String>("officeCommune");
-        final TextField<String> officeCountryField = new TextField<String>("officeCountry");
+        final TextField<String> officeStreetField = new TextField<>("officeStreet");
+        final TextField<String> officeCommuneField = new TextField<>("officeCommune");
+        final TextField<String> officeCountryField = new TextField<>("officeCountry");
 
         if (officeLocationService == null) {
             LOG.warn(">>>This is not supposed to happen");
@@ -76,22 +77,25 @@ public final class CommutePage extends BasePage {
         // ---------------------------
         WebMarkupContainer webMarkupContainer = new WebMarkupContainer("validationCorrectContainer");
 
-        TextField<String> dummyField = new TextField<String>("dummy");
+        TextField<String> dummyField = new TextField<>("dummy");
         webMarkupContainer.add(dummyField);
 
-        // validationCorrectContainer will be visible when the given logic returns true.
-        ValidationCorrectContainerPredicate<Component> validationCorrectContainerPredicate = new ValidationCorrectContainerPredicate<Component>(officeCountryField.getDefaultModelObjectAsString());
+        // WebMarkupContainer "validationCorrectContainer" will be visible when the given logic returns true.
+        ValidationCorrectContainerPredicate<Component> validationCorrectContainerPredicate = new ValidationCorrectContainerPredicate<>(officeCountryField.getDefaultModelObjectAsString());
+        @SuppressWarnings("unchecked")
         VisibilityBehavior visibilityBehavior = new VisibilityBehavior(validationCorrectContainerPredicate);
+
         webMarkupContainer.add(visibilityBehavior);
         webMarkupContainer.setOutputMarkupId(true);
         webMarkupContainer.setOutputMarkupPlaceholderTag(true);
         form.add(webMarkupContainer);
 
         // location of commuter's home address is based on Commuter and CompoundPropertyModel
+        // ----------------------------------------------------------------------------------
 
-        TextField<String> homeStreetField = new TextField("homeStreet");
-        TextField<String> homeCommuneField = new TextField("homeCommune");
-        TextField<String> homeCountryField = new TextField("homeCountry");
+        TextField<String> homeStreetField = new TextField<>("homeStreet");
+        TextField<String> homeCommuneField = new TextField<>("homeCommune");
+        TextField<String> homeCountryField = new TextField<>("homeCountry");
 
         // example of validation
 
@@ -152,23 +156,18 @@ public final class CommutePage extends BasePage {
         form.add(submitButton);
     }
 
-    private static class ValidationCorrectContainerPredicate<T> implements Predicate, Serializable {
+    private static class ValidationCorrectContainerPredicate<T extends Component> implements Predicate, Serializable {
         private static final long serialVersionUID = 7719059818782432234L;
-        private String dummy;
+        private String officeCountry;
 
         public ValidationCorrectContainerPredicate(String dummy) {
-            this.dummy = dummy;
+            this.officeCountry = dummy;
         }
 
-//        @Override
-//        public boolean evaluate(T component) {
-//            this.component = component;
-//            return dummy.equals("Belgium");
-//        }
-
+        // condition is met when OfficeCountry is equal to Belgium
         @Override
         public boolean evaluate(Object o) {
-            return dummy.equals("Belgium");
+            return officeCountry.equals("Belgium");
         }
     }
 
