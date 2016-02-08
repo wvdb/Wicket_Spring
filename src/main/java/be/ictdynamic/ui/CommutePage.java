@@ -10,7 +10,6 @@ import be.ictdynamic.services.OfficeLocationService;
 import be.ictdynamic.services.SecurityService;
 import be.ictdynamic.ui.base.BasePage;
 import org.apache.commons.collections4.Predicate;
-import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -81,7 +80,7 @@ public final class CommutePage extends BasePage {
         webMarkupContainer.add(dummyField);
 
         // WebMarkupContainer "validationCorrectContainer" will be visible when the given logic returns true.
-        ValidationCorrectContainerPredicate<Component> validationCorrectContainerPredicate = new ValidationCorrectContainerPredicate<>(officeCountryField.getDefaultModelObjectAsString());
+        ValidationCorrectContainerPredicate validationCorrectContainerPredicate = new ValidationCorrectContainerPredicate(officeCountryField.getDefaultModelObjectAsString());
         @SuppressWarnings("unchecked")
         VisibilityBehavior visibilityBehavior = new VisibilityBehavior(validationCorrectContainerPredicate);
 
@@ -156,7 +155,7 @@ public final class CommutePage extends BasePage {
         form.add(submitButton);
     }
 
-    private static class ValidationCorrectContainerPredicate<T extends Component> implements Predicate, Serializable {
+    private static class ValidationCorrectContainerPredicate implements Predicate, Serializable {
         private static final long serialVersionUID = 7719059818782432234L;
         private String officeCountry;
 
