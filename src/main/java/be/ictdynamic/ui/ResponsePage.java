@@ -11,8 +11,10 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 
 public class ResponsePage extends BasePage {
+    private static final long serialVersionUID = 5869901981141048197L;
     private Double lat = 0.0;
     private Double lng = 0.0;
+
     // required because of Wicket's CompoundPropertyModel
     public String comment;
 
@@ -27,27 +29,27 @@ public class ResponsePage extends BasePage {
 
     private void initGui() {
 
-        StatelessForm<ResponsePage> responseForm = new StatelessForm<ResponsePage>("responseForm", new CompoundPropertyModel<ResponsePage>(this));
+        StatelessForm<ResponsePage> responseForm = new StatelessForm<>("responseForm", new CompoundPropertyModel<>(this));
         add(responseForm);
 
         Label responseLabel = new Label("latLabel", "Latitude: (*)");
         responseForm.add(responseLabel);
 
-        RequiredTextField<String> latField = new RequiredTextField<String>("lat");
+        RequiredTextField<String> latField = new RequiredTextField<>("lat");
         latField.setModel(Model.of(getLat().toString()));
         responseForm.add(latField);
 
         Label authorLabel = new Label("lngLabel", "Longitude: (*)");
         responseForm.add(authorLabel);
 
-        RequiredTextField<String> lngField = new RequiredTextField<String>("lng");
+        RequiredTextField<String> lngField = new RequiredTextField<>("lng");
         lngField.setModel(Model.of(getLng().toString()));
         responseForm.add(lngField);
 
         Label commentLabel = new Label("commentLabel", "Comment: (*)");
         responseForm.add(commentLabel);
 
-        TextField<String> commentField = new TextField<String>("comment");
+        TextField<String> commentField = new TextField<>("comment");
         responseForm.add(commentField);
 
         Button submitButton = new Button("submitButton") {
