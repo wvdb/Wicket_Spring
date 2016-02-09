@@ -25,6 +25,7 @@ import java.io.Serializable;
 
 public final class CommutePage extends BasePage {
     private static final Logger LOG = LoggerFactory.getLogger(CommutePage.class);
+    private static final long serialVersionUID = -264755820748811049L;
 
     @SpringBean
     private OfficeLocationService officeLocationService;
@@ -49,17 +50,17 @@ public final class CommutePage extends BasePage {
 
         // bind Form with Model of Type CompoundProperty !!!
         // -------------------------------------------------
-
         Commuter commuter = new Commuter();
-        Form<CommutePage> form = new Form<CommutePage>("commutePageForm", new CompoundPropertyModel<CommutePage>(commuter));
+
+        Form<Commuter> form = new Form<>("commutePageForm", new CompoundPropertyModel<>(Model.of(commuter)));
 
         add(form);
 
         // location of office is retrieved by using a (not very intelligent) service
 
-        final TextField<String> officeStreetField = new TextField<String>("officeStreet");
-        final TextField<String> officeCommuneField = new TextField<String>("officeCommune");
-        final TextField<String> officeCountryField = new TextField<String>("officeCountry");
+        final TextField<String> officeStreetField = new TextField<>("officeStreet");
+        final TextField<String> officeCommuneField = new TextField<>("officeCommune");
+        final TextField<String> officeCountryField = new TextField<>("officeCountry");
 
         if (officeLocationService == null) {
             LOG.warn(">>>This is not supposed to happen");
@@ -67,30 +68,33 @@ public final class CommutePage extends BasePage {
         } else {
             LOG.debug(">>>Spring config ok .... ready to roll");
             officeStreetField.setModel(Model.of(officeLocationService.getStreet()));
-            officeCountryField.setModel(Model.of(officeLocationService.getCountry()));
             officeCommuneField.setModel(Model.of(officeLocationService.getCommune()));
+            officeCountryField.setModel(Model.of(officeLocationService.getCountry()));
         }
 
         // example of dynamic behavior
         // ---------------------------
         WebMarkupContainer webMarkupContainer = new WebMarkupContainer("validationCorrectContainer");
 
-        TextField<String> dummyField = new TextField<String>("dummy");
+        TextField<String> dummyField = new TextField<>("dummy");
         webMarkupContainer.add(dummyField);
 
-        // validationCorrectContainer will be visible when the given logic returns true.
+        // WebMarkupContainer "validationCorrectContainer" will be visible when the given logic returns true.
         ValidationCorrectContainerPredicate validationCorrectContainerPredicate = new ValidationCorrectContainerPredicate(officeCountryField.getDefaultModelObjectAsString());
-//        VisibilityBehavior visibilityBehavior = new VisibilityBehavior(validationCorrectContainerPredicate);
-//        webMarkupContainer.add(visibilityBehavior);
+        @SuppressWarnings("unchecked")
+        VisibilityBehavior visibilityBehavior = new VisibilityBehavior(validationCorrectContainerPredicate);
+
+        webMarkupContainer.add(visibilityBehavior);
         webMarkupContainer.setOutputMarkupId(true);
         webMarkupContainer.setOutputMarkupPlaceholderTag(true);
         form.add(webMarkupContainer);
 
         // location of commuter's home address is based on Commuter and CompoundPropertyModel
+        // ----------------------------------------------------------------------------------
 
-        TextField homeStreetField = new TextField("homeStreet");
-        TextField homeCommuneField = new TextField("homeCommune");
-        TextField homeCountryField = new TextField("homeCountry");
+        TextField<String> homeStreetField = new TextField<>("homeStreet");
+        TextField<String> homeCommuneField = new TextField<>("homeCommune");
+        TextField<String> homeCountryField = new TextField<>("homeCountry");
 
         // example of validation
 
@@ -153,27 +157,18 @@ public final class CommutePage extends BasePage {
 
     private static class ValidationCorrectContainerPredicate implements Predicate, Serializable {
         private static final long serialVersionUID = 7719059818782432234L;
-        private String dummy;
+        private String officeCountry;
 
         public ValidationCorrectContainerPredicate(String dummy) {
-            this.dummy = dummy;
+            this.officeCountry = dummy;
         }
 
+        // condition is met when OfficeCountry is equal to Belgium
         @Override
         public boolean evaluate(Object o) {
-            return dummy.equals("Belgium");
+            return officeCountry.equals("Belgium");
         }
     }
 
-//    public FormBuilder createWrappingContainer(String containerId, Predicate<Component> visibilityPredicate) {
-//        WebMarkupContainer webMarkupContainer = new WebMarkupContainer(containerId);
-////        webMarkupContainer.add(new Behavior(visibilityPredicate));
-//        webMarkupContainer.setOutputMarkupId(true);
-//        webMarkupContainer.setOutputMarkupId(true);
-//        webMarkupContainer.setOutputMarkupPlaceholderTag(true);
-//
-//        this.getContainer().add(webMarkupContainer);
-//        return newFormBuilderInstance(webMarkupContainer);
-//    }
 
 }
