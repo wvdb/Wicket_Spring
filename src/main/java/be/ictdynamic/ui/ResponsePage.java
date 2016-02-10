@@ -36,6 +36,7 @@ public class ResponsePage extends BasePage {
         responseForm.add(responseLabel);
 
         RequiredTextField<String> latField = new RequiredTextField<>("lat");
+        latField.add(new RequiredFieldBehavior());
         latField.setModel(Model.of(getLat().toString()));
         responseForm.add(latField);
 
@@ -43,6 +44,7 @@ public class ResponsePage extends BasePage {
         responseForm.add(authorLabel);
 
         RequiredTextField<String> lngField = new RequiredTextField<>("lng");
+        lngField.add(new RequiredFieldBehavior());
         lngField.setModel(Model.of(getLng().toString()));
         responseForm.add(lngField);
 
