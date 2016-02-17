@@ -13,19 +13,26 @@ import org.apache.commons.collections4.Predicate;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.RadioChoice;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.validation.validator.StringValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 
 public final class CommutePage extends BasePage {
     private static final Logger LOG = LoggerFactory.getLogger(CommutePage.class);
     private static final long serialVersionUID = -264755820748811049L;
+    private static final List<String> HOST_TYPES = Arrays.asList("Shared Host", "VPS", "Dedicated Server");
+
+    private String selected = "VPS";
 
     @SpringBean
     private OfficeLocationService officeLocationService;
@@ -88,6 +95,13 @@ public final class CommutePage extends BasePage {
         webMarkupContainer.setOutputMarkupId(true);
         webMarkupContainer.setOutputMarkupPlaceholderTag(true);
         form.add(webMarkupContainer);
+
+        // example of radio button
+        // -----------------------
+
+        RadioChoice<String> hostingType = new RadioChoice<>(
+        				"hostingTypes", new PropertyModel<String>(this, "selected"), HOST_TYPES);
+        form.add(hostingType);
 
         // location of commuter's home address is based on Commuter and CompoundPropertyModel
         // ----------------------------------------------------------------------------------

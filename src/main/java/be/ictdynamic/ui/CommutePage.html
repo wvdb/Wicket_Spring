@@ -5,75 +5,80 @@
 </head>
 <body>
 
-    <wicket:extend>
-        <h3>
-            Commute Page
-        </h3>
+<wicket:extend>
+    <h3>
+        Commute Page
+    </h3>
 
-        <form action="" wicket:id="commutePageForm">
+    <form action="" wicket:id="commutePageForm">
 
-            <table id="TableLocationOffice">
-                <tr>
-                    <td>
-                        Street:
-                    </td>
-                    <td>
-                        <input type="text" wicket:id="officeStreet" maxlength="50"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Commune:
-                    </td>
-                    <td>
-                        <input type="text" wicket:id="officeCommune" maxlength="50"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Country:
-                    </td>
-                    <td>
-                        <input type="text" wicket:id="officeCountry" maxlength="50"/>
-                    </td>
-                </tr>
-            </table>
+        <table id="TableLocationOffice">
+            <tr>
+                <td>
+                    Street:
+                </td>
+                <td>
+                    <input type="text" wicket:id="officeStreet" maxlength="50"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Commune:
+                </td>
+                <td>
+                    <input type="text" wicket:id="officeCommune" maxlength="50"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Country:
+                </td>
+                <td>
+                    <input type="text" wicket:id="officeCountry" maxlength="50"/>
+                </td>
+            </tr>
+        </table>
 
-            <div style="border: double" wicket:id="validationCorrectContainer">
-                <p>
-                    Vb van dynamic behavior:
-                </p>
-                Dummy: <input type="text" wicket:id="dummy"/>
-            </div> <br>
+        <div style="border: double" wicket:id="validationCorrectContainer">
+            <p>
+                Vb van dynamic behavior:
+            </p>
+            Dummy: <input type="text" wicket:id="dummy"/>
+        </div>
+        <br>
 
-            <table id="TableLocationHome">
-                <tr>
-                    <td>
-                        Home Street
-                    </td>
-                    <td>
-                        Home Commune
-                    </td>
-                    <td>
-                        Home Country
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="text" wicket:id="homeStreet"/>
-                    </td>
-                    <td>
-                        <input type="text" wicket:id="homeCommune"/>
-                    </td>
-                    <td>
-                        <input type="text" wicket:id="homeCountry"/>
-                    </td>
-                </tr>
-            </table>
+        <label>Select your hosting type :</label>
+        <br/>
+        <span wicket:id="hostingTypes"></span>
+
+        <table id="TableLocationHome">
+            <tr>
+                <td>
+                    Home Street
+                </td>
+                <td>
+                    Home Commune
+                </td>
+                <td>
+                    Home Country
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" wicket:id="homeStreet"/>
+                </td>
+                <td>
+                    <input type="text" wicket:id="homeCommune"/>
+                </td>
+                <td>
+                    <input type="text" wicket:id="homeCountry"/>
+                </td>
+            </tr>
+        </table>
 
         <input type="submit" value="Save" class="formbutton" name="save" wicket:id="submitButton"/>
-        </form>
-    </wicket:extend>
+    </form>
+</wicket:extend>
 
 </body>
 </html>
