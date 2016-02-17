@@ -10,6 +10,8 @@ import be.ictdynamic.services.OfficeLocationService;
 import be.ictdynamic.services.SecurityService;
 import be.ictdynamic.ui.base.BasePage;
 import org.apache.commons.collections4.Predicate;
+import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -32,7 +34,8 @@ public final class CommutePage extends BasePage {
     private static final long serialVersionUID = -264755820748811049L;
     private static final List<String> HOST_TYPES = Arrays.asList("Shared Host", "VPS", "Dedicated Server");
 
-    private String selected = "VPS";
+    private String selected1 = "Shared Host";
+    private String selected2 = "VPS";
 
     @SpringBean
     private OfficeLocationService officeLocationService;
@@ -79,6 +82,29 @@ public final class CommutePage extends BasePage {
             officeCountryField.setModel(Model.of(officeLocationService.getCountry()));
         }
 
+        // example of radio button
+        // -----------------------
+
+        RadioChoice<String> hostingType = new RadioChoice<>(
+                "hostingTypes", new PropertyModel<String>(this, "selected1"), HOST_TYPES);
+
+        form.add(hostingType);
+
+        // example of customized radio button
+        // -----------------------
+
+        WimRadioChoice<String> hostingType2 = new WimRadioChoice<>(
+                "hostingTypes2", new PropertyModel<String>(this, "selected2"), HOST_TYPES);
+
+        form.add(hostingType2);
+
+        // location of commuter's home address is based on Commuter and CompoundPropertyModel
+        // ----------------------------------------------------------------------------------
+
+        TextField<String> homeStreetField = new TextField<>("homeStreet");
+        TextField<String> homeCommuneField = new TextField<>("homeCommune");
+        final TextField<String> homeCountryField = new TextField<>("homeCountry");
+
         // example of dynamic behavior
         // ---------------------------
         WebMarkupContainer webMarkupContainer = new WebMarkupContainer("validationCorrectContainer");
@@ -86,29 +112,11 @@ public final class CommutePage extends BasePage {
         TextField<String> dummyField = new TextField<>("dummy");
         webMarkupContainer.add(dummyField);
 
-        // WebMarkupContainer "validationCorrectContainer" will be visible when the given logic returns true.
-        ValidationCorrectContainerPredicate validationCorrectContainerPredicate = new ValidationCorrectContainerPredicate(officeCountryField.getDefaultModelObjectAsString());
-        @SuppressWarnings("unchecked")
-        VisibilityBehavior visibilityBehavior = new VisibilityBehavior(validationCorrectContainerPredicate);
-
-        webMarkupContainer.add(visibilityBehavior);
+        ValidationCorrectContainerPredicate validationCorrectContainerPredicate = new ValidationCorrectContainerPredicate();
+        webMarkupContainer.add(new VisibilityBehavior(validationCorrectContainerPredicate));
         webMarkupContainer.setOutputMarkupId(true);
         webMarkupContainer.setOutputMarkupPlaceholderTag(true);
         form.add(webMarkupContainer);
-
-        // example of radio button
-        // -----------------------
-
-        RadioChoice<String> hostingType = new RadioChoice<>(
-        				"hostingTypes", new PropertyModel<String>(this, "selected"), HOST_TYPES);
-        form.add(hostingType);
-
-        // location of commuter's home address is based on Commuter and CompoundPropertyModel
-        // ----------------------------------------------------------------------------------
-
-        TextField<String> homeStreetField = new TextField<>("homeStreet");
-        TextField<String> homeCommuneField = new TextField<>("homeCommune");
-        TextField<String> homeCountryField = new TextField<>("homeCountry");
 
         // example of validation
 
@@ -141,6 +149,11 @@ public final class CommutePage extends BasePage {
             @Override
             public void onSubmit() {
 
+                // dummy logging for radio button 1
+                info("Selected Type : " + selected1);
+                LOG.info(">>>Selected Type: " + selected1);
+                LOG.info(">>>HomeCountryField: " + homeCountryField.getDefaultModelObjectAsString());
+
                 // invoke factory instantiating a Google Map Service
                 // http://www.tutorialspoint.com/design_pattern/factory_pattern.htm
 
@@ -169,18 +182,22 @@ public final class CommutePage extends BasePage {
         form.add(submitButton);
     }
 
-    private static class ValidationCorrectContainerPredicate implements Predicate, Serializable {
-        private static final long serialVersionUID = 7719059818782432234L;
-        private String officeCountry;
+    public Commuter getCommuter() {
+        return (Commuter) this.getDefaultModelObject();
+    }
 
-        public ValidationCorrectContainerPredicate(String dummy) {
-            this.officeCountry = dummy;
-        }
+    public void handleRadioButtonUpdate(AjaxRequestTarget target) {
+        ((Commuter) get("commutePageForm").getDefaultModelObject()).setHomeCountry("dit is een test");
+        target.add(get("commutePageForm").get("validationCorrectContainer"));
+    }
+
+    private static class ValidationCorrectContainerPredicate implements Predicate<Component>, Serializable {
+        private static final long serialVersionUID = 7719059818782432234L;
 
         // condition is met when OfficeCountry is equal to Belgium
         @Override
-        public boolean evaluate(Object o) {
-            return officeCountry.equals("Belgium");
+        public boolean evaluate(Component component) {
+            return ((Commuter) component.getParent().getDefaultModelObject()).getHomeCountry().equals("Belgium");
         }
     }
 
