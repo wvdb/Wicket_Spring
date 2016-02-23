@@ -187,17 +187,18 @@ public final class CommutePage extends BasePage {
     }
 
     public void handleRadioButtonUpdate(AjaxRequestTarget target) {
-        ((Commuter) get("commutePageForm").getDefaultModelObject()).setHomeCountry("dit is een test");
+//        ((Commuter) get("commutePageForm").getDefaultModelObject()).setHomeCountry("dit is een test");
         target.add(get("commutePageForm").get("validationCorrectContainer"));
     }
 
     private static class ValidationCorrectContainerPredicate implements Predicate<Component>, Serializable {
         private static final long serialVersionUID = 7719059818782432234L;
 
-        // condition is met when OfficeCountry is equal to Belgium
+        // condition is met when hostingtype is equal to Dedicated Server
         @Override
         public boolean evaluate(Component component) {
-            return ((Commuter) component.getParent().getDefaultModelObject()).getHomeCountry().equals("Belgium");
+//            return ((Commuter) component.getParent().getDefaultModelObject()).getHomeCountry().equals("Belgium");
+            return component.getParent().get("hostingTypes2").getDefaultModelObjectAsString().equals("Dedicated Server");
         }
     }
 

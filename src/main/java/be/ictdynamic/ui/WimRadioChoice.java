@@ -37,10 +37,10 @@ public class WimRadioChoice<T> extends RadioChoice {
             protected void onUpdate(AjaxRequestTarget target) {
                 String selectedValue = getComponent().getDefaultModelObjectAsString();
                 LOG.debug(">>>WimRadioChoice is being updated. Selected value:" + selectedValue);
-                if (selectedValue.equals("Dedicated Server")) {
+//                if (selectedValue.equals("Dedicated Server")) {
                     ((CommutePage) getParent().getParent()).handleRadioButtonUpdate(target);
                 }
-            }
+//            }
         });
     }
 }
