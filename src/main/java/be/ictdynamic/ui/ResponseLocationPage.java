@@ -25,8 +25,8 @@ public class ResponseLocationPage extends BasePage {
         if (googleMapResponse != null) {
             this.lat = googleMapResponse.getLat();
             this.lng = googleMapResponse.getLng();
-            this.duration = googleMapResponse.getDuration();
-            this.distance = googleMapResponse.getDistance();
+            this.duration = googleMapResponse.getVoyages().iterator().next().getVoyageDuration();
+            this.distance = googleMapResponse.getVoyages().iterator().next().getVoyageDistance();
         }
         initGui();
     }

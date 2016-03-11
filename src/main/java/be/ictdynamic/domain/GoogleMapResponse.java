@@ -1,6 +1,9 @@
 package be.ictdynamic.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
 
 /**
  * Class Commuter.
@@ -14,8 +17,7 @@ public class GoogleMapResponse implements Serializable {
 
     private Double lat;
     private Double lng;
-    private Integer duration;
-    private Integer distance;
+    private Collection<Voyage> voyages;
 
     public Double getLat() {
         if (lat == null) {
@@ -39,27 +41,15 @@ public class GoogleMapResponse implements Serializable {
         this.lng = lng;
     }
 
-    public Integer getDuration() {
-        if (duration == null) {
-            duration = 0;
+    public Collection<Voyage> getVoyages() {
+        if (voyages == null) {
+            voyages = new ArrayList<>();
         }
-
-        return duration;
+        return voyages;
     }
 
-    public void setDuration(Integer duration) {
-        this.duration = duration;
-    }
-
-    public Integer getDistance() {
-        if (distance == null) {
-            distance = 0;
-        }
-        return distance;
-    }
-
-    public void setDistance(Integer distance) {
-        this.distance = distance;
+    public void setVoyages(Collection<Voyage> voyages) {
+        this.voyages = voyages;
     }
 
     @Override
@@ -68,5 +58,35 @@ public class GoogleMapResponse implements Serializable {
                 "lat=" + lat +
                 ", lng=" + lng +
                 '}';
+    }
+
+    public static class Voyage {
+       private Integer voyageDuration;
+       private Integer voyageDistance;
+       private Calendar voyageStartTime;
+
+        public Integer getVoyageDuration() {
+            return voyageDuration;
+        }
+
+        public void setVoyageDuration(Integer voyageDuration) {
+            this.voyageDuration = voyageDuration;
+        }
+
+        public Integer getVoyageDistance() {
+            return voyageDistance;
+        }
+
+        public void setVoyageDistance(Integer voyageDistance) {
+            this.voyageDistance = voyageDistance;
+        }
+
+        public Calendar getVoyageStartTime() {
+            return voyageStartTime;
+        }
+
+        public void setVoyageStartTime(Calendar voyageStartTime) {
+            this.voyageStartTime = voyageStartTime;
+        }
     }
 }

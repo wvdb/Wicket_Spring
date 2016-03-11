@@ -59,7 +59,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.5.8</version>
+            <version>1.6.2</version>
         </dependency>
 
         <dependency>
@@ -85,6 +85,12 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
             <version>4.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sourceforge.collections</groupId>
+            <artifactId>collections-generic</artifactId>
+            <version>4.01</version>
         </dependency>
 
     </dependencies>
