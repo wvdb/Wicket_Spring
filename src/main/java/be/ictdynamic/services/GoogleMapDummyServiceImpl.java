@@ -44,4 +44,9 @@ public class GoogleMapDummyServiceImpl implements GoogleMapService {
             throw new Exception(e);
         }
     }
+
+    @Override
+    public GoogleMapResponse getGoogleDistance(GoogleMapRequest googleMapRequest) throws Exception {
+        return null;
+    }
 }

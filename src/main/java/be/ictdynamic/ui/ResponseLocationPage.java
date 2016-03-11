@@ -10,26 +10,30 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 
-public class ResponsePage extends BasePage {
+public class ResponseLocationPage extends BasePage {
     private static final long serialVersionUID = 5869901981141048197L;
     private Double lat = 0.0;
     private Double lng = 0.0;
+    private Integer duration;
+    private Integer distance;
 
     // required because of Wicket's CompoundPropertyModel
     public String comment;
 
     // page should be non-bookmarkable
-    public ResponsePage(GoogleMapResponse googleMapResponse) {
+    public ResponseLocationPage(GoogleMapResponse googleMapResponse) {
         if (googleMapResponse != null) {
             this.lat = googleMapResponse.getLat();
             this.lng = googleMapResponse.getLng();
+            this.duration = googleMapResponse.getDuration();
+            this.distance = googleMapResponse.getDistance();
         }
         initGui();
     }
 
     private void initGui() {
 
-        StatelessForm<ResponsePage> responseForm = new StatelessForm<>("responseForm", new CompoundPropertyModel<>(this));
+        StatelessForm<ResponseLocationPage> responseForm = new StatelessForm<>("responseForm", new CompoundPropertyModel<>(this));
         add(responseForm);
 
         Label responseLabel = new Label("latLabel", "Latitude:");
@@ -37,7 +41,7 @@ public class ResponsePage extends BasePage {
 
         RequiredTextField<String> latField = new RequiredTextField<>("lat");
         latField.add(new RequiredFieldBehavior());
-        latField.setModel(Model.of(getLat().toString()));
+        latField.setModel(Model.of(getDuration().toString()));
         responseForm.add(latField);
 
         Label authorLabel = new Label("lngLabel", "Longitude:");
@@ -45,7 +49,7 @@ public class ResponsePage extends BasePage {
 
         RequiredTextField<String> lngField = new RequiredTextField<>("lng");
         lngField.add(new RequiredFieldBehavior());
-        lngField.setModel(Model.of(getLng().toString()));
+        lngField.setModel(Model.of(getDistance().toString()));
         responseForm.add(lngField);
 
         Label commentLabel = new Label("commentLabel", "Comment: (*)");
@@ -84,5 +88,12 @@ public class ResponsePage extends BasePage {
         return lng;
     }
 
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public Integer getDistance() {
+        return distance;
+    }
 }
 

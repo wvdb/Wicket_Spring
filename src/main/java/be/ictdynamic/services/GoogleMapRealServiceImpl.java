@@ -32,10 +32,9 @@ public class GoogleMapRealServiceImpl implements GoogleMapService {
                 "https",
                 "maps.googleapis.com",
                 "/maps/api/geocode/json",
-                "address=" + googleMapRequest.getStreet() + ",+" + googleMapRequest.getCommune() + ",+" + googleMapRequest.getCountry(),
+                "address=" + googleMapRequest.getOfficeStreet() + ",+" + googleMapRequest.getOfficeCommune() + ",+" + googleMapRequest.getOfficeCountry(),
                 null);
         String httpRequest = uri.toASCIIString();
-        // String httpRequest = "https://maps.googleapis.com/maps/api/geocode/json?address=" + googleMapRequest.getStreet() + ",+" + googleMapRequest.getCommune() + ",+" + googleMapRequest.getCountry();
         HttpGet request = new HttpGet(httpRequest);
 
         GoogleMapResponse googleMapResponse = new GoogleMapResponse();
@@ -67,7 +66,63 @@ public class GoogleMapRealServiceImpl implements GoogleMapService {
 
             return googleMapResponse;
         } catch (Exception e) {
+            LOG.error(">>>Exception occurred when querying Google Maps: message = " + e.getMessage());
             throw new Exception(e);
         }
     }
+
+    public GoogleMapResponse getGoogleDistance(final GoogleMapRequest googleMapRequest) throws Exception {
+        HttpClient client = new DefaultHttpClient();
+
+        URI uri = new URI(
+                "https",
+                "maps.googleapis.com",
+                "/maps/api/distancematrix/json",
+                  "origins=" + googleMapRequest.getHomeStreet() + ",+" + googleMapRequest.getHomeCommune() + ",+" + googleMapRequest.getHomeCountry()
+                + "&destinations=" + googleMapRequest.getOfficeStreet() + ",+" + googleMapRequest.getOfficeCommune() + ",+" + googleMapRequest.getOfficeCountry(),
+                null);
+        String httpRequest = uri.toASCIIString();
+        HttpGet request = new HttpGet(httpRequest);
+
+        GoogleMapResponse googleMapResponse = new GoogleMapResponse();
+
+        try {
+            HttpResponse response = client.execute(request);
+            LOG.debug(">>>HTTP response = {}" + response);
+
+            // CONVERT RESPONSE TO STRING
+            String stringResult = EntityUtils.toString(response.getEntity());
+            LOG.debug(">>>HTTP stringResult = {}" +  stringResult);
+
+            JSONObject jsonobject1 = new JSONObject(stringResult);
+            LOG.debug(">>>HTTP jsonobject1 = {}" +  jsonobject1);
+
+            // CONVERT STRING TO JSON ARRAY
+            JSONArray jsonArrayRow = jsonobject1.getJSONArray("rows");
+
+            for (int i = 0; i < jsonArrayRow.length(); i++) {
+                // GET INDIVIDUAL JSON OBJECT FROM JSON ARRAY
+                JSONObject jsonobject2 = jsonArrayRow.getJSONObject(i);
+
+                JSONArray jsonArrayElement = jsonobject2.getJSONArray("elements");
+                for (int j = 0; j < jsonArrayElement.length(); j++) {
+                    JSONObject jsonElement = jsonArrayElement.getJSONObject(j);
+                    LOG.debug(">>>location.lat = " + jsonElement.getJSONObject("distance").get("text"));
+                    LOG.debug(">>>location.lng = " + jsonElement.getJSONObject("distance").get("value"));
+                    LOG.debug(">>>location.lat = " + jsonElement.getJSONObject("duration").get("text"));
+                    LOG.debug(">>>location.lng = " + jsonElement.getJSONObject("duration").get("value"));
+
+                    googleMapResponse.setDistance((Integer) jsonElement.getJSONObject("distance").get("value"));
+                    googleMapResponse.setDuration((Integer) jsonElement.getJSONObject("duration").get("value"));
+                }
+
+            }
+
+            return googleMapResponse;
+        } catch (Exception e) {
+            LOG.error(">>>Exception occurred when querying Google Maps: message = " + e.getMessage());
+            throw new Exception(e);
+        }
+    }
+
 }

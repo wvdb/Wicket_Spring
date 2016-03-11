@@ -60,7 +60,7 @@ public final class CommutePage extends BasePage {
 
         // bind Form with Model of Type CompoundProperty !!!
         // -------------------------------------------------
-        Commuter commuter = new Commuter();
+        final Commuter commuter = new Commuter();
 
         Form<Commuter> form = new Form<>("commutePageForm", new CompoundPropertyModel<>(Model.of(commuter)));
 
@@ -158,24 +158,29 @@ public final class CommutePage extends BasePage {
                 // http://www.tutorialspoint.com/design_pattern/factory_pattern.htm
 
                 GoogleMapRequest googleMapRequest = new GoogleMapRequest();
-                googleMapRequest.setStreet(officeStreetField.getDefaultModelObjectAsString());
-                googleMapRequest.setCommune(officeCommuneField.getDefaultModelObjectAsString());
-                googleMapRequest.setCountry(officeCountryField.getDefaultModelObjectAsString());
+                googleMapRequest.setOfficeStreet(officeStreetField.getDefaultModelObjectAsString());
+                googleMapRequest.setOfficeCommune(officeCommuneField.getDefaultModelObjectAsString());
+                googleMapRequest.setOfficeCountry(officeCountryField.getDefaultModelObjectAsString());
+
+                googleMapRequest.setHomeStreet(((Commuter) getParent().getDefaultModelObject()).getHomeStreet());
+                googleMapRequest.setHomeCommune(((Commuter) getParent().getDefaultModelObject()).getHomeCommune());
+                googleMapRequest.setHomeCountry(((Commuter) getParent().getDefaultModelObject()).getHomeCountry());
 
                 GoogleMapResponse googleMapResponse = null;
                 try {
-                    googleMapResponse = googleMapFactoryService.getGoogleMapService().getGoogleLocation(googleMapRequest);
+//                    googleMapResponse = googleMapFactoryService.getGoogleMapService().getGoogleLocation(googleMapRequest);
+                    googleMapResponse = googleMapFactoryService.getGoogleMapService().getGoogleDistance(googleMapRequest);
                 } catch (Exception e) {
                     LOG.error(">>>GoogleMapService is not available: exception = " + e);
                     error("GoogleMapService is not available");
                 }
 
-                // improper support for navigating from CommutePage to ResponsePage
+                // improper support for navigating from CommutePage to ResponseLocationPage
                 // PageParameters pageParameters = new PageParameters();
                 // pageParameters.add("reponseGoogleMap", response);
 
-                // to support navigation from CommutePage to ResponsePage
-                setResponsePage(new ResponsePage(googleMapResponse));
+                // to support navigation from CommutePage to ResponseLocationPage
+                setResponsePage(new ResponseLocationPage(googleMapResponse));
             }
         };
 
