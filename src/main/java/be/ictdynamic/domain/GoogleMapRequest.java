@@ -12,31 +12,59 @@ public class GoogleMapRequest implements Serializable {
 
     private static final long serialVersionUID = -5073135041934007777L;
 
-    private String street;
-    private String commune;
-    private String country;
+    private String officeStreet;
+    private String officeCommune;
+    private String officeCountry;
 
-    public String getStreet() {
-        return street;
+    private String homeStreet;
+    private String homeCommune;
+    private String homeCountry;
+
+    public String getOfficeStreet() {
+        return homeStreet;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setOfficeStreet(String officeStreet) {
+        this.homeStreet = officeStreet;
     }
 
-    public String getCommune() {
-        return commune;
+    public String getOfficeCommune() {
+        return officeCommune;
     }
 
-    public void setCommune(String commune) {
-        this.commune = commune;
+    public void setOfficeCommune(String officeCommune) {
+        this.officeCommune = officeCommune;
     }
 
-    public String getCountry() {
-        return country;
+    public String getOfficeCountry() {
+        return officeCountry;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setOfficeCountry(String officeCountry) {
+        this.officeCountry = officeCountry;
+    }
+
+    public String getHomeStreet() {
+        return homeStreet;
+    }
+
+    public void setHomeStreet(String homeStreet) {
+        this.homeStreet = homeStreet;
+    }
+
+    public String getHomeCommune() {
+        return homeCommune;
+    }
+
+    public void setHomeCommune(String homeCommune) {
+        this.homeCommune = homeCommune;
+    }
+
+    public String getHomeCountry() {
+        return homeCountry;
+    }
+
+    public void setHomeCountry(String homeCountry) {
+        this.homeCountry = homeCountry;
     }
 }

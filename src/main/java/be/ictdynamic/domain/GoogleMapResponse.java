@@ -1,6 +1,9 @@
 package be.ictdynamic.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
 
 /**
  * Class Commuter.
@@ -14,8 +17,12 @@ public class GoogleMapResponse implements Serializable {
 
     private Double lat;
     private Double lng;
+    private Collection<Voyage> voyages;
 
     public Double getLat() {
+        if (lat == null) {
+            lat = 0.0;
+        }
         return lat;
     }
 
@@ -24,11 +31,25 @@ public class GoogleMapResponse implements Serializable {
     }
 
     public Double getLng() {
+        if (lng == null) {
+            lng = 0.0;
+        }
         return lng;
     }
 
     public void setLng(Double lng) {
         this.lng = lng;
+    }
+
+    public Collection<Voyage> getVoyages() {
+        if (voyages == null) {
+            voyages = new ArrayList<>();
+        }
+        return voyages;
+    }
+
+    public void setVoyages(Collection<Voyage> voyages) {
+        this.voyages = voyages;
     }
 
     @Override
@@ -37,5 +58,35 @@ public class GoogleMapResponse implements Serializable {
                 "lat=" + lat +
                 ", lng=" + lng +
                 '}';
+    }
+
+    public static class Voyage {
+       private Integer voyageDuration;
+       private Integer voyageDistance;
+       private Calendar voyageStartTime;
+
+        public Integer getVoyageDuration() {
+            return voyageDuration;
+        }
+
+        public void setVoyageDuration(Integer voyageDuration) {
+            this.voyageDuration = voyageDuration;
+        }
+
+        public Integer getVoyageDistance() {
+            return voyageDistance;
+        }
+
+        public void setVoyageDistance(Integer voyageDistance) {
+            this.voyageDistance = voyageDistance;
+        }
+
+        public Calendar getVoyageStartTime() {
+            return voyageStartTime;
+        }
+
+        public void setVoyageStartTime(Calendar voyageStartTime) {
+            this.voyageStartTime = voyageStartTime;
+        }
     }
 }
