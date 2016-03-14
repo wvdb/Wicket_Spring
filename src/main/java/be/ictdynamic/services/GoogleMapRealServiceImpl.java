@@ -145,6 +145,7 @@ public class GoogleMapRealServiceImpl implements GoogleMapService {
                     LOG.debug(">>>location.lat = " + jsonElement.getJSONObject("duration_in_traffic").get("text"));
                     LOG.debug(">>>location.lng = " + jsonElement.getJSONObject("duration_in_traffic").get("value"));
 
+
                     voyage.setVoyageDistance((Integer) jsonElement.getJSONObject("distance").get("value"));
                     voyage.setVoyageDuration((Integer) jsonElement.getJSONObject("duration_in_traffic").get("value"));
                     Calendar calendar = Calendar.getInstance();
