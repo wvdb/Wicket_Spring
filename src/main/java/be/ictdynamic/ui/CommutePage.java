@@ -162,9 +162,9 @@ public final class CommutePage extends BasePage {
                 googleMapRequest.setOfficeCommune(officeCommuneField.getDefaultModelObjectAsString());
                 googleMapRequest.setOfficeCountry(officeCountryField.getDefaultModelObjectAsString());
 
-                googleMapRequest.setHomeStreet(((Commuter) getParent().getDefaultModelObject()).getHomeStreet());
-                googleMapRequest.setHomeCommune(((Commuter) getParent().getDefaultModelObject()).getHomeCommune());
-                googleMapRequest.setHomeCountry(((Commuter) getParent().getDefaultModelObject()).getHomeCountry());
+                googleMapRequest.setHomeStreet(((Commuter) findParent(Form.class).getDefaultModelObject()).getHomeStreet());
+                googleMapRequest.setHomeCommune(((Commuter) findParent(Form.class).getDefaultModelObject()).getHomeCommune());
+                googleMapRequest.setHomeCountry(((Commuter) findParent(Form.class).getDefaultModelObject()).getHomeCountry());
 
                 GoogleMapResponse googleMapResponse = null;
                 try {
@@ -202,7 +202,6 @@ public final class CommutePage extends BasePage {
         // condition is met when hostingtype is equal to Dedicated Server
         @Override
         public boolean evaluate(Component component) {
-//            return ((Commuter) component.getParent().getDefaultModelObject()).getHomeCountry().equals("Belgium");
             return component.getParent().get("hostingTypes2").getDefaultModelObjectAsString().equals("Dedicated Server");
         }
     }

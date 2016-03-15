@@ -16,9 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.net.URI;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
+import java.util.*;
 
 /**
  * Class GoogleMapRealServiceImpl.
@@ -86,18 +84,32 @@ public class GoogleMapRealServiceImpl implements GoogleMapService {
         // add 8 hours
         firstDayOfWeekinSeconds += 8 * 3600000;
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+
         // start from 8 AM and increase team in slots of 12 hours
-        for (int i=1; i <= 14; i++) {
+        for (int i = 1; i <= 14; i++) {
             GoogleMapResponse.Voyage voyage = getGoogleDistanceBasedOnTime(googleMapRequest, firstDayOfWeekinSeconds);
             voyages.add(voyage);
             // add 12 hours hours
             firstDayOfWeekinSeconds += 12 * 3600000;
 
-            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-            LOG.debug(">>>Google info retrieved for time " + format.format(voyage.getVoyageStartTime().getTime()) + ": duration = " + voyage.getVoyageDuration() + ", distance = " + voyage.getVoyageDistance());
+            LOG.info(">>>Google info retrieved for time " + dateFormat.format(voyage.getVoyageStartTime().getTime()) + ": duration = " + voyage.getVoyageDuration() + ", distance = " + voyage.getVoyageDistance());
         }
 
         googleMapResponse.setVoyages(voyages);
+
+        Comparator<GoogleMapResponse.Voyage> voyageComparator = new Comparator<GoogleMapResponse.Voyage>() {
+            @Override
+            public int compare(GoogleMapResponse.Voyage o1, GoogleMapResponse.Voyage o2) {
+                return o1.getVoyageDuration().compareTo(o2.getVoyageDuration());
+            }
+        };
+
+        GoogleMapResponse.Voyage fastVoyage = Collections.max(googleMapResponse.getVoyages(), voyageComparator);
+        GoogleMapResponse.Voyage slowVoyage = Collections.min(googleMapResponse.getVoyages(), voyageComparator);
+
+        LOG.info("Voyage taking the most time : " + fastVoyage.getVoyageDuration() + " planned on " + dateFormat.format(fastVoyage.getVoyageStartTime().getTime()));
+        LOG.info("Voyage taking the least time : " + slowVoyage.getVoyageDuration() + " planned on " + dateFormat.format(slowVoyage.getVoyageStartTime().getTime()));
 
         return googleMapResponse;
     }
@@ -144,7 +156,6 @@ public class GoogleMapRealServiceImpl implements GoogleMapService {
                     LOG.debug(">>>location.lng = " + jsonElement.getJSONObject("distance").get("value"));
                     LOG.debug(">>>location.lat = " + jsonElement.getJSONObject("duration_in_traffic").get("text"));
                     LOG.debug(">>>location.lng = " + jsonElement.getJSONObject("duration_in_traffic").get("value"));
-
 
                     voyage.setVoyageDistance((Integer) jsonElement.getJSONObject("distance").get("value"));
                     voyage.setVoyageDuration((Integer) jsonElement.getJSONObject("duration_in_traffic").get("value"));
