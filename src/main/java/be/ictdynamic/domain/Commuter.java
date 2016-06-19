@@ -13,10 +13,14 @@ public class Commuter implements Serializable {
     private static final long serialVersionUID = -5073135041934007777L;
 
     private String dummy;
+    private String dummy2;
 
     private String homeStreet;
     private String homeCommune;
     private String homeCountry;
+
+    private String distance;
+    private String duration;
 
     public Commuter() {
         homeStreet = "Tweebunder 4";
@@ -60,6 +64,30 @@ public class Commuter implements Serializable {
 
     public void setDummy(String dummy) {
         this.dummy = dummy;
+    }
+
+    public String getDummy2() {
+        return dummy2;
+    }
+
+    public void setDummy2(String dummy2) {
+        this.dummy2 = dummy2;
+    }
+
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
     }
 
     @Override

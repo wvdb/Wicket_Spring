@@ -21,11 +21,11 @@ public class GoogleMapRequest implements Serializable {
     private String homeCountry;
 
     public String getOfficeStreet() {
-        return homeStreet;
+        return officeStreet;
     }
 
     public void setOfficeStreet(String officeStreet) {
-        this.homeStreet = officeStreet;
+        this.officeStreet = officeStreet;
     }
 
     public String getOfficeCommune() {

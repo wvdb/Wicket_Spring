@@ -15,7 +15,7 @@
         <table id="TableLocationOffice">
             <tr>
                 <td>
-                    Street:
+                    Office Street:
                 </td>
                 <td>
                     <input type="text" wicket:id="officeStreet" maxlength="50"/>
@@ -23,7 +23,7 @@
             </tr>
             <tr>
                 <td>
-                    Commune:
+                    Office Commune:
                 </td>
                 <td>
                     <input type="text" wicket:id="officeCommune" maxlength="50"/>
@@ -31,10 +31,18 @@
             </tr>
             <tr>
                 <td>
-                    Country:
+                    Office Country:
                 </td>
                 <td>
                     <input type="text" wicket:id="officeCountry" maxlength="50"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Dummy:
+                </td>
+                <td>
+                    <input type="text" wicket:id="dummy2" maxlength="50"/>
                 </td>
             </tr>
         </table>
@@ -69,6 +77,12 @@
                 <td>
                     Home Country
                 </td>
+                <td style="width: 100px">
+                    Distance (kilometres)
+                </td>
+                <td style="width: 100px">
+                    Duration (minutes)
+                </td>
             </tr>
             <tr>
                 <td>
@@ -79,6 +93,12 @@
                 </td>
                 <td>
                     <input type="text" wicket:id="homeCountry"/>
+                </td>
+                <td style="width: 100px">
+                    <label wicket:id="distance"></label>
+                </td>
+                <td style="width: 100px">
+                    <label wicket:id="duration"></label>
                 </td>
             </tr>
         </table>

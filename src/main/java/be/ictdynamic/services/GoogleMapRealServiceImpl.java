@@ -75,7 +75,7 @@ public class GoogleMapRealServiceImpl implements GoogleMapService {
         }
     }
 
-    public GoogleMapResponse getGoogleDistance(final GoogleMapRequest googleMapRequest) throws Exception {
+    public GoogleMapResponse getGoogleDistanceForEntireWeek(final GoogleMapRequest googleMapRequest) throws Exception {
         long firstDayOfWeekinSeconds = DateUtilities.getFirstDayOfWeek();
 
         GoogleMapResponse googleMapResponse = new GoogleMapResponse();
@@ -114,6 +114,19 @@ public class GoogleMapRealServiceImpl implements GoogleMapService {
         return googleMapResponse;
     }
 
+    public GoogleMapResponse getGoogleDistance(final GoogleMapRequest googleMapRequest) throws Exception {
+        // TODO : to fix time issue
+        long now = System.currentTimeMillis() % 1000;
+
+        GoogleMapResponse googleMapResponse = new GoogleMapResponse();
+        Collection<GoogleMapResponse.Voyage> voyages = new ArrayList<>(1);
+        GoogleMapResponse.Voyage voyage = getGoogleDistanceBasedOnTime(googleMapRequest, now);
+        voyages.add(voyage);
+        googleMapResponse.setVoyages(voyages);
+
+        return googleMapResponse;
+    }
+
     public GoogleMapResponse.Voyage getGoogleDistanceBasedOnTime(final GoogleMapRequest googleMapRequest, long startTime) throws Exception {
         HttpClient client = new DefaultHttpClient();
 
@@ -125,9 +138,14 @@ public class GoogleMapRealServiceImpl implements GoogleMapService {
                 "/maps/api/distancematrix/json",
                 "origins=" + googleMapRequest.getHomeStreet() + ",+" + googleMapRequest.getHomeCommune() + ",+" + googleMapRequest.getHomeCountry()
                         + "&destinations=" + googleMapRequest.getOfficeStreet() + ",+" + googleMapRequest.getOfficeCommune() + ",+" + googleMapRequest.getOfficeCountry()
-                        + "&departure_time=" + startTime + "&key=" + GOOGLE_DISTANCE_MATRIX_API_KEY,
+                        + "&key=" + GOOGLE_DISTANCE_MATRIX_API_KEY,
+//                        + "&departure_time=" + startTime + "&key=" + GOOGLE_DISTANCE_MATRIX_API_KEY,
                 null);
+
         String httpRequest = uri.toASCIIString();
+
+        LOG.debug(">>>HTTP request = {}" + httpRequest);
+
         HttpGet request = new HttpGet(httpRequest);
         GoogleMapResponse.Voyage voyage = new GoogleMapResponse.Voyage();
 
@@ -152,13 +170,13 @@ public class GoogleMapRealServiceImpl implements GoogleMapService {
                 JSONArray jsonArrayElement = jsonobject2.getJSONArray("elements");
                 for (int j = 0; j < jsonArrayElement.length(); j++) {
                     JSONObject jsonElement = jsonArrayElement.getJSONObject(j);
-                    LOG.debug(">>>location.lat = " + jsonElement.getJSONObject("distance").get("text"));
-                    LOG.debug(">>>location.lng = " + jsonElement.getJSONObject("distance").get("value"));
-                    LOG.debug(">>>location.lat = " + jsonElement.getJSONObject("duration_in_traffic").get("text"));
-                    LOG.debug(">>>location.lng = " + jsonElement.getJSONObject("duration_in_traffic").get("value"));
+                    LOG.debug(String.valueOf(">>>distance = " + jsonElement.opt("distance") == null ? 0 : (Integer) jsonElement.getJSONObject("distance").get("value")));
+                    LOG.debug(String.valueOf(">>>duration = " + jsonElement.opt("duration") == null ? 0 : (Integer) jsonElement.getJSONObject("duration").get("value")));
 
-                    voyage.setVoyageDistance((Integer) jsonElement.getJSONObject("distance").get("value"));
-                    voyage.setVoyageDuration((Integer) jsonElement.getJSONObject("duration_in_traffic").get("value"));
+                    voyage.setVoyageDistance(jsonElement.opt("distance") == null ? 0 : (Integer) jsonElement.getJSONObject("distance").get("value"));
+//                    voyage.setVoyageDuration((Integer) jsonElement.getJSONObject("duration_in_traffic").get("value"));
+                    voyage.setVoyageDuration(jsonElement.opt("duration") == null ? 0 : (Integer) jsonElement.getJSONObject("duration").get("value"));
+
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTimeInMillis(startTime);
                     voyage.setVoyageStartTime(calendar);
