@@ -1,35 +1,24 @@
 package be.ictdynamic.ui;
 
 import be.ictdynamic.Constants;
+import be.ictdynamic.common.collections.CollectionUtilities;
 import be.ictdynamic.domain.Commuter;
 import be.ictdynamic.domain.GoogleMapRequest;
 import be.ictdynamic.domain.GoogleMapResponse;
-import be.ictdynamic.services.DummyService;
 import be.ictdynamic.services.GoogleMapFactoryServiceImpl;
-import be.ictdynamic.services.OfficeLocationService;
 import be.ictdynamic.services.SecurityService;
 import be.ictdynamic.ui.base.BasePage;
-import org.apache.commons.collections4.Predicate;
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.RadioChoice;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.validation.validator.StringValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.List;
 
 public final class CommutePage extends BasePage {
     private static final Logger LOG = LoggerFactory.getLogger(CommutePage.class);
@@ -79,47 +68,47 @@ public final class CommutePage extends BasePage {
             }
         };
 
-        final TextField<String> officeCommuneField = new TextField<String >("officeCommune")  {
+        final TextField<String> officeCommuneField = new TextField<String>("officeCommune") {
 
             private static final long serialVersionUID = -7011567939901389719L;
 
             @Override
-                    protected void onInitialize() {
-                        super.onInitialize();
+            protected void onInitialize() {
+                super.onInitialize();
 
-                        // all dom events: http://www.w3schools.com/jsref/dom_obj_event.asp
-                        this.add(new AjaxFormComponentUpdatingBehavior("onChange") {
+                // all dom events: http://www.w3schools.com/jsref/dom_obj_event.asp
+                this.add(new AjaxFormComponentUpdatingBehavior("onChange") {
 
-                            private static final long serialVersionUID = -5768972302609935505L;
+                    private static final long serialVersionUID = -5768972302609935505L;
 
-                            @Override
-                            protected void onUpdate(AjaxRequestTarget target) {
-                                ((CommutePage) getParent().getParent()).handleTextFieldUpdate(target);
-                            }
-                        });
+                    @Override
+                    protected void onUpdate(AjaxRequestTarget target) {
+                        ((CommutePage) getParent().getParent()).handleTextFieldUpdate(target);
                     }
-                } ;
+                });
+            }
+        };
 
-        final TextField<String> officeCountryField = new TextField<String>("officeCountry")  {
+        final TextField<String> officeCountryField = new TextField<String>("officeCountry") {
 
             private static final long serialVersionUID = 2427966590472602399L;
 
             @Override
-                    protected void onInitialize() {
-                        super.onInitialize();
+            protected void onInitialize() {
+                super.onInitialize();
 
-                        // all dom events: http://www.w3schools.com/jsref/dom_obj_event.asp
-                        this.add(new AjaxFormComponentUpdatingBehavior("onChange") {
+                // all dom events: http://www.w3schools.com/jsref/dom_obj_event.asp
+                this.add(new AjaxFormComponentUpdatingBehavior("onChange") {
 
-                            private static final long serialVersionUID = -3738689518095087643L;
+                    private static final long serialVersionUID = -3738689518095087643L;
 
-                            @Override
-                            protected void onUpdate(AjaxRequestTarget target) {
-                                ((CommutePage) getParent().getParent()).handleTextFieldUpdate(target);
-                            }
-                        });
+                    @Override
+                    protected void onUpdate(AjaxRequestTarget target) {
+                        ((CommutePage) getParent().getParent()).handleTextFieldUpdate(target);
                     }
-                };
+                });
+            }
+        };
 
         // HOME FIELDS
         // -----------
@@ -204,21 +193,12 @@ public final class CommutePage extends BasePage {
 
     /**
      * Add the components that have to be refreshed
-     *
      */
     public void handleTextFieldUpdate(AjaxRequestTarget target) {
+        // invoke actual processing message
         GoogleMapResponse googleMapResponse = processGoogleRequest();
-
-        Integer distance;
-        Integer duration;
-        try {
-            distance = googleMapResponse.getVoyages().iterator().next().getVoyageDistance();
-            duration = googleMapResponse.getVoyages().iterator().next().getVoyageDuration();
-        }
-        catch (NullPointerException e) {
-            distance = 0;
-            duration = 0;
-        }
+        Integer distance = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDistance();
+        Integer duration = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDuration();
 
         LOG.debug("Retrieved from Google: distance (in metres) : " + distance);
         LOG.debug("Retrieved from Google: duration (in seconds) : " + duration);
