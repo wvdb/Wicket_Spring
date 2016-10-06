@@ -29,6 +29,10 @@ public class GoogleMapRealServiceImpl implements GoogleMapService {
     private static final Logger LOG = LoggerFactory.getLogger(GoogleMapRealServiceImpl.class);
     public static final String GOOGLE_DISTANCE_MATRIX_API_KEY = "AIzaSyDrQxf6ftnF-2xihZBUQkTL6ZEIlgee5WA";
 
+    /**
+     * @inheritDoc
+     */
+    @Override
     public GoogleMapResponse getGoogleLocation(final GoogleMapRequest googleMapRequest) throws Exception {
         HttpClient client = new DefaultHttpClient();
 
@@ -75,7 +79,7 @@ public class GoogleMapRealServiceImpl implements GoogleMapService {
         }
     }
 
-    public GoogleMapResponse getGoogleDistanceForEntireWeek(final GoogleMapRequest googleMapRequest) throws Exception {
+    private GoogleMapResponse getGoogleDistanceForEntireWeek(final GoogleMapRequest googleMapRequest) throws Exception {
         long firstDayOfWeekinSeconds = DateUtilities.getFirstDayOfWeek();
 
         GoogleMapResponse googleMapResponse = new GoogleMapResponse();
@@ -114,6 +118,10 @@ public class GoogleMapRealServiceImpl implements GoogleMapService {
         return googleMapResponse;
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Override
     public GoogleMapResponse getGoogleDistance(final GoogleMapRequest googleMapRequest) throws Exception {
         // TODO : to fix time issue
         long now = System.currentTimeMillis() % 1000;
@@ -127,7 +135,7 @@ public class GoogleMapRealServiceImpl implements GoogleMapService {
         return googleMapResponse;
     }
 
-    public GoogleMapResponse.Voyage getGoogleDistanceBasedOnTime(final GoogleMapRequest googleMapRequest, long startTime) throws Exception {
+    private GoogleMapResponse.Voyage getGoogleDistanceBasedOnTime(final GoogleMapRequest googleMapRequest, long startTime) throws Exception {
         HttpClient client = new DefaultHttpClient();
 
         // traffic_model = pessimistic/optimistic can be added
@@ -170,8 +178,8 @@ public class GoogleMapRealServiceImpl implements GoogleMapService {
                 JSONArray jsonArrayElement = jsonobject2.getJSONArray("elements");
                 for (int j = 0; j < jsonArrayElement.length(); j++) {
                     JSONObject jsonElement = jsonArrayElement.getJSONObject(j);
-                    LOG.debug(String.valueOf(">>>distance = " + jsonElement.opt("distance") == null ? 0 : (Integer) jsonElement.getJSONObject("distance").get("value")));
-                    LOG.debug(String.valueOf(">>>duration = " + jsonElement.opt("duration") == null ? 0 : (Integer) jsonElement.getJSONObject("duration").get("value")));
+                    LOG.debug(">>>distance = " + jsonElement.opt("distance"));
+                    LOG.debug(">>>duration = " + jsonElement.opt("duration"));
 
                     voyage.setVoyageDistance(jsonElement.opt("distance") == null ? 0 : (Integer) jsonElement.getJSONObject("distance").get("value"));
 //                    voyage.setVoyageDuration((Integer) jsonElement.getJSONObject("duration_in_traffic").get("value"));

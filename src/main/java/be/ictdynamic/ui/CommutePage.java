@@ -1,22 +1,18 @@
 package be.ictdynamic.ui;
 
-import be.ictdynamic.Constants;
 import be.ictdynamic.common.collections.CollectionUtilities;
 import be.ictdynamic.domain.Commuter;
 import be.ictdynamic.domain.GoogleMapRequest;
 import be.ictdynamic.domain.GoogleMapResponse;
 import be.ictdynamic.services.GoogleMapFactoryServiceImpl;
-import be.ictdynamic.services.SecurityService;
 import be.ictdynamic.ui.base.BasePage;
+import be.ictdynamic.ui.base.BaseTextField;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.validation.validator.StringValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,10 +21,8 @@ public final class CommutePage extends BasePage {
     private static final long serialVersionUID = -264755820748811049L;
 
     @SpringBean
+    @SuppressWarnings({"UnusedDeclaration"})
     private GoogleMapFactoryServiceImpl googleMapFactoryService;
-
-    @SpringBean
-    private SecurityService securityService;
 
     /**
      * Constructor that is invoked when page is invoked without a session.
@@ -45,136 +39,20 @@ public final class CommutePage extends BasePage {
 
         Form<Commuter> form = new Form<>("commutePageForm", new CompoundPropertyModel<>(Model.of(commuter)));
 
-        add(form);
+        this.add(form);
 
         // OFFICE FIELDS
 
-        final TextField<String> officeStreetField = new TextField<String>("officeStreet") {
-            private static final long serialVersionUID = 8079540829151688207L;
-
-            @Override
-            protected void onInitialize() {
-                super.onInitialize();
-
-                // all dom events: http://www.w3schools.com/jsref/dom_obj_event.asp
-                this.add(new AjaxFormComponentUpdatingBehavior("onChange") {
-                    private static final long serialVersionUID = 4650984070993921421L;
-
-                    @Override
-                    protected void onUpdate(AjaxRequestTarget target) {
-                        ((CommutePage) getParent().getParent()).handleTextFieldUpdate(target);
-                    }
-                });
-            }
-        };
-
-        final TextField<String> officeCommuneField = new TextField<String>("officeCommune") {
-
-            private static final long serialVersionUID = -7011567939901389719L;
-
-            @Override
-            protected void onInitialize() {
-                super.onInitialize();
-
-                // all dom events: http://www.w3schools.com/jsref/dom_obj_event.asp
-                this.add(new AjaxFormComponentUpdatingBehavior("onChange") {
-
-                    private static final long serialVersionUID = -5768972302609935505L;
-
-                    @Override
-                    protected void onUpdate(AjaxRequestTarget target) {
-                        ((CommutePage) getParent().getParent()).handleTextFieldUpdate(target);
-                    }
-                });
-            }
-        };
-
-        final TextField<String> officeCountryField = new TextField<String>("officeCountry") {
-
-            private static final long serialVersionUID = 2427966590472602399L;
-
-            @Override
-            protected void onInitialize() {
-                super.onInitialize();
-
-                // all dom events: http://www.w3schools.com/jsref/dom_obj_event.asp
-                this.add(new AjaxFormComponentUpdatingBehavior("onChange") {
-
-                    private static final long serialVersionUID = -3738689518095087643L;
-
-                    @Override
-                    protected void onUpdate(AjaxRequestTarget target) {
-                        ((CommutePage) getParent().getParent()).handleTextFieldUpdate(target);
-                    }
-                });
-            }
-        };
+        BaseTextField officeStreetField = new BaseTextField("officeStreet");
+        BaseTextField officeCommuneField = new BaseTextField("officeCommune");
+        BaseTextField officeCountryField = new BaseTextField("officeCountry");
 
         // HOME FIELDS
         // -----------
 
-        TextField<String> homeStreetField = new TextField<String>("homeStreet") {
-
-            private static final long serialVersionUID = 2427966590472602399L;
-
-            @Override
-            protected void onInitialize() {
-                super.onInitialize();
-
-                // all dom events: http://www.w3schools.com/jsref/dom_obj_event.asp
-                this.add(new AjaxFormComponentUpdatingBehavior("onChange") {
-
-                    private static final long serialVersionUID = -3738689518095087643L;
-
-                    @Override
-                    protected void onUpdate(AjaxRequestTarget target) {
-                        ((CommutePage) getParent().getParent()).handleTextFieldUpdate(target);
-                    }
-                });
-            }
-        };
-        homeStreetField.setOutputMarkupId(true);
-        homeStreetField.setOutputMarkupPlaceholderTag(true);
-        TextField<String> homeCommuneField = new TextField<String>("homeCommune") {
-
-            private static final long serialVersionUID = 2427966590472602399L;
-
-            @Override
-            protected void onInitialize() {
-                super.onInitialize();
-
-                // all dom events: http://www.w3schools.com/jsref/dom_obj_event.asp
-                this.add(new AjaxFormComponentUpdatingBehavior("onChange") {
-
-                    private static final long serialVersionUID = -3738689518095087643L;
-
-                    @Override
-                    protected void onUpdate(AjaxRequestTarget target) {
-                        ((CommutePage) getParent().getParent()).handleTextFieldUpdate(target);
-                    }
-                });
-            }
-        };
-        final TextField<String> homeCountryField = new TextField<String>("homeCountry") {
-
-            private static final long serialVersionUID = 2427966590472602399L;
-
-            @Override
-            protected void onInitialize() {
-                super.onInitialize();
-
-                // all dom events: http://www.w3schools.com/jsref/dom_obj_event.asp
-                this.add(new AjaxFormComponentUpdatingBehavior("onChange") {
-
-                    private static final long serialVersionUID = -3738689518095087643L;
-
-                    @Override
-                    protected void onUpdate(AjaxRequestTarget target) {
-                        ((CommutePage) getParent().getParent()).handleTextFieldUpdate(target);
-                    }
-                });
-            }
-        };
+        BaseTextField homeStreetField = new BaseTextField("homeStreet");
+        BaseTextField homeCommuneField = new BaseTextField("homeCommune");
+        BaseTextField homeCountryField = new BaseTextField("homeCountry");
 
         // example of validation
 
@@ -185,17 +63,18 @@ public final class CommutePage extends BasePage {
         form.add(officeCommuneField.setRequired(true)).setVersioned(false);
         form.add(officeCountryField.setRequired(true)).setVersioned(false);
 
-        form.add(homeStreetField.add(StringValidator.lengthBetween(Constants.MIN_LENGTH, Constants.MAX_LENGTH_STREET))).setVersioned(false);
-        form.add(homeCommuneField.add(StringValidator.lengthBetween(Constants.MIN_LENGTH, Constants.MAX_LENGTH_COMMUNE))).setVersioned(false);
-        form.add(homeCountryField.add(StringValidator.lengthBetween(Constants.MIN_LENGTH, Constants.MAX_LENGTH_COUNTRY))).setVersioned(false);
-
+//        form.add(homeStreetField.add(StringValidator.lengthBetween(Constants.MIN_LENGTH, Constants.MAX_LENGTH_STREET))).setVersioned(false);
+//        form.add(homeCommuneField.add(StringValidator.lengthBetween(Constants.MIN_LENGTH, Constants.MAX_LENGTH_COMMUNE))).setVersioned(false);
+//        form.add(homeCountryField.add(StringValidator.lengthBetween(Constants.MIN_LENGTH, Constants.MAX_LENGTH_COUNTRY))).setVersioned(false);
     }
 
     /**
-     * Add the components that have to be refreshed
+     * Trigger the prcoessing method and parse the response
+     * and
+     * add the components that have to be refreshed within UI
      */
     public void handleTextFieldUpdate(AjaxRequestTarget target) {
-        // invoke actual processing message
+        // invoke actual processing method
         GoogleMapResponse googleMapResponse = processGoogleRequest();
         Integer distance = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDistance();
         Integer duration = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDuration();
