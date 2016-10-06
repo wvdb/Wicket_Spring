@@ -1,14 +1,16 @@
 package be.ictdynamic.ui;
 
 import be.ictdynamic.Constants;
+import be.ictdynamic.common.collections.CollectionUtilities;
 import be.ictdynamic.domain.Commuter;
 import be.ictdynamic.domain.GoogleMapRequest;
 import be.ictdynamic.domain.GoogleMapResponse;
-import be.ictdynamic.services.DummyService;
 import be.ictdynamic.services.GoogleMapFactoryServiceImpl;
-import be.ictdynamic.services.OfficeLocationService;
+import be.ictdynamic.services.SecurityService;
 import be.ictdynamic.ui.base.BasePage;
-import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
@@ -20,15 +22,13 @@ import org.slf4j.LoggerFactory;
 
 public final class CommutePage extends BasePage {
     private static final Logger LOG = LoggerFactory.getLogger(CommutePage.class);
-
-    @SpringBean
-    private OfficeLocationService officeLocationService;
+    private static final long serialVersionUID = -264755820748811049L;
 
     @SpringBean
     private GoogleMapFactoryServiceImpl googleMapFactoryService;
 
     @SpringBean
-    private DummyService dummyService;
+    private SecurityService securityService;
 
     /**
      * Constructor that is invoked when page is invoked without a session.
@@ -41,61 +41,145 @@ public final class CommutePage extends BasePage {
 
         // bind Form with Model of Type CompoundProperty !!!
         // -------------------------------------------------
+        final Commuter commuter = new Commuter();
 
-        Commuter commuter = new Commuter();
-        Form<CommutePage> form = new Form<CommutePage>("commutePageForm", new CompoundPropertyModel<CommutePage>(commuter));
+        Form<Commuter> form = new Form<>("commutePageForm", new CompoundPropertyModel<>(Model.of(commuter)));
 
         add(form);
 
-        // location of office is retrieved by using a (not very intelligent) service
+        // OFFICE FIELDS
 
-        TextField<String> officeStreetField = new TextField<String>("officeStreet");
-        TextField<String> officeCommuneField = new TextField<String>("officeCommune");
-        TextField<String> officeCountryField = new TextField<String>("officeCountry");
-
-        if (officeLocationService == null) {
-            LOG.warn(">>>This is not supposed to happen");
-            officeCountryField.setModel(Model.of("Spring is not always fun"));
-        } else {
-            LOG.debug(">>>Spring config ok .... ready to roll");
-            officeStreetField.setModel(Model.of(officeLocationService.getStreet()));
-            officeCountryField.setModel(Model.of(officeLocationService.getCountry()));
-            officeCommuneField.setModel(Model.of(officeLocationService.getCommune()));
-        }
-
-        // location of commuter's home address is retrieved by using the Commuter POJO class (being mapped as a Model)
-
-        TextField homeStreetField = new TextField("homeStreet");
-        TextField homeCommuneField = new TextField("homeCommune");
-        TextField homeCountryField = new TextField("homeCountry");
-
-        Button submitButton = new Button("submitButton") {
-            private static final long serialVersionUID = 1858351845188795071L;
+        final TextField<String> officeStreetField = new TextField<String>("officeStreet") {
+            private static final long serialVersionUID = 8079540829151688207L;
 
             @Override
-            public void onSubmit() {
+            protected void onInitialize() {
+                super.onInitialize();
 
-                // invoke factory instantiating a Google Map Service
-                // http://www.tutorialspoint.com/design_pattern/factory_pattern.htm
+                // all dom events: http://www.w3schools.com/jsref/dom_obj_event.asp
+                this.add(new AjaxFormComponentUpdatingBehavior("onChange") {
+                    private static final long serialVersionUID = 4650984070993921421L;
 
-                GoogleMapRequest googleMapRequest = new GoogleMapRequest();
-                googleMapRequest.setStreet(officeLocationService.getStreet());
-                googleMapRequest.setCommune(officeLocationService.getCommune());
-                googleMapRequest.setCountry(officeLocationService.getCountry());
-
-                GoogleMapResponse googleMapResponse = null;
-                try {
-                    googleMapResponse = googleMapFactoryService.getGoogleMapService().getGoogleDistance(googleMapRequest);
-                } catch (Exception e) {
-                    error("GoogleMapService is not available");
-                }
-
-//                PageParameters pageParameters = new PageParameters();
-//                pageParameters.add("reponseGoogleMap", response);
-
-                setResponsePage(new ResponsePage(googleMapResponse));
+                    @Override
+                    protected void onUpdate(AjaxRequestTarget target) {
+                        ((CommutePage) getParent().getParent()).handleTextFieldUpdate(target);
+                    }
+                });
             }
         };
+
+        final TextField<String> officeCommuneField = new TextField<String>("officeCommune") {
+
+            private static final long serialVersionUID = -7011567939901389719L;
+
+            @Override
+            protected void onInitialize() {
+                super.onInitialize();
+
+                // all dom events: http://www.w3schools.com/jsref/dom_obj_event.asp
+                this.add(new AjaxFormComponentUpdatingBehavior("onChange") {
+
+                    private static final long serialVersionUID = -5768972302609935505L;
+
+                    @Override
+                    protected void onUpdate(AjaxRequestTarget target) {
+                        ((CommutePage) getParent().getParent()).handleTextFieldUpdate(target);
+                    }
+                });
+            }
+        };
+
+        final TextField<String> officeCountryField = new TextField<String>("officeCountry") {
+
+            private static final long serialVersionUID = 2427966590472602399L;
+
+            @Override
+            protected void onInitialize() {
+                super.onInitialize();
+
+                // all dom events: http://www.w3schools.com/jsref/dom_obj_event.asp
+                this.add(new AjaxFormComponentUpdatingBehavior("onChange") {
+
+                    private static final long serialVersionUID = -3738689518095087643L;
+
+                    @Override
+                    protected void onUpdate(AjaxRequestTarget target) {
+                        ((CommutePage) getParent().getParent()).handleTextFieldUpdate(target);
+                    }
+                });
+            }
+        };
+
+        // HOME FIELDS
+        // -----------
+
+        TextField<String> homeStreetField = new TextField<String>("homeStreet") {
+
+            private static final long serialVersionUID = 2427966590472602399L;
+
+            @Override
+            protected void onInitialize() {
+                super.onInitialize();
+
+                // all dom events: http://www.w3schools.com/jsref/dom_obj_event.asp
+                this.add(new AjaxFormComponentUpdatingBehavior("onChange") {
+
+                    private static final long serialVersionUID = -3738689518095087643L;
+
+                    @Override
+                    protected void onUpdate(AjaxRequestTarget target) {
+                        ((CommutePage) getParent().getParent()).handleTextFieldUpdate(target);
+                    }
+                });
+            }
+        };
+        homeStreetField.setOutputMarkupId(true);
+        homeStreetField.setOutputMarkupPlaceholderTag(true);
+        TextField<String> homeCommuneField = new TextField<String>("homeCommune") {
+
+            private static final long serialVersionUID = 2427966590472602399L;
+
+            @Override
+            protected void onInitialize() {
+                super.onInitialize();
+
+                // all dom events: http://www.w3schools.com/jsref/dom_obj_event.asp
+                this.add(new AjaxFormComponentUpdatingBehavior("onChange") {
+
+                    private static final long serialVersionUID = -3738689518095087643L;
+
+                    @Override
+                    protected void onUpdate(AjaxRequestTarget target) {
+                        ((CommutePage) getParent().getParent()).handleTextFieldUpdate(target);
+                    }
+                });
+            }
+        };
+        final TextField<String> homeCountryField = new TextField<String>("homeCountry") {
+
+            private static final long serialVersionUID = 2427966590472602399L;
+
+            @Override
+            protected void onInitialize() {
+                super.onInitialize();
+
+                // all dom events: http://www.w3schools.com/jsref/dom_obj_event.asp
+                this.add(new AjaxFormComponentUpdatingBehavior("onChange") {
+
+                    private static final long serialVersionUID = -3738689518095087643L;
+
+                    @Override
+                    protected void onUpdate(AjaxRequestTarget target) {
+                        ((CommutePage) getParent().getParent()).handleTextFieldUpdate(target);
+                    }
+                });
+            }
+        };
+
+        // example of validation
+
+        form.add(new Label("distance").setOutputMarkupId(true).setOutputMarkupPlaceholderTag(true));
+        form.add(new Label("duration").setOutputMarkupId(true).setOutputMarkupPlaceholderTag(true));
 
         form.add(officeStreetField.setRequired(true)).setVersioned(false);
         form.add(officeCommuneField.setRequired(true)).setVersioned(false);
@@ -105,9 +189,52 @@ public final class CommutePage extends BasePage {
         form.add(homeCommuneField.add(StringValidator.lengthBetween(Constants.MIN_LENGTH, Constants.MAX_LENGTH_COMMUNE))).setVersioned(false);
         form.add(homeCountryField.add(StringValidator.lengthBetween(Constants.MIN_LENGTH, Constants.MAX_LENGTH_COUNTRY))).setVersioned(false);
 
-        form.add(submitButton);
-
-
     }
+
+    /**
+     * Add the components that have to be refreshed
+     */
+    public void handleTextFieldUpdate(AjaxRequestTarget target) {
+        // invoke actual processing message
+        GoogleMapResponse googleMapResponse = processGoogleRequest();
+        Integer distance = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDistance();
+        Integer duration = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDuration();
+
+        LOG.debug("Retrieved from Google: distance (in metres) : " + distance);
+        LOG.debug("Retrieved from Google: duration (in seconds) : " + duration);
+
+        get("commutePageForm").get("distance").setDefaultModelObject(distance / 1000);
+        get("commutePageForm").get("duration").setDefaultModelObject(duration / 60);
+
+        target.add(get("commutePageForm").get("distance"));
+        target.add(get("commutePageForm").get("duration"));
+    }
+
+    /**
+     * Process a Google Request to retrieve distance and duration
+     *
+     * @return GoogleMapResponse response with distance and duration
+     */
+    private GoogleMapResponse processGoogleRequest() {
+        GoogleMapRequest googleMapRequest = new GoogleMapRequest();
+
+        googleMapRequest.setOfficeStreet(get("commutePageForm").get("officeStreet").getDefaultModelObjectAsString());
+        googleMapRequest.setOfficeCommune(get("commutePageForm").get("officeCommune").getDefaultModelObjectAsString());
+        googleMapRequest.setOfficeCountry(get("commutePageForm").get("officeCountry").getDefaultModelObjectAsString());
+
+        googleMapRequest.setHomeStreet(get("commutePageForm").get("homeStreet").getDefaultModelObjectAsString());
+        googleMapRequest.setHomeCommune(get("commutePageForm").get("homeCommune").getDefaultModelObjectAsString());
+        googleMapRequest.setHomeCountry(get("commutePageForm").get("homeCountry").getDefaultModelObjectAsString());
+
+        GoogleMapResponse googleMapResponse = null;
+        try {
+            googleMapResponse = googleMapFactoryService.getGoogleMapService().getGoogleDistance(googleMapRequest);
+        } catch (Exception e) {
+            LOG.error(">>>GoogleMapService is not available: exception = " + e);
+            error("GoogleMapService is not available");
+        }
+        return googleMapResponse;
+    }
+
 
 }

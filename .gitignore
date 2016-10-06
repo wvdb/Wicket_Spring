@@ -4,3 +4,4 @@ overlays/
 *.class
 *.war
 *.log
+/POC_Wicket_Spring.iml

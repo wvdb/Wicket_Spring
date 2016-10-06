@@ -1,72 +1,84 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
       xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
 <head>
-    <title>IctDynamic's Commute Page</title>
+    <title>Commute Page</title>
 </head>
 <body>
 
-    <wicket:extend>
-        <h3>
-            Commute Page
-        </h3>
+<wicket:extend>
+    <h3>
+        Commute Page
+    </h3>
 
-        <form action="" wicket:id="commutePageForm">
+    <form action="" wicket:id="commutePageForm">
 
-            <table id="TableLocationOffice">
-                <tr>
-                    <td>
-                        Street:
-                    </td>
-                    <td>
-                        <input type="text" wicket:id="officeStreet" maxlength="50"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Commune:
-                    </td>
-                    <td>
-                        <input type="text" wicket:id="officeCommune" maxlength="50"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Country:
-                    </td>
-                    <td>
-                        <input type="text" wicket:id="officeCountry" maxlength="50"/>
-                    </td>
-                </tr>
-            </table>
+        <table id="TableLocationOffice">
+            <tr>
+                <td>
+                    Office Street:
+                </td>
+                <td>
+                    <input type="text" wicket:id="officeStreet" maxlength="50"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Office Commune:
+                </td>
+                <td>
+                    <input type="text" wicket:id="officeCommune" maxlength="50"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Office Country:
+                </td>
+                <td>
+                    <input type="text" wicket:id="officeCountry" maxlength="50"/>
+                </td>
+            </tr>
+        </table>
 
-            <table id="TableLocationHome">
-                <tr>
-                    <td>
-                        Home Street
-                    </td>
-                    <td>
-                        Home Commune
-                    </td>
-                    <td>
-                        Home Country
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="text" wicket:id="homeStreet"/>
-                    </td>
-                    <td>
-                        <input type="text" wicket:id="homeCommune"/>
-                    </td>
-                    <td>
-                        <input type="text" wicket:id="homeCountry"/>
-                    </td>
-                </tr>
-            </table>
+        <table id="TableLocationHome">
+            <tr>
+                <td>
+                    Home Street
+                </td>
+                <td>
+                    Home Commune
+                </td>
+                <td>
+                    Home Country
+                </td>
+                <td style="width: 100px">
+                    Distance (kilometres)
+                </td>
+                <td style="width: 100px">
+                    Duration (minutes)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" wicket:id="homeStreet"/>
+                </td>
+                <td>
+                    <input type="text" wicket:id="homeCommune"/>
+                </td>
+                <td>
+                    <input type="text" wicket:id="homeCountry"/>
+                </td>
+                <td style="width: 100px">
+                    <label wicket:id="distance"></label>
+                </td>
+                <td style="width: 100px">
+                    <label wicket:id="duration"></label>
+                </td>
+            </tr>
+        </table>
 
-        <input type="submit" value="Save" class="formbutton" name="save" wicket:id="submitButton"/>
-        </form>
-    </wicket:extend>
+        <!--<input type="submit" value="Save" class="formbutton" name="save" wicket:id="submitButton"/>-->
+    </form>
+</wicket:extend>
 
 </body>
 </html>

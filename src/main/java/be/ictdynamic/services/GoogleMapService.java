@@ -10,5 +10,6 @@ import be.ictdynamic.domain.GoogleMapResponse;
  * @since 05/10/2015 - 20:35
  */
 public interface GoogleMapService {
+    GoogleMapResponse getGoogleLocation(GoogleMapRequest googleMapRequest) throws Exception;
     GoogleMapResponse getGoogleDistance(GoogleMapRequest googleMapRequest) throws Exception;
 }

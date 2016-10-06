@@ -22,7 +22,7 @@ public class GoogleMapDummyServiceImpl implements GoogleMapService {
 
     // HttpGet request = new HttpGet("https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA");
 
-    public GoogleMapResponse getGoogleDistance(final GoogleMapRequest googleMapRequest) throws Exception {
+    public GoogleMapResponse getGoogleLocation(final GoogleMapRequest googleMapRequest) throws Exception {
         try {
             String stringResult = Constants.DUMMY_RESPONSE;
             JSONObject jsonobject1 = new JSONObject(stringResult);
@@ -43,5 +43,10 @@ public class GoogleMapDummyServiceImpl implements GoogleMapService {
         } catch (Exception e) {
             throw new Exception(e);
         }
+    }
+
+    @Override
+    public GoogleMapResponse getGoogleDistance(GoogleMapRequest googleMapRequest) throws Exception {
+        return null;
     }
 }
