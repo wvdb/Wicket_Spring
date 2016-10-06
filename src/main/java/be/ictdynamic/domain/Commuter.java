@@ -12,8 +12,9 @@ public class Commuter implements Serializable {
 
     private static final long serialVersionUID = -5073135041934007777L;
 
-    private String dummy;
-    private String dummy2;
+    private String officeStreet;
+    private String officeCommune;
+    private String officeCountry;
 
     private String homeStreet;
     private String homeCommune;
@@ -23,16 +24,15 @@ public class Commuter implements Serializable {
     private String duration;
 
     public Commuter() {
+        officeStreet = "Interleuvenlaan 17A";
+        officeCommune = "Heverlee";
+        officeCountry = "Belgium";
+
         homeStreet = "Tweebunder 4";
         homeCommune = "Edegem";
         homeCountry = "Belgium";
     }
 
-    public Commuter(String homeStreet, String homeCommune, String homeCountry) {
-        this.homeStreet = homeStreet;
-        this.homeCommune = homeCommune;
-        this.homeCountry = homeCountry;
-    }
 
     public String getHomeStreet() {
         return homeStreet;
@@ -58,22 +58,6 @@ public class Commuter implements Serializable {
         this.homeCountry = homeCountry;
     }
 
-    public String getDummy() {
-        return dummy;
-    }
-
-    public void setDummy(String dummy) {
-        this.dummy = dummy;
-    }
-
-    public String getDummy2() {
-        return dummy2;
-    }
-
-    public void setDummy2(String dummy2) {
-        this.dummy2 = dummy2;
-    }
-
     public String getDistance() {
         return distance;
     }
@@ -88,6 +72,30 @@ public class Commuter implements Serializable {
 
     public void setDuration(String duration) {
         this.duration = duration;
+    }
+
+    public String getOfficeStreet() {
+        return officeStreet;
+    }
+
+    public void setOfficeStreet(String officeStreet) {
+        this.officeStreet = officeStreet;
+    }
+
+    public String getOfficeCommune() {
+        return officeCommune;
+    }
+
+    public void setOfficeCommune(String officeCommune) {
+        this.officeCommune = officeCommune;
+    }
+
+    public String getOfficeCountry() {
+        return officeCountry;
+    }
+
+    public void setOfficeCountry(String officeCountry) {
+        this.officeCountry = officeCountry;
     }
 
     @Override
