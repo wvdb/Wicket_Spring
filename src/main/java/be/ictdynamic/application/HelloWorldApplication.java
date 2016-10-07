@@ -1,6 +1,7 @@
 package be.ictdynamic.application;
 
 import be.ictdynamic.ui.CommutePage;
+import de.agilecoders.wicket.core.Bootstrap;
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
@@ -17,7 +18,8 @@ public class HelloWorldApplication extends WebApplication {
     @Override
     protected void init() {
         super.init();
-//        addComponentInstantiationListener(new SpringComponentInjector(this));
-       getComponentInstantiationListeners().add(new SpringComponentInjector(this));
+        getComponentInstantiationListeners().add(new SpringComponentInjector(this));
+
+        Bootstrap.install(this);
     }
 }

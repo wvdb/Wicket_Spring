@@ -44,20 +44,29 @@ public final class CommutePage extends BasePage {
         // OFFICE FIELDS
 
         BaseTextField officeStreetField = new BaseTextField("officeStreet");
+        form.add(officeStreetField);
         BaseTextField officeCommuneField = new BaseTextField("officeCommune");
+        form.add(officeCommuneField);
         BaseTextField officeCountryField = new BaseTextField("officeCountry");
+        form.add(officeCountryField);
 
         // HOME FIELDS
         // -----------
 
         BaseTextField homeStreetField = new BaseTextField("homeStreet");
+        form.add(homeStreetField);
         BaseTextField homeCommuneField = new BaseTextField("homeCommune");
+        form.add(homeCommuneField);
         BaseTextField homeCountryField = new BaseTextField("homeCountry");
+        form.add(homeCountryField);
 
-        // example of validation
+        // Label Fields
+        // ------------
 
         form.add(new Label("distance").setOutputMarkupId(true).setOutputMarkupPlaceholderTag(true));
         form.add(new Label("duration").setOutputMarkupId(true).setOutputMarkupPlaceholderTag(true));
+
+        // example of validation
 
         form.add(officeStreetField.setRequired(true)).setVersioned(false);
         form.add(officeCommuneField.setRequired(true)).setVersioned(false);
