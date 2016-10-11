@@ -140,13 +140,23 @@ public class GoogleMapRealServiceImpl implements GoogleMapService {
 
         // traffic_model = pessimistic/optimistic can be added
 
+//        URI uri = new URI(
+//                "https",
+//                "maps.googleapis.com",
+//                "/maps/api/distancematrix/json",
+//                "origins=" + googleMapRequest.getHomeStreet() + ",+" + googleMapRequest.getHomeCommune() + ",+" + googleMapRequest.getHomeCountry()
+//                        + "&destinations=" + googleMapRequest.getOfficeStreet() + ",+" + googleMapRequest.getOfficeCommune() + ",+" + googleMapRequest.getOfficeCountry(),
+////                        + "&key=" + GOOGLE_DISTANCE_MATRIX_API_KEY,
+////                        + "&departure_time=" + startTime + "&key=" + GOOGLE_DISTANCE_MATRIX_API_KEY,
+//                null);
+
         URI uri = new URI(
                 "https",
                 "maps.googleapis.com",
                 "/maps/api/distancematrix/json",
-                "origins=" + googleMapRequest.getHomeStreet() + ",+" + googleMapRequest.getHomeCommune() + ",+" + googleMapRequest.getHomeCountry()
-                        + "&destinations=" + googleMapRequest.getOfficeStreet() + ",+" + googleMapRequest.getOfficeCommune() + ",+" + googleMapRequest.getOfficeCountry()
-                        + "&key=" + GOOGLE_DISTANCE_MATRIX_API_KEY,
+                "origins=" + googleMapRequest.getHomeCommune() + "," + googleMapRequest.getHomeCountry()
+                        + "&destinations=" + googleMapRequest.getOfficeCommune() + "," + googleMapRequest.getOfficeCountry(),
+//                        + "&key=" + GOOGLE_DISTANCE_MATRIX_API_KEY,
 //                        + "&departure_time=" + startTime + "&key=" + GOOGLE_DISTANCE_MATRIX_API_KEY,
                 null);
 
