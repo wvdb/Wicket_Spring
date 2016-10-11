@@ -326,10 +326,22 @@ public class POC {
 
     private static final Logger LOG = LoggerFactory.getLogger(POC.class);
 
-    public static void printGemeentes() {
+    public static void printGemeentes(String gemeenteToStartFrom) {
         int numEntriesProcessed = 7;
 
-        for (int i = numEntriesProcessed; i <= 12; i++) {
+        int dummy;
+        for (dummy = 0; dummy < 308; dummy++) {
+            if (gemeentes[dummy].equals(gemeenteToStartFrom)) {
+               break;
+            }
+        }
+
+        if (dummy==308) {
+            System.out.println(gemeenteToStartFrom + " is een ongeldige gemeente");
+            System.exit(-1);
+        }
+
+        for (int i = dummy; i < dummy+1; i++) {
             String gemeenteVan = gemeentes[i];
 
 //        for (String gemeenteVan : gemeentes) {
@@ -340,9 +352,7 @@ public class POC {
             googleMapRequest.setOfficeCommune(gemeenteVan);
             googleMapRequest.setOfficeCountry("België");
 
-//            for (String gemeenteNaar : gemeentes) {
-//            while (j < gemeentes.length) {
-            for (int j = numEntriesProcessed; j < 308; j++) {
+            for (int j = dummy; j < 308; j++) {
                 String gemeenteNaar = gemeentes[j];
 
                 googleMapRequest.setHomeCommune(gemeenteNaar);
@@ -360,14 +370,14 @@ public class POC {
                 }
             } // end second for
 
-            System.out.println(String.format("Aantal entries processed for gemeente %s: %03d", gemeenteVan, 308 - numEntriesProcessed));
+            System.out.println(String.format("Aantal entries processed for gemeente %s: %03d", gemeenteVan, 308 - dummy));
             numEntriesProcessed += 1;
         } // end first for
 
     }
 
     public static void main(String[] args) {
-        printGemeentes();
+        printGemeentes(args[0]);
     }
 
 }
