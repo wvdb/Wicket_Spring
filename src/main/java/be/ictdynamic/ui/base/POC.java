@@ -14,7 +14,8 @@ import org.slf4j.LoggerFactory;
  * @since 09/10/2016 - 15:57
  */
 public class POC {
-    static String[] gemeentes = new String[]{"AALST",
+    static String[] gemeentes = new String[]{
+            "AALST",
             "AALTER",
             "AARSCHOT",
             "AARTSELAAR",
@@ -326,9 +327,9 @@ public class POC {
     private static final Logger LOG = LoggerFactory.getLogger(POC.class);
 
     public static void printGemeentes() {
-        int numEntriesProcessed = 5;
+        int numEntriesProcessed = 7;
 
-        for (int i = numEntriesProcessed; i < 10; i++) {
+        for (int i = numEntriesProcessed; i <= 12; i++) {
             String gemeenteVan = gemeentes[i];
 
 //        for (String gemeenteVan : gemeentes) {
@@ -357,10 +358,11 @@ public class POC {
                 catch (Exception e) {
                     LOG.error(">>>GoogleMapService is not available: exception = " + e);
                 }
-            }
+            } // end second for
+
             System.out.println(String.format("Aantal entries processed for gemeente %s: %03d", gemeenteVan, 308 - numEntriesProcessed));
             numEntriesProcessed += 1;
-        } // end for
+        } // end first for
 
     }
 

@@ -155,9 +155,8 @@ public class GoogleMapRealServiceImpl implements GoogleMapService {
                 "maps.googleapis.com",
                 "/maps/api/distancematrix/json",
                 "origins=" + googleMapRequest.getHomeCommune() + "," + googleMapRequest.getHomeCountry()
-                        + "&destinations=" + googleMapRequest.getOfficeCommune() + "," + googleMapRequest.getOfficeCountry(),
-//                        + "&key=" + GOOGLE_DISTANCE_MATRIX_API_KEY,
-//                        + "&departure_time=" + startTime + "&key=" + GOOGLE_DISTANCE_MATRIX_API_KEY,
+                        + "&destinations=" + googleMapRequest.getOfficeCommune() + "," + googleMapRequest.getOfficeCountry()
+                        + "&key=" + GOOGLE_DISTANCE_MATRIX_API_KEY,
                 null);
 
         String httpRequest = uri.toASCIIString();
