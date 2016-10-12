@@ -327,56 +327,70 @@ public class POC {
     private static final Logger LOG = LoggerFactory.getLogger(POC.class);
 
     public static void printGemeentes(String gemeenteToStartFrom) {
-        int numEntriesProcessed = 7;
+        int totalNumEntriesProcessed = 0;
 
-        int dummy;
-        for (dummy = 0; dummy < 308; dummy++) {
-            if (gemeentes[dummy].equals(gemeenteToStartFrom)) {
+        int startCommuneIndex;
+        for (startCommuneIndex = 0; startCommuneIndex < 308; startCommuneIndex++) {
+            if (gemeentes[startCommuneIndex].equals(gemeenteToStartFrom)) {
                break;
             }
         }
 
-        if (dummy==308) {
+        if (startCommuneIndex==308) {
             System.out.println(gemeenteToStartFrom + " is een ongeldige gemeente");
             System.exit(-1);
         }
 
-        for (int i = dummy; i < dummy+1; i++) {
-            String gemeenteVan = gemeentes[i];
+//        int numberOfCommunesToBeProcessedasInt = 0;
+//        try {
+//            numberOfCommunesToBeProcessedasInt = Integer.valueOf(numberOfCommunesToBeProcessed);
+//        }
+//        catch (Exception e) {
+//            System.out.println(gemeenteToStartFrom + "Parsing to integer failed");
+//            System.exit(-1);
+//        }
 
-//        for (String gemeenteVan : gemeentes) {
-//        String gemeenteVan = gemeentes[0];
-            System.out.println("gemeente = " + gemeenteVan);
+        for (int i = startCommuneIndex; i<308 && totalNumEntriesProcessed < 2500; i++) {
+            String gemeenteVan = gemeentes[i];
 
             GoogleMapRequest googleMapRequest = new GoogleMapRequest();
             googleMapRequest.setOfficeCommune(gemeenteVan);
             googleMapRequest.setOfficeCountry("België");
 
-            for (int j = dummy; j < 308; j++) {
+            int numCommunesProcessed = 0;
+            for (int j = i+1; j < 308 && totalNumEntriesProcessed < 2500; j++) {
                 String gemeenteNaar = gemeentes[j];
 
                 googleMapRequest.setHomeCommune(gemeenteNaar);
                 googleMapRequest.setHomeCountry("België");
                 GoogleMapResponse googleMapResponse;
                 try {
+                    Integer distance = 0;
+                    Integer duration = 0;
                     GoogleMapRealServiceImpl googleMapRealService = new GoogleMapRealServiceImpl();
                     googleMapResponse = googleMapRealService.getGoogleDistance(googleMapRequest);
-                    Integer distance = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDistance();
-                    Integer duration = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDuration();
+                    distance = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDistance();
+                    duration = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDuration();
                     System.out.println(String.format("%s|%s|%d|%d", gemeenteVan, gemeenteNaar, distance, duration));
                 }
                 catch (Exception e) {
                     LOG.error(">>>GoogleMapService is not available: exception = " + e);
                 }
+                totalNumEntriesProcessed += 1;
+                numCommunesProcessed += 1;
             } // end second for
 
-            System.out.println(String.format("Aantal entries processed for gemeente %s: %03d", gemeenteVan, 308 - dummy));
-            numEntriesProcessed += 1;
+//            System.out.println(String.format("Aantal entries processed for gemeente %s: %03d", gemeenteVan, numCommunesProcessed));
         } // end first for
 
     }
 
     public static void main(String[] args) {
+        if (args.length != 1) {
+            System.out.println("invalid number of arguments. Expected: POC gemeente");
+            System.exit(-1);
+        }
+
         printGemeentes(args[0]);
     }
 
