@@ -7,6 +7,8 @@ import be.ictdynamic.services.GoogleMapRealServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
+
 /**
  * Class POC.
  *
@@ -470,6 +472,105 @@ public class POC {
 
     }
 
+    public static void printGemeenteAdHoc() {
+
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("AS", "MERKSPLAS");
+        hashMap.put("AS", "SINT-GILLIS-WAAS");
+        hashMap.put("AS", "SINT-NIKLAAS")    ;
+        hashMap.put("AS", "WAASMUNSTER")      ;
+
+        hashMap.put("ASSE", "MERKSPLAS")       ;
+        hashMap.put("ASSE", "SINT-GILLIS-WAAS") ;
+        hashMap.put("ASSE", "SINT-NIKLAAS")      ;
+        hashMap.put("ASSE", "WAASMUNSTER")        ;
+
+        hashMap.put("BAARLE-HERTOG", "DEINZE")     ;
+        hashMap.put("BAARLE-HERTOG", "TEMSE")       ;
+        hashMap.put("BAARLE-HERTOG", "TERNAT")       ;
+        hashMap.put("BAARLE-HERTOG", "TERVUREN")      ;
+        hashMap.put("BAARLE-HERTOG", "TESSENDERLO")    ;
+        hashMap.put("BAARLE-HERTOG", "TIELT")           ;
+        hashMap.put("BAARLE-HERTOG", "TIELT-WINGE")      ;
+
+        hashMap.put("BALEN", "ESSEN")                     ;
+        hashMap.put("BALEN", "EVERGEM")                    ;
+        hashMap.put("BALEN", "GALMAARDEN")                  ;
+        hashMap.put("BALEN", "GAVERE")                       ;
+        hashMap.put("BALEN", "SINT-AMANDS")                    ;
+        hashMap.put("BALEN", "SINT-GENESIUS-RODE")            ;
+        hashMap.put("BALEN", "SINT-GILLIS-WAAS")      ;
+        hashMap.put("BALEN", "SINT-KATELIJNE-WAVER")   ;
+        hashMap.put("BALEN", "SINT-LAUREINS")           ;
+        hashMap.put("BALEN", "SINT-LIEVENS-HOUTEM")      ;
+        hashMap.put("BALEN", "SINT-MARTENS-LATEM")        ;
+        hashMap.put("BALEN", "SINT-NIKLAAS")               ;
+        hashMap.put("BALEN", "SINT-PIETERS-LEEUW")          ;
+
+        hashMap.put("BEERNEM", "GERAARDSBERGEN")   ;
+        hashMap.put("BEERNEM", "GINGELOM")          ;
+        hashMap.put("BEERNEM", "GISTEL")             ;
+        hashMap.put("BEERNEM", "GLABBEEK")            ;
+        hashMap.put("BEERNEM", "GOOIK")                ;
+        hashMap.put("BEERNEM", "GRIMBERGEN")            ;
+        hashMap.put("BEERNEM", "GROBBENDONK")            ;
+        hashMap.put("BEERNEM", "MEISE")                   ;
+        hashMap.put("BEERNEM", "MELLE")                    ;
+        hashMap.put("BEERNEM", "MENEN")                     ;
+        hashMap.put("BEERNEM", "MERCHTEM")                   ;
+        hashMap.put("BEERNEM", "MERELBEKE")     ;
+        hashMap.put("BEERNEM", "MERKSPLAS")      ;
+        hashMap.put("BEERNEM", "MESEN")           ;
+        hashMap.put("BEERNEM", "MEULEBEKE")            ;
+        hashMap.put("BEERNEM", "MIDDELKERKE")      ;
+        hashMap.put("BEERNEM", "MOERBEKE")          ;
+        hashMap.put("BEERNEM", "MOL")               ;
+        hashMap.put("BEERNEM", "ZEMST")              ;
+        hashMap.put("BEERNEM", "ZINGEM")             ;
+        hashMap.put("BEERNEM", "ZOERSEL")             ;
+        hashMap.put("BEERNEM", "ZOMERGEM")             ;
+        hashMap.put("BEERNEM", "ZONHOVEN")              ;
+        hashMap.put("BEERNEM", "ZONNEBEKE")              ;
+        hashMap.put("BEERNEM", "ZOTTEGEM")                ;
+        hashMap.put("BEERNEM", "ZOUTLEEUW")                ;
+        hashMap.put("BEERNEM", "ZUIENKERKE")                ;
+
+        hashMap.put("BEERSE", "BEERSEL")        ;
+        hashMap.put("BEERSE", "VOSSELAAR")       ;
+        hashMap.put("BEERSE", "WAARSCHOOT")       ;
+        hashMap.put("BEERSE", "WAASMUNSTER")        ;
+        hashMap.put("BEERSE", "WACHTEBEKE")        ;
+        hashMap.put("BEERSE", "WAREGEM")             ;
+        hashMap.put("BEERSE", "WELLEN")               ;
+        hashMap.put("BEERSE", "WEMMEL")                ;
+        hashMap.put("BEERSE", "WERVIK")                 ;
+        hashMap.put("BEERSE", "WESTERLO")                ;
+        hashMap.put("BEERSE", "WETTEREN")                 ;
+
+        hashMap.forEach((k,v)-> {
+            String gemeenteNaar = k;
+
+            GoogleMapRequest googleMapRequest = new GoogleMapRequest();
+            googleMapRequest.setOfficeCommune(v);
+            googleMapRequest.setOfficeCountry("België");
+            googleMapRequest.setHomeCommune(gemeenteNaar);
+            googleMapRequest.setHomeCountry("België");
+            GoogleMapResponse googleMapResponse;
+            try {
+                Integer distance = 0;
+                Integer duration = 0;
+                GoogleMapRealServiceImpl googleMapRealService = new GoogleMapRealServiceImpl();
+                googleMapResponse = googleMapRealService.getGoogleDistance(googleMapRequest);
+                distance = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDistance();
+                duration = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDuration();
+                System.out.println(String.format("insert into commune values ('%s', '%s', %d, %d);", k, gemeenteNaar, distance, duration));
+            } catch (Exception e) {
+                LOG.error(">>>GoogleMapService is not available: exception = " + e);
+            }
+        });
+
+    }
+
     public static void printNotExists() {
         int startCommuneIndex;
         for (startCommuneIndex = 0; startCommuneIndex < 308; startCommuneIndex++) {
@@ -493,7 +594,9 @@ public class POC {
 //
 //        printGemeente(args[0]);
 
-        printGemeenteFromGemeenteTo(args[0], args[1]);
+        printGemeenteAdHoc();
+
+//        printGemeenteFromGemeenteTo(args[0], args[1]);
     }
 
 }
