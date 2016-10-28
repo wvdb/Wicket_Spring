@@ -326,31 +326,22 @@ public class POC {
 
     private static final Logger LOG = LoggerFactory.getLogger(POC.class);
 
-    public static void printGemeentes(String gemeenteToStartFrom) {
+    public static void printGemeentes(String gemeenteFrom) {
         int totalNumEntriesProcessed = 0;
 
         int startCommuneIndex;
         for (startCommuneIndex = 0; startCommuneIndex < 308; startCommuneIndex++) {
-            if (gemeentes[startCommuneIndex].equals(gemeenteToStartFrom)) {
-               break;
+            if (gemeentes[startCommuneIndex].equals(gemeenteFrom)) {
+                break;
             }
         }
 
-        if (startCommuneIndex==308) {
-            System.out.println(gemeenteToStartFrom + " is een ongeldige gemeente");
+        if (startCommuneIndex == 308) {
+            System.out.println(gemeenteFrom + " is een ongeldige gemeente");
             System.exit(-1);
         }
 
-//        int numberOfCommunesToBeProcessedasInt = 0;
-//        try {
-//            numberOfCommunesToBeProcessedasInt = Integer.valueOf(numberOfCommunesToBeProcessed);
-//        }
-//        catch (Exception e) {
-//            System.out.println(gemeenteToStartFrom + "Parsing to integer failed");
-//            System.exit(-1);
-//        }
-
-        for (int i = startCommuneIndex; i<308 && totalNumEntriesProcessed < 2500; i++) {
+        for (int i = startCommuneIndex; i < 308 && totalNumEntriesProcessed < 2500; i++) {
             String gemeenteVan = gemeentes[i];
 
             GoogleMapRequest googleMapRequest = new GoogleMapRequest();
@@ -358,7 +349,7 @@ public class POC {
             googleMapRequest.setOfficeCountry("België");
 
             int numCommunesProcessed = 0;
-            for (int j = i+1; j < 308 && totalNumEntriesProcessed < 2500; j++) {
+            for (int j = i + 1; j < 308 && totalNumEntriesProcessed < 2500; j++) {
                 String gemeenteNaar = gemeentes[j];
 
                 googleMapRequest.setHomeCommune(gemeenteNaar);
@@ -371,9 +362,9 @@ public class POC {
                     googleMapResponse = googleMapRealService.getGoogleDistance(googleMapRequest);
                     distance = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDistance();
                     duration = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDuration();
-                    System.out.println(String.format("%s|%s|%d|%d", gemeenteVan, gemeenteNaar, distance, duration));
-                }
-                catch (Exception e) {
+//                    System.out.println(String.format("%s|%s|%d|%d", gemeenteVan, gemeenteNaar, distance, duration));
+                    System.out.println(String.format("insert into commune values ('%s', '%s', %d, %d);", gemeenteVan, gemeenteNaar, distance, duration));
+                } catch (Exception e) {
                     LOG.error(">>>GoogleMapService is not available: exception = " + e);
                 }
                 totalNumEntriesProcessed += 1;
@@ -385,13 +376,124 @@ public class POC {
 
     }
 
-    public static void main(String[] args) {
-        if (args.length != 1) {
-            System.out.println("invalid number of arguments. Expected: POC gemeente");
+    public static void printGemeente(String gemeenteToStartFrom) {
+        int totalNumEntriesProcessed = 0;
+
+        int startCommuneIndex;
+        for (startCommuneIndex = 0; startCommuneIndex < 308; startCommuneIndex++) {
+            if (gemeentes[startCommuneIndex].equals(gemeenteToStartFrom)) {
+                break;
+            }
+        }
+
+        if (startCommuneIndex == 308) {
+            System.out.println(gemeenteToStartFrom + " is een ongeldige gemeente");
             System.exit(-1);
         }
 
-        printGemeentes(args[0]);
+        String gemeenteVan = gemeentes[startCommuneIndex];
+
+        GoogleMapRequest googleMapRequest = new GoogleMapRequest();
+        googleMapRequest.setOfficeCommune(gemeenteVan);
+        googleMapRequest.setOfficeCountry("België");
+
+        int numCommunesProcessed = 0;
+        for (int j = startCommuneIndex + 1; j < 308 && totalNumEntriesProcessed < 2500; j++) {
+            String gemeenteNaar = gemeentes[j];
+
+            googleMapRequest.setHomeCommune(gemeenteNaar);
+            googleMapRequest.setHomeCountry("België");
+            GoogleMapResponse googleMapResponse;
+            try {
+                Integer distance = 0;
+                Integer duration = 0;
+                GoogleMapRealServiceImpl googleMapRealService = new GoogleMapRealServiceImpl();
+                googleMapResponse = googleMapRealService.getGoogleDistance(googleMapRequest);
+                distance = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDistance();
+                duration = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDuration();
+                System.out.println(String.format("insert into commune values ('%s', '%s', %d, %d);", gemeenteVan, gemeenteNaar, distance, duration));
+            } catch (Exception e) {
+                LOG.error(">>>GoogleMapService is not available: exception = " + e);
+            }
+            totalNumEntriesProcessed += 1;
+            numCommunesProcessed += 1;
+        } // end for
+
+    }
+
+    public static void printGemeenteFromGemeenteTo(String gemeenteFrom, String gemeenteTo) {
+        int startCommuneIndex;
+        for (startCommuneIndex = 0; startCommuneIndex < 308; startCommuneIndex++) {
+            if (gemeentes[startCommuneIndex].equals(gemeenteFrom)) {
+                break;
+            }
+        }
+
+        if (startCommuneIndex == 308) {
+            System.out.println(gemeenteFrom + " is een ongeldige gemeente");
+            System.exit(-1);
+        }
+
+        String gemeenteVan = gemeentes[startCommuneIndex];
+
+        int startCommuneIndex2;
+        for (startCommuneIndex2 = 0; startCommuneIndex2 < 308; startCommuneIndex2++) {
+            if (gemeentes[startCommuneIndex2].equals(gemeenteTo)) {
+                break;
+            }
+        }
+
+        if (startCommuneIndex2 == 308) {
+            System.out.println(gemeenteTo + " is een ongeldige gemeente");
+            System.exit(-1);
+        }
+
+        String gemeenteNaar = gemeentes[startCommuneIndex2];
+
+        GoogleMapRequest googleMapRequest = new GoogleMapRequest();
+        googleMapRequest.setOfficeCommune(gemeenteVan);
+        googleMapRequest.setOfficeCountry("België");
+        googleMapRequest.setHomeCommune(gemeenteNaar);
+        googleMapRequest.setHomeCountry("België");
+        GoogleMapResponse googleMapResponse;
+        try {
+            Integer distance = 0;
+            Integer duration = 0;
+            GoogleMapRealServiceImpl googleMapRealService = new GoogleMapRealServiceImpl();
+            googleMapResponse = googleMapRealService.getGoogleDistance(googleMapRequest);
+            distance = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDistance();
+            duration = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDuration();
+            System.out.println(String.format("insert into commune values ('%s', '%s', %d, %d);", gemeenteVan, gemeenteNaar, distance, duration));
+        } catch (Exception e) {
+            LOG.error(">>>GoogleMapService is not available: exception = " + e);
+        }
+
+    }
+
+    public static void printNotExists() {
+        int startCommuneIndex;
+        for (startCommuneIndex = 0; startCommuneIndex < 308; startCommuneIndex++) {
+            System.out.println("select '" + gemeentes[startCommuneIndex] + "' from dual;");
+            System.out.println("select commune_name \n" +
+                    "from commune \n" +
+                    "where not exists (select 1 from commune_distance where commune_name = commune_distance.commune_to and commune_from = '" + gemeentes[startCommuneIndex] + "' ) \n" +
+                    "and commune_name > '" + gemeentes[startCommuneIndex] + "';");
+        }
+    }
+
+    public static void main(String[] args) {
+//        if (args.length != 1) {
+//            System.out.println("invalid number of arguments. Expected: POC gemeente");
+//            System.exit(-1);
+//        }
+
+//        printNotExists();
+
+//        printGemeentes(args[0]);
+//
+//        printGemeente(args[0]);
+
+        printGemeenteFromGemeenteTo(args[0], args[1]);
     }
 
 }
