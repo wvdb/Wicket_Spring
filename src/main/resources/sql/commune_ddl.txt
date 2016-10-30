@@ -1,0 +1,54 @@
+create sequence commune_sequence;  
+
+create table commune 
+( commune_id number not null
+, commune_from varchar(100) not null
+, commune_to varchar(100) not null
+, distance integer not null
+, duration integer not null); 
+
+create index commune_idx0 on commune (commune_from); 
+create index commune_idx1 on commune (commune_to); 
+
+create table commune (commune_name varchar(100) not null); 
+create unique index commune_idx99 on commune (commune_name); 
+
+insert into commune select distinct commune_to from commune_distance ; 
+commit; 
+insert into commune values ('AALST') ;
+commit; 
+
+select * 
+from   commune 
+where  distance = (select min(distance) from commune where commune_from = 'ANTWERPEN' or commune_to = 'ANTWERPEN'  and distance > 0); 
+
+MIN
+--- 
+
+select * 
+from   commune 
+where  distance = (select min(distance) from commune where commune_from = 'AALST' or commune_to = 'AALST')
+and    ( commune_from = 'AALST' or commune_to = 'AALST');    
+
+select * 
+from   commune 
+where  distance = (select min(distance) from commune where commune_from = 'EDEGEM' or commune_to = 'EDEGEM')
+and    ( commune_from = 'EDEGEM' or commune_to = 'EDEGEM');   
+
+MAX
+--- 
+
+select * 
+from   commune 
+where  distance = (select max(distance) from commune where commune_from = 'AALST' or commune_to = 'AALST')
+and    ( commune_from = 'AALST' or commune_to = 'AALST');    
+
+select commune_from, count(*) 
+from   commune_distance 
+group by commune_from
+order by 2 desc 
+
+select commune_from, count(*) 
+from   commune_distance 
+group by commune_from
+order by 1 asc 

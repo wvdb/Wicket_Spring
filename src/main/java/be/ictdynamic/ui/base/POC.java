@@ -4,10 +4,12 @@ import be.ictdynamic.common.collections.CollectionUtilities;
 import be.ictdynamic.domain.GoogleMapRequest;
 import be.ictdynamic.domain.GoogleMapResponse;
 import be.ictdynamic.services.GoogleMapRealServiceImpl;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Class POC.
@@ -365,7 +367,7 @@ public class POC {
                     distance = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDistance();
                     duration = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDuration();
 //                    System.out.println(String.format("%s|%s|%d|%d", gemeenteVan, gemeenteNaar, distance, duration));
-                    System.out.println(String.format("insert into commune values ('%s', '%s', %d, %d);", gemeenteVan, gemeenteNaar, distance, duration));
+                    System.out.println(String.format("insert into commune_distance values ('%s', '%s', %d, %d);", gemeenteVan, gemeenteNaar, distance, duration));
                 } catch (Exception e) {
                     LOG.error(">>>GoogleMapService is not available: exception = " + e);
                 }
@@ -413,7 +415,7 @@ public class POC {
                 googleMapResponse = googleMapRealService.getGoogleDistance(googleMapRequest);
                 distance = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDistance();
                 duration = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDuration();
-                System.out.println(String.format("insert into commune values ('%s', '%s', %d, %d);", gemeenteVan, gemeenteNaar, distance, duration));
+                System.out.println(String.format("insert into commune_distance values ('%s', '%s', %d, %d);", gemeenteVan, gemeenteNaar, distance, duration));
             } catch (Exception e) {
                 LOG.error(">>>GoogleMapService is not available: exception = " + e);
             }
@@ -465,7 +467,7 @@ public class POC {
             googleMapResponse = googleMapRealService.getGoogleDistance(googleMapRequest);
             distance = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDistance();
             duration = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDuration();
-            System.out.println(String.format("insert into commune values ('%s', '%s', %d, %d);", gemeenteVan, gemeenteNaar, distance, duration));
+            System.out.println(String.format("insert into commune_distance values ('%s', '%s', %d, %d);", gemeenteVan, gemeenteNaar, distance, duration));
         } catch (Exception e) {
             LOG.error(">>>GoogleMapService is not available: exception = " + e);
         }
@@ -474,86 +476,88 @@ public class POC {
 
     public static void printGemeenteAdHoc() {
 
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("AS", "MERKSPLAS");
-        hashMap.put("AS", "SINT-GILLIS-WAAS");
-        hashMap.put("AS", "SINT-NIKLAAS")    ;
-        hashMap.put("AS", "WAASMUNSTER")      ;
+        Multimap<String, String> multiMap = ArrayListMultimap.create();
+        multiMap.put("AS", "MERKSPLAS");
+        multiMap.put("AS", "SINT-GILLIS-WAAS");
+        multiMap.put("AS", "SINT-NIKLAAS")    ;
+        multiMap.put("AS", "WAASMUNSTER")      ;
 
-        hashMap.put("ASSE", "MERKSPLAS")       ;
-        hashMap.put("ASSE", "SINT-GILLIS-WAAS") ;
-        hashMap.put("ASSE", "SINT-NIKLAAS")      ;
-        hashMap.put("ASSE", "WAASMUNSTER")        ;
+        multiMap.put("ASSE", "MERKSPLAS")       ;
+        multiMap.put("ASSE", "SINT-GILLIS-WAAS") ;
+        multiMap.put("ASSE", "SINT-NIKLAAS")      ;
+        multiMap.put("ASSE", "WAASMUNSTER")        ;
 
-        hashMap.put("BAARLE-HERTOG", "DEINZE")     ;
-        hashMap.put("BAARLE-HERTOG", "TEMSE")       ;
-        hashMap.put("BAARLE-HERTOG", "TERNAT")       ;
-        hashMap.put("BAARLE-HERTOG", "TERVUREN")      ;
-        hashMap.put("BAARLE-HERTOG", "TESSENDERLO")    ;
-        hashMap.put("BAARLE-HERTOG", "TIELT")           ;
-        hashMap.put("BAARLE-HERTOG", "TIELT-WINGE")      ;
+        multiMap.put("BAARLE-HERTOG", "DEINZE")     ;
+        multiMap.put("BAARLE-HERTOG", "TEMSE")       ;
+        multiMap.put("BAARLE-HERTOG", "TERNAT")       ;
+        multiMap.put("BAARLE-HERTOG", "TERVUREN")      ;
+        multiMap.put("BAARLE-HERTOG", "TESSENDERLO")    ;
+        multiMap.put("BAARLE-HERTOG", "TIELT")           ;
+        multiMap.put("BAARLE-HERTOG", "TIELT-WINGE")      ;
 
-        hashMap.put("BALEN", "ESSEN")                     ;
-        hashMap.put("BALEN", "EVERGEM")                    ;
-        hashMap.put("BALEN", "GALMAARDEN")                  ;
-        hashMap.put("BALEN", "GAVERE")                       ;
-        hashMap.put("BALEN", "SINT-AMANDS")                    ;
-        hashMap.put("BALEN", "SINT-GENESIUS-RODE")            ;
-        hashMap.put("BALEN", "SINT-GILLIS-WAAS")      ;
-        hashMap.put("BALEN", "SINT-KATELIJNE-WAVER")   ;
-        hashMap.put("BALEN", "SINT-LAUREINS")           ;
-        hashMap.put("BALEN", "SINT-LIEVENS-HOUTEM")      ;
-        hashMap.put("BALEN", "SINT-MARTENS-LATEM")        ;
-        hashMap.put("BALEN", "SINT-NIKLAAS")               ;
-        hashMap.put("BALEN", "SINT-PIETERS-LEEUW")          ;
+        multiMap.put("BALEN", "ESSEN")                     ;
+        multiMap.put("BALEN", "EVERGEM")                    ;
+        multiMap.put("BALEN", "GALMAARDEN")                  ;
+        multiMap.put("BALEN", "GAVERE")                       ;
+        multiMap.put("BALEN", "SINT-AMANDS")                    ;
+        multiMap.put("BALEN", "SINT-GENESIUS-RODE")            ;
+        multiMap.put("BALEN", "SINT-GILLIS-WAAS")      ;
+        multiMap.put("BALEN", "SINT-KATELIJNE-WAVER")   ;
+        multiMap.put("BALEN", "SINT-LAUREINS")           ;
+        multiMap.put("BALEN", "SINT-LIEVENS-HOUTEM")      ;
+        multiMap.put("BALEN", "SINT-MARTENS-LATEM")        ;
+        multiMap.put("BALEN", "SINT-NIKLAAS")               ;
+        multiMap.put("BALEN", "SINT-PIETERS-LEEUW")          ;
 
-        hashMap.put("BEERNEM", "GERAARDSBERGEN")   ;
-        hashMap.put("BEERNEM", "GINGELOM")          ;
-        hashMap.put("BEERNEM", "GISTEL")             ;
-        hashMap.put("BEERNEM", "GLABBEEK")            ;
-        hashMap.put("BEERNEM", "GOOIK")                ;
-        hashMap.put("BEERNEM", "GRIMBERGEN")            ;
-        hashMap.put("BEERNEM", "GROBBENDONK")            ;
-        hashMap.put("BEERNEM", "MEISE")                   ;
-        hashMap.put("BEERNEM", "MELLE")                    ;
-        hashMap.put("BEERNEM", "MENEN")                     ;
-        hashMap.put("BEERNEM", "MERCHTEM")                   ;
-        hashMap.put("BEERNEM", "MERELBEKE")     ;
-        hashMap.put("BEERNEM", "MERKSPLAS")      ;
-        hashMap.put("BEERNEM", "MESEN")           ;
-        hashMap.put("BEERNEM", "MEULEBEKE")            ;
-        hashMap.put("BEERNEM", "MIDDELKERKE")      ;
-        hashMap.put("BEERNEM", "MOERBEKE")          ;
-        hashMap.put("BEERNEM", "MOL")               ;
-        hashMap.put("BEERNEM", "ZEMST")              ;
-        hashMap.put("BEERNEM", "ZINGEM")             ;
-        hashMap.put("BEERNEM", "ZOERSEL")             ;
-        hashMap.put("BEERNEM", "ZOMERGEM")             ;
-        hashMap.put("BEERNEM", "ZONHOVEN")              ;
-        hashMap.put("BEERNEM", "ZONNEBEKE")              ;
-        hashMap.put("BEERNEM", "ZOTTEGEM")                ;
-        hashMap.put("BEERNEM", "ZOUTLEEUW")                ;
-        hashMap.put("BEERNEM", "ZUIENKERKE")                ;
+        multiMap.put("BEERNEM", "GERAARDSBERGEN")   ;
+        multiMap.put("BEERNEM", "GINGELOM")          ;
+        multiMap.put("BEERNEM", "GISTEL")             ;
+        multiMap.put("BEERNEM", "GLABBEEK")            ;
+        multiMap.put("BEERNEM", "GOOIK")                ;
+        multiMap.put("BEERNEM", "GRIMBERGEN")            ;
+        multiMap.put("BEERNEM", "GROBBENDONK")            ;
+        multiMap.put("BEERNEM", "MEISE")                   ;
+        multiMap.put("BEERNEM", "MELLE")                    ;
+        multiMap.put("BEERNEM", "MENEN")                     ;
+        multiMap.put("BEERNEM", "MERCHTEM")                   ;
+        multiMap.put("BEERNEM", "MERELBEKE")     ;
+        multiMap.put("BEERNEM", "MERKSPLAS")      ;
+        multiMap.put("BEERNEM", "MESEN")           ;
+        multiMap.put("BEERNEM", "MEULEBEKE")            ;
+        multiMap.put("BEERNEM", "MIDDELKERKE")      ;
+        multiMap.put("BEERNEM", "MOERBEKE")          ;
+        multiMap.put("BEERNEM", "MOL")               ;
+        multiMap.put("BEERNEM", "ZEMST")              ;
+        multiMap.put("BEERNEM", "ZINGEM")             ;
+        multiMap.put("BEERNEM", "ZOERSEL")             ;
+        multiMap.put("BEERNEM", "ZOMERGEM")             ;
+        multiMap.put("BEERNEM", "ZONHOVEN")              ;
+        multiMap.put("BEERNEM", "ZONNEBEKE")              ;
+        multiMap.put("BEERNEM", "ZOTTEGEM")                ;
+        multiMap.put("BEERNEM", "ZOUTLEEUW")                ;
+        multiMap.put("BEERNEM", "ZUIENKERKE")                ;
 
-        hashMap.put("BEERSE", "BEERSEL")        ;
-        hashMap.put("BEERSE", "VOSSELAAR")       ;
-        hashMap.put("BEERSE", "WAARSCHOOT")       ;
-        hashMap.put("BEERSE", "WAASMUNSTER")        ;
-        hashMap.put("BEERSE", "WACHTEBEKE")        ;
-        hashMap.put("BEERSE", "WAREGEM")             ;
-        hashMap.put("BEERSE", "WELLEN")               ;
-        hashMap.put("BEERSE", "WEMMEL")                ;
-        hashMap.put("BEERSE", "WERVIK")                 ;
-        hashMap.put("BEERSE", "WESTERLO")                ;
-        hashMap.put("BEERSE", "WETTEREN")                 ;
+        multiMap.put("BEERSE", "BEERSEL")        ;
+        multiMap.put("BEERSE", "VOSSELAAR")       ;
+        multiMap.put("BEERSE", "WAARSCHOOT")       ;
+        multiMap.put("BEERSE", "WAASMUNSTER")        ;
+        multiMap.put("BEERSE", "WACHTEBEKE")        ;
+        multiMap.put("BEERSE", "WAREGEM")             ;
+        multiMap.put("BEERSE", "WELLEN")               ;
+        multiMap.put("BEERSE", "WEMMEL")                ;
+        multiMap.put("BEERSE", "WERVIK")                 ;
+        multiMap.put("BEERSE", "WESTERLO")                ;
+        multiMap.put("BEERSE", "WETTEREN")                 ;
 
-        hashMap.forEach((k,v)-> {
-            String gemeenteNaar = k;
+        for (Map.Entry entry : multiMap.entries()) {
+
+            String k = (String) entry.getKey();
+            String v = (String) entry.getValue();
 
             GoogleMapRequest googleMapRequest = new GoogleMapRequest();
             googleMapRequest.setOfficeCommune(v);
             googleMapRequest.setOfficeCountry("België");
-            googleMapRequest.setHomeCommune(gemeenteNaar);
+            googleMapRequest.setHomeCommune(k);
             googleMapRequest.setHomeCountry("België");
             GoogleMapResponse googleMapResponse;
             try {
@@ -563,11 +567,11 @@ public class POC {
                 googleMapResponse = googleMapRealService.getGoogleDistance(googleMapRequest);
                 distance = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDistance();
                 duration = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDuration();
-                System.out.println(String.format("insert into commune values ('%s', '%s', %d, %d);", k, gemeenteNaar, distance, duration));
+                System.out.println(String.format("insert into commune_distance values ('%s', '%s', %d, %d);", k, v, distance, duration));
             } catch (Exception e) {
                 LOG.error(">>>GoogleMapService is not available: exception = " + e);
             }
-        });
+        };
 
     }
 
@@ -592,9 +596,9 @@ public class POC {
 
 //        printGemeentes(args[0]);
 //
-//        printGemeente(args[0]);
+        printGemeente("BEERSE");
 
-        printGemeenteAdHoc();
+//        printGemeenteAdHoc();
 
 //        printGemeenteFromGemeenteTo(args[0], args[1]);
     }
