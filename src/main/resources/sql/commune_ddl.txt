@@ -25,11 +25,22 @@ where  distance = (select min(distance) from commune where commune_from = 'ANTWE
 ALTER TABLE commune_distance ADD CONSTRAINT FK01_COMMUNE_FROM FOREIGN KEY (commune_from) REFERENCES commune(COMMUNE_NAME);
 ALTER TABLE commune_distance ADD CONSTRAINT FK02_COMMUNE_TO   FOREIGN KEY (commune_to) REFERENCES commune(COMMUNE_NAME);
 
+SPECIFIC (15 gemeentes)
+-----------------------
+
+select *
+from   commune_distance
+where  distance = ( select min(distance)
+                    from commune_distance
+                    where (commune_from = 'EDEGEM' and commune_to in ('AALST', 'AARTSELAAR', 'ALSEMBERG', 'ANTWERPEN', 'BEERSEL', 'BERTEM', 'BEVEREN', 'BOOM', 'BRASSCHAAT', 'EDEGEM', 'HOVE', 'KONTICH', 'KORTENBERG', 'MORTSEL', 'SCHOTEN') )
+                    or commune_to = 'EDEGEM' and commune_from in ('AALST', 'AARTSELAAR', 'ALSEMBERG', 'ANTWERPEN', 'BEERSEL', 'BERTEM', 'BEVEREN', 'BOOM', 'BRASSCHAAT', 'EDEGEM', 'HOVE', 'KONTICH', 'KORTENBERG', 'MORTSEL', 'SCHOTEN') )
+and    ( commune_from = 'EDEGEM' or commune_to = 'EDEGEM');
+
 MIN
 --- 
 
 select * 
-from   commune 
+from   commune_distance
 where  distance = (select min(distance) from commune_distance where commune_from = 'AALST' or commune_to = 'AALST')
 and    ( commune_from = 'AALST' or commune_to = 'AALST');    
 
