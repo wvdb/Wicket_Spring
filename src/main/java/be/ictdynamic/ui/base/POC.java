@@ -420,6 +420,11 @@ public class POC {
                 distance = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDistance();
                 duration = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDuration();
                 System.out.println(String.format("insert into commune_distance values ('%s', '%s', %d, %d);", gemeenteVan, gemeenteNaar, distance, duration));
+
+                if (totalNumEntriesProcessed % 99 == 0) {
+                    Thread.sleep(5000);
+                }
+
             } catch (Exception e) {
                 LOG.error(">>>GoogleMapService is not available: exception = " + e);
             }
@@ -918,11 +923,11 @@ public class POC {
 //            System.exit(-1);
 //        }
 
-        printNotExists();
+//        printNotExists();
 
 //        printGemeentes(args[0]);
 //
-//        printGemeente("BEERSE");
+        printGemeente("SCHOTEN");
 
 //        printGemeenteAdHoc();
 
