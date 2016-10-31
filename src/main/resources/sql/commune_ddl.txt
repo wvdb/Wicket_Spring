@@ -11,7 +11,7 @@ create table commune
 , distance integer not null
 , duration integer not null); 
 
-create index commune_idx0 on commune_distance (commune_from, commune_to);
+create unique index commune_idx0 on commune_distance (commune_from, commune_to);
 create index commune_idx1 on commune_distance (commune_from);
 create index commune_idx2 on commune_distance (commune_to);
 
@@ -32,9 +32,14 @@ select *
 from   commune_distance
 where  distance = ( select min(distance)
                     from commune_distance
-                    where (commune_from = 'EDEGEM' and commune_to in ('AALST', 'AARTSELAAR', 'ALSEMBERG', 'ANTWERPEN', 'BEERSEL', 'BERTEM', 'BEVEREN', 'BOOM', 'BRASSCHAAT', 'EDEGEM', 'HOVE', 'KONTICH', 'KORTENBERG', 'MORTSEL', 'SCHOTEN') )
-                    or commune_to = 'EDEGEM' and commune_from in ('AALST', 'AARTSELAAR', 'ALSEMBERG', 'ANTWERPEN', 'BEERSEL', 'BERTEM', 'BEVEREN', 'BOOM', 'BRASSCHAAT', 'EDEGEM', 'HOVE', 'KONTICH', 'KORTENBERG', 'MORTSEL', 'SCHOTEN') )
+                    where (commune_from = 'EDEGEM' and commune_to in ('AALST', 'AARTSELAAR', 'ANTWERPEN', 'BEERSE', 'BERTEM', 'BEVEREN', 'BOOM', 'BRASSCHAAT', 'EDEGEM', 'HOVE', 'KONTICH', 'KORTENBERG', 'MORTSEL', 'SCHOTEN') )
+                    or commune_to = 'EDEGEM' and commune_from in ('AALST', 'AARTSELAAR', 'ANTWERPEN', 'BEERSE', 'BERTEM', 'BEVEREN', 'BOOM', 'BRASSCHAAT', 'EDEGEM', 'HOVE', 'KONTICH', 'KORTENBERG', 'MORTSEL', 'SCHOTEN') )
 and    ( commune_from = 'EDEGEM' or commune_to = 'EDEGEM');
+
+GOOGLE VB
+---------
+
+https://maps.googleapis.com/maps/api/directions/json?origin=Edegem,Belgium&destination=Edegem,Belgium&waypoints=optimize:true|Aalst,Belgium|Aartselaar,Belgium|Antwerpen,Belgium|Beerse,Belgium|Bertem,Belgium|Beveren,Belgium|Boom,Belgium|Brasschaat,Belgium|Edegem,Belgium|Hove,Belgium|Kontich,Belgium|Kortenberg,Belgium|Mortsel,Belgium|Schoten,Belgium&key=AIzaSyBBG4okpEk8d-t-oGaBykNoNf2fRo1NzXo
 
 MIN
 --- 
@@ -57,10 +62,10 @@ from   commune_distance
 where  distance = (select max(distance) from commune_distance where commune_from = 'AALST' or commune_to = 'AALST')
 and    ( commune_from = 'AALST' or commune_to = 'AALST');    
 
-select commune_from, count(*) 
-from   commune_distance 
+select commune_from, count(*)
+from   commune_distance
 group by commune_from
-order by 2 desc 
+order by 2 desc
 
 select commune_from, count(*) 
 from   commune_distance 
