@@ -413,8 +413,8 @@ public class POC {
             googleMapRequest.setHomeCountry("België");
             GoogleMapResponse googleMapResponse;
             try {
-                Integer distance = 0;
-                Integer duration = 0;
+                Integer distance;
+                Integer duration;
                 GoogleMapRealServiceImpl googleMapRealService = new GoogleMapRealServiceImpl();
                 googleMapResponse = googleMapRealService.getGoogleDistance(googleMapRequest);
                 distance = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDistance();
@@ -470,8 +470,8 @@ public class POC {
         googleMapRequest.setHomeCountry("België");
         GoogleMapResponse googleMapResponse;
         try {
-            Integer distance = 0;
-            Integer duration = 0;
+            Integer distance;
+            Integer duration;
             GoogleMapRealServiceImpl googleMapRealService = new GoogleMapRealServiceImpl();
             googleMapResponse = googleMapRealService.getGoogleDistance(googleMapRequest);
             distance = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDistance();
@@ -892,8 +892,8 @@ public class POC {
             googleMapRequest.setHomeCountry("België");
             GoogleMapResponse googleMapResponse;
             try {
-                Integer distance = 0;
-                Integer duration = 0;
+                Integer distance;
+                Integer duration;
                 GoogleMapRealServiceImpl googleMapRealService = new GoogleMapRealServiceImpl();
                 googleMapResponse = googleMapRealService.getGoogleDistance(googleMapRequest);
                 distance = CollectionUtilities.firstElement(googleMapResponse.getVoyages()) == null ? 0 : CollectionUtilities.firstElement(googleMapResponse.getVoyages()).getVoyageDistance();
@@ -902,7 +902,7 @@ public class POC {
             } catch (Exception e) {
                 LOG.error(">>>GoogleMapService is not available: exception = " + e);
             }
-        };
+        }
 
     }
 
@@ -925,9 +925,12 @@ public class POC {
 
 //        printNotExists();
 
-        printGemeentes(args[0]);
+//        printGemeentes(args[0]);
 
-//        printGemeente("HOVE");
+        printGemeente("HOUTHALEN-HELCHTEREN");
+//        printGemeente("HOUTHULST");
+//        printGemeente("HOVE"); all gedaan
+//        printGemeente("HULDENBERG"); terug volledig
 
 //        printGemeenteAdHoc();
 
