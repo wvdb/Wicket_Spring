@@ -379,7 +379,7 @@ public class POC {
                 numCommunesProcessed += 1;
             } // end second for
 
-            System.out.println(String.format("Aantal entries processed for gemeente %s: %03d", gemeenteVan, numCommunesProcessed));
+//            System.out.println(String.format("Aantal entries processed for gemeente %s: %03d", gemeenteVan, numCommunesProcessed));
         } // end first for
 
     }
@@ -925,9 +925,9 @@ public class POC {
 
 //        printNotExists();
 
-//        printGemeentes(args[0]);
-//
-        printGemeente("HOVE");
+        printGemeentes(args[0]);
+
+//        printGemeente("HOVE");
 
 //        printGemeenteAdHoc();
 

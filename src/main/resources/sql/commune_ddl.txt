@@ -62,6 +62,9 @@ from   commune_distance
 where  distance = (select max(distance) from commune_distance where commune_from = 'AALST' or commune_to = 'AALST')
 and    ( commune_from = 'AALST' or commune_to = 'AALST');    
 
+AANTALLEN
+---------
+
 select commune_from, count(*)
 from   commune_distance
 group by commune_from
