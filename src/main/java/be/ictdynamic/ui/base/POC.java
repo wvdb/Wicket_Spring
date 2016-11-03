@@ -925,11 +925,8 @@ public class POC {
 
 //        printNotExists();
 
-//        printGemeentes(args[0]);
+        printGemeentes(args[0]);
 
-        printGemeente("HOUTHALEN-HELCHTEREN");
-//        printGemeente("HOUTHULST");
-//        printGemeente("HOVE"); all gedaan
 //        printGemeente("HULDENBERG"); terug volledig
 
 //        printGemeenteAdHoc();
